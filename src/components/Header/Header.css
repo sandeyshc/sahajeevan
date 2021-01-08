@@ -1,0 +1,66 @@
+.header {
+    padding: 23px 9%;
+    width: 100%;
+}
+
+.header__row {
+    align-items: center;
+}
+
+.header__row__nav {
+    display: flex;
+    justify-content: flex-end;
+    list-style-type: none;
+    margin: 0;
+    color: white;
+    padding: 0;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.header__row__nav__item {
+    padding: 10px;
+    white-space: nowrap;
+}
+
+.header__row__nav__item__link,
+.header__row__nav__item__link:hover {
+    color: white;
+    text-decoration: none;
+}
+
+.header__row__btngrp {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.header__row__btn {
+    border-radius: 50px;
+    color: white;
+    min-width: 110px;
+    min-height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0;
+    font-weight: 500;
+    font-size: 12px;
+}
+
+.header__row__btn:hover {
+    box-shadow: 0px 2px 10px -5px black;
+}
+
+.header__row__btn__icon {
+    margin-right: 5px;
+    height: 14px;
+}
+
+.header__row__login {
+    background-color: #fcb432;
+}
+
+.header__row__register {
+    background-color: #ee4642;
+}
