@@ -99,3 +99,10 @@
         }
     }
 }
+
+@media screen and (max-width: 450px) {
+    .smallcard {
+        max-width: 100%;
+        flex: 1;
+    }
+}
