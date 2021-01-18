@@ -1,10 +1,38 @@
 .header {
-    padding: 23px 9%;
+    padding: 10px 100px;
     width: 100%;
-}
-
-.header__row {
-    align-items: center;
+    .header__nav {
+        .header__nav__link {
+            color: white;
+            text-transform: uppercase;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            white-space: nowrap;
+            box-shadow: none;
+        }
+        .header__nav__link__img {
+            padding: 0.2rem;
+        }
+        .header__nav__link__dropdown {
+            .nav-link {
+                color: white;
+            }
+        }
+        .header__nav__link__user {
+            padding: 0;
+        }
+    }
+    &__nav {
+        &__brand {
+            margin-right: 5rem;
+        }
+        & .navbar-collapse {
+            justify-content: flex-end;
+        }
+    }
 }
 
 .header__row__nav {
@@ -63,4 +91,15 @@
 
 .header__row__register {
     background-color: #ee4642;
+}
+
+@media screen and (max-width: 991px) {
+    .header {
+        padding: 10px;
+        &__nav {
+            &__brand {
+                margin-right: 4rem;
+            }
+        }
+    }
 }

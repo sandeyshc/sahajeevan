@@ -1,11 +1,11 @@
 import React from "react";
-import "./Hero.css";
+import "./Hero.scss";
 import HeroBanner from "./HeroBanner";
 
-function Hero() {
+function Hero({ data: { isSmallBanner, title, subtitle } }) {
   return (
-    <div className="hero">
-      <HeroBanner />
+    <div className={isSmallBanner ? "banner" : "hero"}>
+      <HeroBanner title={title} subtitle={subtitle} />
     </div>
   );
 }

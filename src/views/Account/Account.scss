@@ -1,0 +1,90 @@
+.settings {
+    margin: auto;
+
+    &__section {
+        display: flex;
+
+        &__filter {
+            flex: 0 0 29%;
+            max-width: 29%;
+            padding: 0 20px;
+        }
+
+        &__content {
+            flex: 2;
+
+            &__cards {
+                &__card {
+                    margin-bottom: 30px;
+                    box-shadow: 0 5px 10px 2px #c7e1e3;
+
+                    &__title {
+                        padding: 15px 20px;
+                        margin: 0;
+                        color: #6d6d6d;
+                        font-size: 24px;
+                    }
+
+                    &__divider {
+                        margin: 0;
+                    }
+
+                    &__content {
+                        font-weight: 400;
+                        font-size: 14px;
+                        color: #a1a1a1;
+                        padding: 15px 20px;
+                        margin: 0;
+                    }
+
+                    &__submit {
+                        max-width: 170px;
+                        background-color: #ee4642;
+                        border: 0;
+                        border-radius: 50px;
+                        min-height: 40px;
+                        color: white;
+                        font-weight: 500;
+                        font-size: 18px;
+                        box-shadow: 0 5px 10px #f5b9c4;
+                        margin: 15px 20px 25px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .settings {
+        &__section {
+            margin: 0;
+        }
+    }
+}
+
+@media screen and (max-width: 1199px) {
+    .settings {
+        &__section {
+            flex-direction: column;
+            &__filter {
+                max-width: 100%;
+                .list {
+                    flex-direction: row;
+                    overflow-x: scroll;
+                    &__item {
+                        margin: 0 10px 0 0;
+                        padding: 8px;
+                        font-size: 14px;
+                        img {
+                            margin-right: 10px;
+                        }
+                    }
+                }
+            }
+            &__content {
+                margin-top: 10px;
+            }
+        }
+    }
+}

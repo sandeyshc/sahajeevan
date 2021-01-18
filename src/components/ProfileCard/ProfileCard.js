@@ -2,44 +2,62 @@ import React from "react";
 import "./ProfileCard.scss";
 
 import { Card, Image, Col, Row } from "react-bootstrap";
-import Demo from "../../assets/images/demo.png";
+
 import Camera from "../../assets/icons/svg icon/camera.svg";
 import Privacy from "../../assets/icons/svg icon/privacy.svg";
 import ViewContact from "../../assets/icons/svg icon/View Contact1.svg";
+import ViewContactWhite from "../../assets/icons/svg icon/View Contact1_.svg";
 import Share from "../../assets/icons/svg icon/Share profile.svg";
 import Chat from "../../assets/icons/svg icon/Chat.svg";
 import Send from "../../assets/icons/svg icon/Send request.svg";
 import Calendar from "../../assets/icons/svg icon/calendar.svg";
 import Kundli from "../../assets/icons/svg icon/Kundli Match.svg";
 import Graph from "../../assets/icons/svg icon/graph.svg";
+import Premium from "../../assets/icons/svg icon/premium.svg";
+import dummyImage from "../../assets/images/dummy.png";
 
-function ProfileCard() {
+function ProfileCard({ isFullCard, isPremium, profileImage }) {
   const uploadPhoto = () => {
     document.getElementsByName("upload")[0].click();
   };
   return (
-    <section className="profile">
+    <section className={isFullCard ? "profile" : "search"}>
       <Card className="profile__card">
-        <Col className="profile__card__left" lg={4} sm={12}>
+        <Col className="profile__card__left" lg={4} md={4} sm={12}>
           <div className="profile__card__left__container">
             <Image
-              src={Demo}
+              src={profileImage || dummyImage}
               alt="profile image"
               className="profile__card__left__container__img"
             />
-            <input
-              type="file"
-              name="upload"
-              className="profile__card__left__container__upload"
-              accept=".jpg,.png,.jpeg"
-            />
-            <a
-              href="javascript:void(0)"
-              className="profile__card__left__container__camera"
-              onClick={uploadPhoto}
-            >
-              <Image src={Camera} alt="camera" height="28" />
-            </a>
+            {isPremium && (
+              <Image
+                src={Premium}
+                alt="premium banner"
+                className="profile__card__left__container__premium"
+              />
+            )}
+            {!!profileImage && (
+              <>
+                <input
+                  type="file"
+                  name="upload"
+                  className="profile__card__left__container__upload"
+                  accept=".jpg,.png,.jpeg"
+                />
+                <a
+                  href="javascript:void(0)"
+                  className="profile__card__left__container__camera"
+                  onClick={uploadPhoto}
+                >
+                  <Image src={Camera} alt="camera" height="28" />
+                  <span className="profile__card__left__container__camera__count">
+                    8
+                  </span>
+                </a>
+              </>
+            )}
+
             <a
               href="javascript:void(0)"
               className="profile__card__left__container__privacy"
@@ -48,36 +66,45 @@ function ProfileCard() {
             </a>
           </div>
         </Col>
-        <Col className="profile__card__right">
+        <Col className="profile__card__right" lg={8} md={8} sm={12}>
           <div className="profile__card__right__container">
             <Row className="profile__card__right__container__header">
               <p className="profile__card__right__container__header__name">
                 K THAKUR (XUYZ7167)
               </p>
               <p className="profile__card__right__container__header__seen">
-                <Image src={Calendar} alt="Calendar" className="profile__card__right__container__header__seen__calendar" />
+                <Image
+                  src={Calendar}
+                  alt="Calendar"
+                  className="profile__card__right__container__header__seen__calendar"
+                />
                 Last seen on 17.Oct.20
               </p>
             </Row>
             <hr className="profile__card__right__container__splitter" />
             <Row className="profile__card__right__container__details">
-              <Col className="profile__card__right__container__details__picture">
-                  <Card>
-                      <Image src={Graph} alt="kundli graph" height={90} />
-                      <hr/>
-                      <p>
-                          <Image src={Kundli} alt="Kundli match" />
-                          Kundli Match</p>
-                  </Card>
+              <Col className="profile__card__right__container__details__picture col-lg-3">
+                <Card>
+                  <Image
+                    src={Graph}
+                    alt="kundli graph"
+                    height={isFullCard ? 90 : 50}
+                  />
+                  <hr />
+                  <p>
+                    <Image src={Kundli} alt="Kundli match" height="10" />
+                    Kundli Match
+                  </p>
+                </Card>
               </Col>
-              <Col className="profile__card__right__container__details__personal">
+              <Col className="profile__card__right__container__details__personal col-lg-3">
                 <Row>29 Years, 5'3"</Row>
                 <Row>MBA/PGDM, BBA</Row>
                 <Row>Hindu</Row>
                 <Row>Punjabi</Row>
               </Col>
-              <Col className="profile__card__right__container__details__professional">
-                <Row>Studied at</Row>
+              <Col className="profile__card__right__container__details__professional col-lg-5">
+                <Row>Studied at D.Y. Patil, Tilak College</Row>
                 <Row>HR Professional</Row>
                 <Row>2 - 3 Lakh</Row>
                 <Row>Never Married</Row>
@@ -85,7 +112,11 @@ function ProfileCard() {
             </Row>
             <Row className="profile__card__right__container__actions">
               <button className="profile__card__right__container__actions__view">
-                <Image src={ViewContact} alt="View Contact" height={18} />
+                <Image
+                  src={ViewContact}
+                  alt="View Contact"
+                  height={18}
+                />
                 View Contact
               </button>
               <button className="profile__card__right__container__actions__send">

@@ -40,7 +40,10 @@ function Home() {
       profession: "Rs 2 - 3 Lakh, BPO/ITES Profession",
       pictureCount: 4,
     },
-  ];
+  ],
+  heroData = {
+    isLoggedIn: true,
+  };
 
   const [visitorIndex, setVisitorIndex] = useState(0),
     [nearByIndex, setNearByIndex] = useState(0),
@@ -48,7 +51,8 @@ function Home() {
     [premiumIndex, setPremiumIndex] = useState(0);
   return (
     <Layout
-      HeroImg={<Image src={Hero} alt="Hero Image" className="hero__image" />}
+      heroImg={Hero}
+      heroData={heroData}
     >
       <section className="section col-lg-10 col-12">
         <div className="section__header">

@@ -73,10 +73,15 @@ function LandingPage() {
           "Send Unlimited Requests",
         ],
       },
-    ];
+    ],
+    heroData = {
+      title: "Lorem ipsum is simply dummy text for printing and typesetting industry.",
+      subtitle: "Lorem ipsum is simply dummy text for printing and typesetting industry. Loreum ipsum has been the industry's."
+    };
   return (
     <Layout
-      HeroImg={<Image src={Hero} alt="hero Image" className="hero__image" />}
+      heroImg={Hero}
+      heroData={heroData}
     >
       <section className="landing__section">
         <Image className="landing__section__image" src={SectionImage} />
