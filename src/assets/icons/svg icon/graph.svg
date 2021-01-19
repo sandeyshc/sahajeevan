@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="111.492" height="68" viewBox="0 0 111.492 68">
+  <g id="Group_8065" data-name="Group 8065" transform="translate(1331 -10745)">
+    <g id="speedometer" transform="translate(-1278.514 10745)">
+      <g id="Gauge" transform="translate(0)">
+        <g id="Group_2283" data-name="Group 2283">
+          <path id="Path_1455" data-name="Path 1455" d="M44.5,19.533a3.3,3.3,0,1,0,0,6.591c26.755,0,48.516,21.387,48.516,47.671a3.36,3.36,0,0,0,6.718,0C99.73,43.87,74.953,19.533,44.5,19.533Z" transform="translate(-41.141 -19.533)" fill="#d6d6d6"/>
+        </g>
+      </g>
+    </g>
+    <g id="Gauge-2" data-name="Gauge" transform="translate(-1331 10745)">
+      <g id="Group_2283-2" data-name="Group 2283">
+        <path id="Path_1455-2" data-name="Path 1455" d="M96.376,19.533a3.3,3.3,0,1,1,0,6.591c-26.755,0-48.516,21.387-48.516,47.671a3.36,3.36,0,0,1-6.718,0C41.144,43.87,65.92,19.533,96.376,19.533Z" transform="translate(-41.141 -19.533)" fill="#ed3042"/>
+      </g>
+    </g>
+    <text id="_0" data-name="0" transform="translate(-1330.582 10811)" fill="#6d6d6d" font-size="8" font-family="Roboto-Medium, Roboto" font-weight="500"><tspan x="0" y="0">0</tspan></text>
+    <text id="_25" data-name="25" transform="translate(-1227.508 10811)" fill="#6d6d6d" font-size="7" font-family="Roboto-Medium, Roboto" font-weight="500"><tspan x="0" y="0">25</tspan></text>
+    <g id="Group_7755" data-name="Group 7755" transform="translate(-17030.514 6186)">
+      <circle id="Ellipse_426" data-name="Ellipse 426" cx="9" cy="9" r="9" transform="translate(15739.514 4582.017)" fill="#ed3042"/>
+      <text id="H" transform="translate(15745.561 4594.553)" fill="#fff" font-size="8" font-family="Roboto-Bold, Roboto" font-weight="700" letter-spacing="0.05em"><tspan x="0" y="0">H</tspan></text>
+      <circle id="Ellipse_427" data-name="Ellipse 427" cx="9" cy="9" r="9" transform="translate(15753.078 4582)" fill="#fcb723"/>
+      <text id="L" transform="translate(15760.078 4594)" fill="#fff" font-size="7" font-family="Roboto-Bold, Roboto" font-weight="700" letter-spacing="0.05em"><tspan x="0" y="0">L</tspan></text>
+    </g>
+  </g>
+</svg>

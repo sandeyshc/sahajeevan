@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="9.036" height="9.036" viewBox="0 0 9.036 9.036">
+  <defs>
+    <clipPath id="clip-path">
+      <path id="Mask" d="M7.935,8.847,4.518,5.431,1.1,8.847a.646.646,0,0,1-.913-.913L3.605,4.518.189,1.1A.646.646,0,0,1,1.1.189L4.518,3.605,7.935.189a.646.646,0,0,1,.913.913L5.431,4.518,8.847,7.935a.645.645,0,1,1-.913.913Z" transform="translate(0 0)" fill="#b4b4b4"/>
+    </clipPath>
+  </defs>
+  <g id="Icon_Cross" data-name="Icon/Cross" clip-path="url(#clip-path)">
+    <g id="Color" transform="translate(-5.164 -5.164)">
+      <path id="Icon_Fill_Accent" data-name="Icon/🖌 Fill/Accent" d="M0,0H19.364V19.364H0Z" fill="#b4b4b4"/>
+    </g>
+  </g>
+</svg>

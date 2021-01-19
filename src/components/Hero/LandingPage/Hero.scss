@@ -1,0 +1,31 @@
+.hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.banner {
+    display: flex;
+    align-items: center;
+    min-height: 250px;
+    margin-bottom: 40px;
+
+    .herobanner {
+        margin: auto;
+
+        &__title {
+            font-size: 2rem;
+            text-transform: uppercase;
+            text-align: center;
+            margin: 0;
+
+        }
+
+        &__subtitle {
+            text-align: center;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            max-width: 350px;
+        }
+    }
+}
