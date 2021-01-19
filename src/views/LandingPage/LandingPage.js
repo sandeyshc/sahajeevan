@@ -6,6 +6,10 @@ import "./LandingPage.scss";
 import RegisterNow from "../../assets/icons/svg icon/Register Now.svg";
 import Connect from "../../assets/icons/svg icon/Page-2.svg";
 import Interact from "../../assets/icons/svg icon/Interact with them.svg";
+import Bronze from "../../assets/icons/svg icon/bronze.svg";
+import Gold from "../../assets/icons/svg icon/gold.svg";
+import Silver from "../../assets/icons/svg icon/Silver.svg";
+import Platinum from "../../assets/icons/svg icon/Platinum.svg";
 
 import SectionImage from "../../assets/images/LandingPage/section.png";
 import FooterLogo from "../../assets/images/logo1.png";
@@ -34,6 +38,7 @@ function LandingPage() {
     ],
     membershipCards = [
       {
+        logo: Bronze,
         title: "BRONZE",
         rate: "349",
         month: "1",
@@ -44,6 +49,7 @@ function LandingPage() {
         ],
       },
       {
+        logo: Silver,
         title: "SILVER",
         rate: "399",
         month: "1",
@@ -54,6 +60,7 @@ function LandingPage() {
         ],
       },
       {
+        logo: Gold,
         title: "GOLD",
         rate: "900",
         month: "3",
@@ -64,6 +71,7 @@ function LandingPage() {
         ],
       },
       {
+        logo: Platinum,
         title: "PLATINUM",
         rate: "1450",
         month: "6",

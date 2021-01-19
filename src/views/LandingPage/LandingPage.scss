@@ -219,15 +219,3 @@
     }
   }
 }
-
-@media screen and (min-width: '982px') {
-  .membership {
-    &__cards {
-      & .member-card {
-        &.active {
-          transform: scaleY(1.1);
-        }
-      }
-    }
-  }
-}

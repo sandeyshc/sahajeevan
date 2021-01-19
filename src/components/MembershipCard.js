@@ -1,15 +1,14 @@
 import React from "react";
 import "./MembershipCard.scss";
 import { Image } from "react-bootstrap";
-import Logo from "../assets/icons/svg icon/gold.svg";
 import Check from "../assets/icons/svg icon/check_.svg";
 
-function MembershipCard({ details: { title, rate, month, messages }, isActive }) {
+function MembershipCard({ details: { logo, title, rate, month, messages }, isActive }) {
   return (
     <div className={`member-card ${isActive ? 'active' : ''}`}>
       <div className="member-card__holder">
         <div className="member-card__image">
-          <Image src={Logo} alt="header logo" />
+          <Image src={logo} alt="header logo" />
           <p className="member-card__image__text">{title}</p>
         </div>
         <div className="member-card__rate">

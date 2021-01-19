@@ -33,8 +33,8 @@ function Header({ isLoggedIn }) {
           {isLoggedIn ? (
             <Nav>
               <NavLink className="header__nav__link" as={Link} to="home">Home</NavLink>
-              <NavLink className="header__nav__link" as={Link} to="/">My Profile</NavLink>
-              <NavLink className="header__nav__link" as={Link} to="/searchresults">Search</NavLink>
+              <NavLink className="header__nav__link" as={Link} to="">My Profile</NavLink>
+              <NavLink className="header__nav__link" as={Link} to="searchresults">Search</NavLink>
               <NavLink className="header__nav__link" as={Link} to="interests">Interests</NavLink>
               <NavLink className="header__nav__link" as={Link} to="notifications">Notifications</NavLink>
               <NavLink className="header__nav__link">Upgrade</NavLink>
@@ -55,7 +55,7 @@ function Header({ isLoggedIn }) {
             </Nav>
           ) : (
             <Nav>
-              <NavLink className="header__nav__link">Search Me</NavLink>
+              <NavLink className="header__nav__link" as={Link} to="home">Search Me</NavLink>
               <NavLink className="header__nav__link">Membership Plans</NavLink>
               <NavLink className="header__nav__link">Why us?</NavLink>
               <NavLink className="header__nav__link">TESTIMONIALS</NavLink>
