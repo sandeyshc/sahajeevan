@@ -1,6 +1,7 @@
 .header {
     padding: 10px 100px;
     width: 100%;
+
     .header__nav {
         .header__nav__link {
             color: white;
@@ -13,22 +14,34 @@
             white-space: nowrap;
             box-shadow: none;
         }
+
         .header__nav__link__img {
             padding: 0.2rem;
+
+            &__user {
+                & img {
+                    background-color: white;
+                    border-radius: 50%;
+                }
+            }
         }
+
         .header__nav__link__dropdown {
             .nav-link {
                 color: white;
             }
         }
+
         .header__nav__link__user {
             padding: 0;
         }
     }
+
     &__nav {
         &__brand {
             margin-right: 5rem;
         }
+
         & .navbar-collapse {
             justify-content: flex-end;
         }
@@ -96,6 +109,7 @@
 @media screen and (max-width: 991px) {
     .header {
         padding: 10px;
+
         &__nav {
             &__brand {
                 margin-right: 4rem;

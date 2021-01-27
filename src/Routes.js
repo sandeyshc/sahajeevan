@@ -1,7 +1,16 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import { LandingPage, Home, SearchResults, Notifications, Interests, Account } from "./views";
-import MembershipPlans from "./views/MembershipPlans/MembershipPlans";
+import {
+  LandingPage,
+  Home,
+  SearchResults,
+  Notifications,
+  Interests,
+  Account,
+  MembershipPlans,
+  Profile,
+  Search,
+} from "./views";
 
 const Routes = () => {
   return (
@@ -10,22 +19,28 @@ const Routes = () => {
         <LandingPage />
       </Route>
       <Route path="/home" exact>
-          <Home />
+        <Home />
+      </Route>
+      <Route path="/search" exact>
+        <Search />
       </Route>
       <Route path="/searchresults" exact>
-          <SearchResults />
+        <SearchResults />
       </Route>
       <Route path="/notifications" exact>
-          <Notifications />
+        <Notifications />
       </Route>
       <Route path="/interests" exact>
-          <Interests />
+        <Interests />
       </Route>
       <Route path="/settings" exact>
-          <Account />
+        <Account />
       </Route>
       <Route path="/membership" exact>
-          <MembershipPlans />
+        <MembershipPlans />
+      </Route>
+      <Route path="/profile/:id" exact>
+        <Profile />
       </Route>
     </Switch>
   );

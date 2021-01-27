@@ -4,22 +4,21 @@
   }
 
   &__card {
-    max-height: 330px;
+    max-height: 325px;
     flex-direction: row;
     border-radius: 10px;
     padding: 7px;
-    box-shadow: 0 3px 10px #d6d6d6;
+    box-shadow: 0 5px 7px #d6d6d6;
 
     &__left {
-      padding: 0 20px 0 0;
+      padding: 0 30px 0 0;
 
       &__container {
         display: flex;
-        justify-content: center;
+        padding-left: 20px;
         align-items: center;
-        border: 1px solid #dfdfdf;
         border-radius: 10px;
-        box-shadow: 0 0 10px 5px #eeeeee;
+        box-shadow: 0 3px 5px #d8d8d8;
         height: 100%;
         position: relative;
 
@@ -29,7 +28,7 @@
 
         &__img {
           border-radius: 50%;
-          height: 90%;
+          height: 85%;
           width: 90%;
           object-fit: cover;
           object-position: center;
@@ -38,18 +37,28 @@
 
         &__camera {
           position: absolute;
-          top: 75%;
-          right: 10%;
+          top: 73%;
+          right: 17%;
           background-color: #00000050;
           border-radius: 50%;
-          height: 55px;
-          width: 55px;
+          height: 60px;
+          width: 60px;
           display: flex;
           justify-content: center;
           align-items: center;
 
           &__count {
-            display: none;
+            position: absolute;
+            background-color: #fbb332;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            left: 55%;
+            top: 20%;
           }
         }
 
@@ -62,7 +71,7 @@
           justify-content: center;
           align-items: center;
           position: absolute;
-          right: 3%;
+          right: 4%;
           top: 3%;
         }
       }
@@ -78,13 +87,13 @@
 
         &__header {
           justify-content: space-between;
-          padding: 15px 15px 0 0;
+          padding: 10px 15px 0 0;
           align-items: center;
 
           &__name {
             margin-bottom: 8px;
             font-size: 28px;
-            font-weight: 600;
+            font-weight: 400;
             color: #6d6d6d;
           }
 
@@ -103,24 +112,28 @@
           --dash-color: #e46e79;
           margin: 0;
           position: relative;
-          background: linear-gradient(
-            to right,
-            var(--dash-color) 5%,
-            white 5% 10%,
-            var(--dash-color) 10% 15%,
-            white 15% 20%,
-            #d9d9d9 20%
-          );
+          background: linear-gradient(to right,
+              var(--dash-color) 2%,
+              white 2% 4%,
+              var(--dash-color) 4% 6%,
+              white 6% 8%,
+              var(--dash-color) 8% 10%,
+              white 10% 12%,
+              #d9d9d9 12%);
           height: 2px;
           border: 0;
         }
 
         &__details {
-          padding: 30px 0 0;
+          padding: 30px 20px 0;
           flex: 1;
           color: #9f9f9f;
+          font-size: 18px;
+          font-weight: 300;
+          white-space: nowrap;
 
           &__picture {
+            display: none;
           }
 
           &__personal {
@@ -130,6 +143,8 @@
           }
 
           &__professional {
+            margin-left: 100px;
+
             & .row {
               margin: 2px 0;
             }
@@ -158,28 +173,24 @@
             color: #c3525d;
             font-size: 14px;
             box-shadow: 0 0 10px 5px #e8ebf4;
-            min-width: 150px;
-            min-height: 40px;
+            min-width: 160px;
+            min-height: 45px;
           }
 
-          &__view {
-          }
+          &__view {}
 
-          &__send {
-          }
+          &__send {}
 
-          &__chat {
-          }
+          &__chat {}
 
-          &__share {
-          }
+          &__share {}
         }
       }
     }
   }
 }
 
-.search {
+.search-profile {
   margin: 50px 0;
 
   .profile {
@@ -198,9 +209,11 @@
       }
 
       &__left {
+        padding: 0 10px 0 0;
         &__container {
           border: none;
           box-shadow: none;
+          padding: 0;
 
           &__img {
             border-radius: 5px;
@@ -282,7 +295,7 @@
                 hr {
                   margin: 0;
 
-                  & + p {
+                  &+p {
                     font-size: 10px;
                     margin: 0;
                     display: flex;
@@ -361,31 +374,33 @@
       &__right {
         &__container {
           padding: 20px;
+
           &__header {
             padding: 0;
+
             &__name {
               font-size: 12px;
               font-weight: 500;
             }
+
             &__seen {
               display: none;
             }
           }
 
           &__splitter {
-            background: linear-gradient(
-              to right,
-              var(--dash-color) 5%,
-              white 5% 10%,
-              var(--dash-color) 10% 15%,
-              white 15%
-            );
+            background: linear-gradient(to right,
+                var(--dash-color) 5%,
+                white 5% 10%,
+                var(--dash-color) 10% 15%,
+                white 15%);
           }
 
           &__details {
             &__picture {
               display: none;
             }
+
             &__personal {
               padding: 0;
             }
@@ -394,15 +409,18 @@
               display: none;
             }
           }
+
           &__actions {
             padding: 0;
             justify-content: space-between;
             margin: 0 0 10px;
+
             button {
               margin: 0;
               min-width: 75px;
               border: 2px solid;
               font-size: 12px;
+
               img {
                 display: none;
               }

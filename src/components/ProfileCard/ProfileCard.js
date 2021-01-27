@@ -21,7 +21,7 @@ function ProfileCard({ isFullCard, isPremium, profileImage }) {
     document.getElementsByName("upload")[0].click();
   };
   return (
-    <section className={isFullCard ? "profile" : "search"}>
+    <section className={isFullCard ? "profile" : "search-profile"}>
       <Card className="profile__card">
         <Col className="profile__card__left" lg={4} md={4} sm={12}>
           <div className="profile__card__left__container">
@@ -70,7 +70,7 @@ function ProfileCard({ isFullCard, isPremium, profileImage }) {
           <div className="profile__card__right__container">
             <Row className="profile__card__right__container__header">
               <p className="profile__card__right__container__header__name">
-                K THAKUR (XUYZ7167)
+                HIMANSHU CHOUHAN (XUYZ7167)
               </p>
               <p className="profile__card__right__container__header__seen">
                 <Image
@@ -106,7 +106,7 @@ function ProfileCard({ isFullCard, isPremium, profileImage }) {
               <Col className="profile__card__right__container__details__professional col-lg-5">
                 <Row>Studied at D.Y. Patil, Tilak College</Row>
                 <Row>HR Professional</Row>
-                <Row>2 - 3 Lakh</Row>
+                <Row>Rs. 5 - 7.5 Lakh, Buxar & Amingaon</Row>
                 <Row>Never Married</Row>
               </Col>
             </Row>
