@@ -12,3 +12,4 @@ export { default as LoginForm } from "./Forms/LoginForm";
 export { default as RegisterForm } from "./Forms/RegisterForm";
 export { default as OTPForm } from "./Forms/OTPForm";
 export { default as StepForm } from "./Forms/StepForm";
+export { default as HomeForm } from "./Forms/HomeForm";

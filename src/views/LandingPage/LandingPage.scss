@@ -3,7 +3,7 @@
     display: grid;
     gap: 50px;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    padding: 50px 0;
+    padding: 50px 15px;
     margin: 100px auto 0;
     &__image {
       width: 100%;
@@ -100,7 +100,7 @@
 
 .options {
   margin: auto;
-  padding: 50px 0;
+  padding: 50px 15px;
   &__header {
     position: relative;
     &__title {
@@ -206,7 +206,7 @@
   &__card {
     margin: 75px auto 50px;
     align-items: center;
-    padding: 40px 0;
+    padding: 40px 15px;
     border-radius: 30px;
     border: 0;
     box-shadow: 0 10px 20px 5px #f0f0f0;

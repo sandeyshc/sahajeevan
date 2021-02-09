@@ -2,6 +2,7 @@
     border-radius: 6px;
     overflow: hidden;
     max-width: 245px;
+    flex: 1;
     position: relative;
 
     &:hover {
@@ -43,8 +44,8 @@
             align-items: center;
             background-color: #dd4e70;
             position: absolute;
-            top: 6px;
-            right: 3px;
+            top: 2px;
+            right: 2px;
         }
     }
 

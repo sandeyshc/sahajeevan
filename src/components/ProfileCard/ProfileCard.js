@@ -16,10 +16,34 @@ import Graph from "../../assets/icons/svg icon/graph.svg";
 import Premium from "../../assets/icons/svg icon/premium.svg";
 import dummyImage from "../../assets/images/dummy.png";
 
-function ProfileCard({ isFullCard, isPremium, profileImage }) {
+function ProfileCard({
+  isFullCard,
+  isPremium,
+  profileImage,
+  card: {
+    name,
+    profile_id,
+    last_seen,
+    height,
+    occupation,
+    marital_status,
+    religion,
+    caste,
+  },
+}) {
   const uploadPhoto = () => {
-    document.getElementsByName("upload")[0].click();
-  };
+      document.getElementsByName("upload")[0].click();
+    },
+    parseDate = (date) => {
+      return new Intl.DateTimeFormat("en-AU", {
+        day: "numeric",
+        year: "2-digit",
+        month: "short",
+      })
+        .format(new Date(date))
+        .split(" ")
+        .join(".");
+    };
   return (
     <section className={isFullCard ? "profile" : "search-profile"}>
       <Card className="profile__card">
@@ -70,7 +94,7 @@ function ProfileCard({ isFullCard, isPremium, profileImage }) {
           <div className="profile__card__right__container">
             <Row className="profile__card__right__container__header">
               <p className="profile__card__right__container__header__name">
-                HIMANSHU CHOUHAN (XUYZ7167)
+                {name} ({profile_id})
               </p>
               <p className="profile__card__right__container__header__seen">
                 <Image
@@ -78,7 +102,7 @@ function ProfileCard({ isFullCard, isPremium, profileImage }) {
                   alt="Calendar"
                   className="profile__card__right__container__header__seen__calendar"
                 />
-                Last seen on 17.Oct.20
+                Last seen on {parseDate(last_seen)}
               </p>
             </Row>
             <hr className="profile__card__right__container__splitter" />
@@ -98,25 +122,21 @@ function ProfileCard({ isFullCard, isPremium, profileImage }) {
                 </Card>
               </Col>
               <Col className="profile__card__right__container__details__personal col-lg-3">
-                <Row>29 Years, 5'3"</Row>
+                <Row>{height}</Row>
                 <Row>MBA/PGDM, BBA</Row>
-                <Row>Hindu</Row>
-                <Row>Punjabi</Row>
+                <Row>{religion}</Row>
+                <Row>{caste}</Row>
               </Col>
               <Col className="profile__card__right__container__details__professional col-lg-5">
                 <Row>Studied at D.Y. Patil, Tilak College</Row>
-                <Row>HR Professional</Row>
+                <Row>{occupation}</Row>
                 <Row>Rs. 5 - 7.5 Lakh, Buxar & Amingaon</Row>
-                <Row>Never Married</Row>
+                <Row>{marital_status}</Row>
               </Col>
             </Row>
             <Row className="profile__card__right__container__actions">
               <button className="profile__card__right__container__actions__view">
-                <Image
-                  src={ViewContact}
-                  alt="View Contact"
-                  height={18}
-                />
+                <Image src={ViewContact} alt="View Contact" height={18} />
                 View Contact
               </button>
               <button className="profile__card__right__container__actions__send">

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Layout, CardCarousel } from "../../components";
+import { Layout, CardCarousel, HomeForm } from "../../components";
 import { Image, Card } from "react-bootstrap";
 import "./Home.scss";
+import { useQuery } from "react-query";
 
 import Hero from "../../assets/images/Home/home.png";
 import FooterLogo from "../../assets/images/logo1.png";
@@ -9,57 +10,66 @@ import Left from "../../assets/icons/svg icon/Right1.svg";
 import Right from "../../assets/icons/svg icon/Stroke 1.svg";
 import RightRedArrow from "../../assets/icons/svg icon/arrow-1.svg";
 import RightWhiteArrow from "../../assets/icons/svg icon/arrow.svg";
+import { premiumMatches, profileVisitors } from "../../services/profile";
 
 function Home() {
   const cards = [
-    {
-      title: "28, 5' 0'', Delhi and allahabad, Uttarpradesh",
-      language: "Hindi-Delhi, kashmiri",
-      education: "M.Com, other",
-      profession: "Rs 2 - 3 Lakh, BPO/ITES Profession",
-      pictureCount: 3,
+      {
+        title: "28, 5' 0'', Delhi and allahabad, Uttarpradesh",
+        language: "Hindi-Delhi, kashmiri",
+        education: "M.Com, other",
+        profession: "Rs 2 - 3 Lakh, BPO/ITES Profession",
+        pictureCount: 3,
+      },
+      {
+        title: "28, 5' 0'', Delhi and allahabad, Uttarpradesh",
+        language: "Hindi-Delhi, kashmiri",
+        education: "M.Com, other",
+        profession: "Rs 2 - 3 Lakh, BPO/ITES Profession",
+        pictureCount: 3,
+      },
+      {
+        title: "28, 5' 0'', Delhi and allahabad, Uttarpradesh",
+        language: "Hindi-Delhi, kashmiri",
+        education: "M.Com, other",
+        profession: "Rs 2 - 3 Lakh, BPO/ITES Profession",
+        pictureCount: 2,
+      },
+      {
+        title: "28, 5' 0'', Delhi and allahabad, Uttarpradesh",
+        language: "Hindi-Delhi, kashmiri",
+        education: "M.Com, other",
+        profession: "Rs 2 - 3 Lakh, BPO/ITES Profession",
+        pictureCount: 4,
+      },
+    ],
+    heroData = {
+      isLoggedIn: true,
+      title: "Lorem ipsum is simply dummy text of the printing.",
+      subtitle:
+        "Lorem ipsum is simply dummy text for printing and typesetting industry. Loreum ipsum has been the industry's.",
+      btnText: "Upgrade",
     },
-    {
-      title: "28, 5' 0'', Delhi and allahabad, Uttarpradesh",
-      language: "Hindi-Delhi, kashmiri",
-      education: "M.Com, other",
-      profession: "Rs 2 - 3 Lakh, BPO/ITES Profession",
-      pictureCount: 3,
-    },
-    {
-      title: "28, 5' 0'', Delhi and allahabad, Uttarpradesh",
-      language: "Hindi-Delhi, kashmiri",
-      education: "M.Com, other",
-      profession: "Rs 2 - 3 Lakh, BPO/ITES Profession",
-      pictureCount: 2,
-    },
-    {
-      title: "28, 5' 0'', Delhi and allahabad, Uttarpradesh",
-      language: "Hindi-Delhi, kashmiri",
-      education: "M.Com, other",
-      profession: "Rs 2 - 3 Lakh, BPO/ITES Profession",
-      pictureCount: 4,
-    },
-  ],
-  heroData = {
-    isLoggedIn: true,
-  };
-
-  const [visitorIndex, setVisitorIndex] = useState(0),
+    { data: premiumCards } = useQuery("premiumMatches", premiumMatches),
+    { data: profileVisitorsCards } = useQuery(
+      "profileVisitorsCards",
+      profileVisitors
+    ),
+    [visitorIndex, setVisitorIndex] = useState(0),
     [nearByIndex, setNearByIndex] = useState(0),
     [recommendationIndex, setRecommendationIndex] = useState(0),
     [premiumIndex, setPremiumIndex] = useState(0);
+
   return (
-    <Layout
-      heroImg={Hero}
-      heroData={heroData}
-    >
+    <Layout heroImg={Hero} heroData={heroData} bannerContent={<HomeForm />}>
       <section className="section col-lg-10 col-12">
         <div className="section__header">
           <div className="section__header__title">
             <p className="section__header__title__text">
               My Profile Visitors
-              <span className="section__header__title__text__count">24</span>
+              <span className="section__header__title__text__count">
+                {profileVisitorsCards?.length}
+              </span>
             </p>
             <p className="section__header__title__subtext">
               Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -105,7 +115,10 @@ function Home() {
           </div>
         </div>
         <div className="section__cards">
-          <CardCarousel cards={cards} activeIndex={visitorIndex}></CardCarousel>
+          <CardCarousel
+            cards={profileVisitorsCards}
+            activeIndex={visitorIndex}
+          ></CardCarousel>
         </div>
       </section>
 
@@ -125,9 +138,7 @@ function Home() {
             <button
               className="section__header__actions__left"
               onClick={() =>
-                setNearByIndex(
-                  nearByIndex > 0 ? nearByIndex - 1 : nearByIndex
-                )
+                setNearByIndex(nearByIndex > 0 ? nearByIndex - 1 : nearByIndex)
               }
             >
               <Image src={Left} alt="left icon" height="15" />
@@ -135,9 +146,7 @@ function Home() {
             <button
               className="section__header__actions__right"
               onClick={() =>
-                setNearByIndex(
-                  nearByIndex < 1 ? nearByIndex + 1 : nearByIndex
-                )
+                setNearByIndex(nearByIndex < 1 ? nearByIndex + 1 : nearByIndex)
               }
             >
               <Image src={Right} alt="right icon" height="15" />
@@ -165,67 +174,75 @@ function Home() {
       </section>
 
       <section className="section col-lg-10 col-12">
-          <div className="section__header">
-            <div className="section__header__title">
-              <p className="section__header__title__text">
-                Daily Recommendations
-                <span className="section__header__title__text__count">
-                  24
-                </span>
-              </p>
-              <p className="section__header__title__subtext">
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-              </p>
-            </div>
-            <div className="section__header__actions">
-              <button
-                className="section__header__actions__left"
-                onClick={() =>
-                  setRecommendationIndex(
-                    recommendationIndex > 0 ? recommendationIndex - 1 : recommendationIndex
-                  )
-                }
-              >
-                <Image src={Left} alt="left icon" height="15" />
-              </button>
-              <button
-                className="section__header__actions__right"
-                onClick={() =>
-                  setRecommendationIndex(
-                    recommendationIndex < 1 ? recommendationIndex + 1 : recommendationIndex
-                  )
-                }
-              >
-                <Image src={Right} alt="right icon" height="15" />
-              </button>
-              <button className="section__header__actions__all">
-                <span className="section__header__actions__all__text">
-                  View All
-                </span>
-                <Image
-                  src={RightRedArrow}
-                  alt="right arrow"
-                  className="section__header__actions__all__redicon"
-                />
-                <Image
-                  src={RightWhiteArrow}
-                  alt="right arrow"
-                  className="section__header__actions__all__whiteicon"
-                />
-              </button>
-            </div>
+        <div className="section__header">
+          <div className="section__header__title">
+            <p className="section__header__title__text">
+              Daily Recommendations
+              <span className="section__header__title__text__count">24</span>
+            </p>
+            <p className="section__header__title__subtext">
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry.
+            </p>
           </div>
-          <div className="section__cards">
-            <CardCarousel cards={cards} activeIndex={recommendationIndex}></CardCarousel>
+          <div className="section__header__actions">
+            <button
+              className="section__header__actions__left"
+              onClick={() =>
+                setRecommendationIndex(
+                  recommendationIndex > 0
+                    ? recommendationIndex - 1
+                    : recommendationIndex
+                )
+              }
+            >
+              <Image src={Left} alt="left icon" height="15" />
+            </button>
+            <button
+              className="section__header__actions__right"
+              onClick={() =>
+                setRecommendationIndex(
+                  recommendationIndex < 1
+                    ? recommendationIndex + 1
+                    : recommendationIndex
+                )
+              }
+            >
+              <Image src={Right} alt="right icon" height="15" />
+            </button>
+            <button className="section__header__actions__all">
+              <span className="section__header__actions__all__text">
+                View All
+              </span>
+              <Image
+                src={RightRedArrow}
+                alt="right arrow"
+                className="section__header__actions__all__redicon"
+              />
+              <Image
+                src={RightWhiteArrow}
+                alt="right arrow"
+                className="section__header__actions__all__whiteicon"
+              />
+            </button>
           </div>
-        </section>
+        </div>
+        <div className="section__cards">
+          <CardCarousel
+            cards={cards}
+            activeIndex={recommendationIndex}
+          ></CardCarousel>
+        </div>
+      </section>
 
       <section className="section col-lg-10 col-12">
         <div className="section__header">
           <div className="section__header__title">
             <p className="section__header__title__text">
               Premium Matches
-              <span className="section__header__title__text__count">24</span>
+              <span className="section__header__title__text__count">
+                {premiumCards?.length}
+              </span>
             </p>
             <p className="section__header__title__subtext">
               Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -271,7 +288,10 @@ function Home() {
           </div>
         </div>
         <div className="section__cards">
-          <CardCarousel cards={cards} activeIndex={premiumIndex}></CardCarousel>
+          <CardCarousel
+            cards={premiumCards}
+            activeIndex={premiumIndex}
+          ></CardCarousel>
         </div>
       </section>
 

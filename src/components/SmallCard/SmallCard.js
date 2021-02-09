@@ -6,14 +6,22 @@ import Arrow from "../../assets/icons/svg icon/Right.svg";
 import Camera from "../../assets/icons/svg icon/camera.svg";
 
 function SmallCard({
-  data: { language, title, education, profession, pictureCount },
+  data: {
+    mother_tongue,
+    name,
+    height,
+    occupation,
+    total_photos,
+    location,
+    birth_date,
+  },
   children,
 }) {
   return (
     <Card className="smallcard">
       <span className="smallcard__pictures">
         <Image src={Camera} alt="camera" height="13px" />
-        <span className="smallcard__pictures__count">{pictureCount}</span>
+        <span className="smallcard__pictures__count">{total_photos}</span>
       </span>
       <button className="smallcard__button">
         Send Interest
@@ -25,10 +33,11 @@ function SmallCard({
       </button>
       {children}
       <div className="smallcard__content">
-        <p className="smallcard__content__title">{title}</p>
-        <p className="smallcard__content__location">{language}</p>
-        <p className="smallcard__content__education">{education}</p>
-        <p className="smallcard__content__profession">{profession}</p>
+        <p className="smallcard__content__title">{name}</p>
+        <p className="smallcard__content__location">{birth_date}</p>
+        <p className="smallcard__content__location">{mother_tongue}</p>
+        <p className="smallcard__content__profession">{occupation}</p>
+        <p className="smallcard__content__profession">{location}</p>
       </div>
     </Card>
   );

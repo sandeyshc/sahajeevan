@@ -6,7 +6,7 @@ function HeroBanner({ title, subtitle, btnText, profileView }) {
     <div className={`herobanner ${profileView ? "view" : ""}`}>
       <p className="herobanner__title">{title}</p>
       <p className="herobanner__subtitle">{subtitle}</p>
-      {btnText && <button className="herobanner__btn">Read More</button>}
+      {btnText && <button className="herobanner__btn">{btnText}</button>}
     </div>
   );
 }

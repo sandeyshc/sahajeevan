@@ -12,11 +12,11 @@ function RegisterForm({ close }) {
       </Form.Group>
       <Form.Group controlId="password" className="registerForm__password">
         <Form.Label>Password</Form.Label>
-        <Form.Control placeholder="Enter Password" />
+        <Form.Control type="password" placeholder="Enter Password" />
       </Form.Group>
       <Form.Group controlId="repassword" className="registerForm__repassword">
         <Form.Label>Reenter Password</Form.Label>
-        <Form.Control placeholder="Re enter Password" />
+        <Form.Control type="password" placeholder="Re enter Password" />
       </Form.Group>
       <Form.Group controlId="phone" className="registerForm__phone">
         <Form.Label>Phone No</Form.Label>
