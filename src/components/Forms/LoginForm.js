@@ -1,0 +1,62 @@
+import React, { useState } from "react";
+import { Button, Form, Row } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { login } from "../../services/api";
+import "./LoginForm.scss";
+
+function LoginForm({ close }) {
+  const [formValue, setFormValue] = useState({ username: "", password: "" }),
+    submit = (e) => {
+      e.preventDefault();
+      login(formValue);
+      close();
+    };
+  return (
+    <Form className="loginForm" onSubmit={submit}>
+      <Form.Group controlId="name" className="loginForm__email">
+        <Form.Label>Email ID / Phone No.</Form.Label>
+        <Form.Control
+          placeholder="Enter Email ID / Phone No"
+          onChange={({ target: { value } }) =>
+            setFormValue({ ...formValue, username: value })
+          }
+          required
+        />
+      </Form.Group>
+      <Form.Group controlId="password" className="loginForm__password">
+        <Form.Label>Password</Form.Label>
+        <Form.Control
+          type="password"
+          placeholder="Enter Password"
+          onChange={({ target: { value } }) =>
+            setFormValue({ ...formValue, password: value })
+          }
+          required
+        />
+      </Form.Group>
+      <Row className="loginForm__options">
+        <Form.Group controlId="stay" className="loginForm__options__check">
+          <Form.Check label="Stay Logged in" />
+        </Form.Group>
+        <Link className="loginForm__options__forgot">Forgot Password?</Link>
+      </Row>
+      <Button type="submit" className="loginForm__submit">
+        Login
+      </Button>
+      <p className="loginForm__postscript">
+        Lorem ipsum is simply a dummy text of printing.
+      </p>
+      <p className="loginForm__links">
+        <Link href="javascript:void(0)" className="loginForm__links__terms">
+          Terms of Use
+        </Link>
+        and
+        <Link href="javascript:void(0)" className="loginForm__links__privacy">
+          Privacy Policy
+        </Link>
+      </p>
+    </Form>
+  );
+}
+
+export default LoginForm;

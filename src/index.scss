@@ -5,26 +5,35 @@
   font-weight: 700;
   src: url("./assets/fonts/Signika-Bold.ttf") format("truetype");
 }
+
 @font-face {
   font-family: "Signika";
   font-weight: 600;
   src: url("./assets/fonts/Signika-SemiBold.ttf") format("truetype");
 }
+
 @font-face {
   font-family: "Signika";
   font-weight: 500;
   src: url("./assets/fonts/Signika-Medium.ttf") format("truetype");
 }
+
 @font-face {
   font-family: "Signika";
   font-weight: 400;
   src: url("./assets/fonts/Signika-Regular.ttf") format("truetype");
 }
+
 @font-face {
   font-family: "Signika";
   font-weight: 300;
   src: url("./assets/fonts/Signika-Light.ttf") format("truetype");
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   font-family: "Signika", sans-serif !important;

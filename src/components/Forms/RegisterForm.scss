@@ -1,0 +1,52 @@
+.registerForm {
+    color: #716f71;
+
+    &__email,
+    &__password,
+    &__repassword,
+    &__phone {
+        & input {
+            height: auto;
+            padding: 10px;
+            font-size: 12px;
+            color: black;
+            background-color: #fbfbfb;
+            border: 1px solid #f5f5f5;
+
+            &::placeholder {
+                font-style: italic;
+                color: #b7b7b7;
+            }
+        }
+
+    }
+
+    &__submit {
+        width: 100%;
+        border-radius: 50px;
+        background-color: #ee4642;
+        border: 0;
+        font-weight: 600;
+        font-size: 18px;
+        min-height: 50px;
+        margin: 30px 0 20px;
+        box-shadow: 0 10px 20px #ffadb2;
+
+        &:hover {
+            background-color: #ee4642;
+        }
+    }
+
+    &__links {
+        color: #403e40;
+        font-size: 14px;
+        text-align: center;
+        margin: 0;
+
+        &__login {
+            color: #e8b64d;
+            font-weight: 600;
+            margin-left: 5px;
+        }
+    }
+}

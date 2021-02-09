@@ -1,6 +1,6 @@
 import React from "react";
 import { Image, Row } from "react-bootstrap";
-import { Layout, ProfileCard, ListOptions } from "../../components";
+import { Layout, ProfileCard, ListOptions, Filter } from "../../components";
 import "./SearchResults.scss";
 
 import heroImg from "../../assets/images/SearchResults/hero.png";
@@ -42,7 +42,7 @@ function SearchResults() {
       <section className="results col-lg-10 col-12">
         <Row className="results__section">
           <div className="results__section__filter">
-            <ListOptions options={listOptions}></ListOptions>
+            <Filter />
           </div>
           <div className="results__section__content">
             <p className="results__section__content__title">

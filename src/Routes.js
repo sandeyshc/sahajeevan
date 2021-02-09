@@ -1,33 +1,53 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import { LandingPage, Home, SearchResults, Notifications, Interests, Account } from "./views";
-import MembershipPlans from "./views/MembershipPlans/MembershipPlans";
+import {
+  LandingPage,
+  Home,
+  SearchResults,
+  Notifications,
+  Interests,
+  Account,
+  MembershipPlans,
+  Profile,
+  Search,
+} from "./views";
+
+import { QueryClient, QueryClientProvider } from "react-query";
 
 const Routes = () => {
+  const queryClient = new QueryClient();
   return (
-    <Switch>
-      <Route path="/" exact>
-        <LandingPage />
-      </Route>
-      <Route path="/home" exact>
+    <QueryClientProvider client={queryClient}>
+      <Switch>
+        <Route path="/" exact>
+          <LandingPage />
+        </Route>
+        <Route path="/home" exact>
           <Home />
-      </Route>
-      <Route path="/searchresults" exact>
+        </Route>
+        <Route path="/search" exact>
+          <Search />
+        </Route>
+        <Route path="/searchresults" exact>
           <SearchResults />
-      </Route>
-      <Route path="/notifications" exact>
+        </Route>
+        <Route path="/notifications" exact>
           <Notifications />
-      </Route>
-      <Route path="/interests" exact>
+        </Route>
+        <Route path="/interests" exact>
           <Interests />
-      </Route>
-      <Route path="/settings" exact>
+        </Route>
+        <Route path="/settings" exact>
           <Account />
-      </Route>
-      <Route path="/membership" exact>
+        </Route>
+        <Route path="/membership" exact>
           <MembershipPlans />
-      </Route>
-    </Switch>
+        </Route>
+        <Route path="/profile/:id" exact>
+          <Profile />
+        </Route>
+      </Switch>
+    </QueryClientProvider>
   );
 };
 

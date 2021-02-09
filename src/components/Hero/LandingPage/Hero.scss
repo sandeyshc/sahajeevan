@@ -2,13 +2,14 @@
     height: 100vh;
     display: flex;
     align-items: center;
+    margin: auto;
 }
 
 .banner {
     display: flex;
     align-items: center;
     min-height: 250px;
-    margin-bottom: 40px;
+    margin: auto;
 
     .herobanner {
         margin: auto;

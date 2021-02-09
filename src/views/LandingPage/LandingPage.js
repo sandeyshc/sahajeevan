@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, MembershipCard } from "../../components";
+import { LandingForm, Layout, MembershipCard } from "../../components";
 import { Image, Card, Row } from "react-bootstrap";
 import "./LandingPage.scss";
 
@@ -83,15 +83,14 @@ function LandingPage() {
       },
     ],
     heroData = {
-      title: "Lorem ipsum is simply dummy text for printing and typesetting industry.",
-      subtitle: "Lorem ipsum is simply dummy text for printing and typesetting industry. Loreum ipsum has been the industry's."
+      title: "Lorem ipsum is simply dummy text for printing.",
+      subtitle:
+        "Lorem ipsum is simply dummy text for printing and typesetting industry. Loreum ipsum has been the industry's.",
+      btnText: "Read More",
     };
   return (
-    <Layout
-      heroImg={Hero}
-      heroData={heroData}
-    >
-      <section className="landing__section">
+    <Layout heroImg={Hero} heroData={heroData} bannerContent={<LandingForm />}>
+      <section className="landing__section col-lg-10">
         <Image className="landing__section__image" src={SectionImage} />
         <div className="landing__section__content">
           <p className="landing__section__content__title">Why Us?</p>
@@ -126,7 +125,7 @@ function LandingPage() {
           </Row>
         </div>
       </section>
-      <section className="options">
+      <section className="options col-lg-10">
         <div className="options__header">
           <p className="options__header__title">Find Someone Special</p>
           <p className="options__header__subtitle">
@@ -170,7 +169,7 @@ function LandingPage() {
           </Card>
         </div>
       </section>
-      <section className="membership col-11">
+      <section className="membership col-lg-10">
         <div className="membership__header">
           <p className="membership__header__title">Membership Plans</p>
           <p className="membership__header__subtitle">
@@ -188,7 +187,7 @@ function LandingPage() {
           ))}
         </div>
       </section>
-      <section className="info col-12">
+      <section className="info">
         <Card className="info__card col-lg-9 col-md-9 col-sm-10">
           <Image
             src={FooterLogo}
