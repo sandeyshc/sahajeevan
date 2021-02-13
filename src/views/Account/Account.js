@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Account.scss";
 import { Layout, ListOptions } from "../../components";
 import { Card, Row } from "react-bootstrap";
@@ -51,13 +51,18 @@ function Account() {
         content:
           "Don't show my detailed profile or summary to any user, I will search and contact profiles.",
       },
-    ];
+    ],
+    [optionSelected, setOptionSelected] = useState(1);
   return (
     <Layout heroData={heroData} heroImg={Hero}>
       <section className="settings col-lg-10 col-12">
         <Row className="settings__section">
           <div className="settings__section__filter">
-            <ListOptions options={listOptions}></ListOptions>
+            <ListOptions
+              options={listOptions}
+              active={optionSelected}
+              activeChange={setOptionSelected}
+            ></ListOptions>
           </div>
           <div className="settings__section__content col-sm-12">
             <div className="settings__section__content__cards">

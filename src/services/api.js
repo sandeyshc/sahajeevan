@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const URLS = {
-    login: "/api/token",
+    LOGIN: "/api/token/",
   },
   setSession = (token) => {
     localStorage.setItem("token", token);
@@ -19,7 +19,7 @@ axios.interceptors.request.use(
         Authorization: "Bearer " + localStorage.getItem("token"),
       }),
       Accept: "application/json",
-      "Content-Type": "application/json; charset=utf-8",
+      "Content-Type": "application/json; charset=UTF-8",
       "Access-Control-Allow-Origin": "*",
     };
     return request;
@@ -30,16 +30,16 @@ axios.interceptors.request.use(
 );
 
 export const login = async ({ username, password }) => {
-  axios
-    .post(process.env.REACT_APP_BASE_URL + URLS.login, {
-      username,
-      password,
-    })
-    .then(({ data }) => {
-      setSession(data.access);
-    });
+  const response = await axios.post(process.env.REACT_APP_BASE_URL + URLS.LOGIN, {
+    username,
+    password,
+  });
+
+  return response
 };
 
 export const logout = () => {
   clearSession();
 };
+
+export {setSession};

@@ -9,6 +9,7 @@ import RegisterIcon from "../../assets/icons/svg icon/Register.svg";
 
 import { Navbar, Nav, NavLink, NavDropdown, Image } from "react-bootstrap";
 import { Dialog } from "../";
+import { logout } from "../../services/api.js";
 
 function Header({ isLoggedIn }) {
   const landLinks = [
@@ -21,12 +22,12 @@ function Header({ isLoggedIn }) {
       login: "LOGIN",
       register: "REGISTER",
       otp: "OTP",
-      step: "STEP"
+      step: "STEP",
     },
     ModalTitles = {
       [Modals.login]: "WELCOME BACK! PLEASE LOGIN",
       [Modals.register]: "LET'S SET UP YOUR ACCOUNT",
-      [Modals.otp]: "VERIFY OTP"
+      [Modals.otp]: "VERIFY OTP",
     },
     [modal, setModal] = useState(""),
     handleModal = (form) => setModal(form);
@@ -81,9 +82,15 @@ function Header({ isLoggedIn }) {
                   title="LOREM IPSUM"
                   className="header__nav__link__dropdown"
                 >
-                  <NavDropdown.Item as={Link} to="/">
-                    Logout
+                  <NavDropdown.Item>
+                    <NavLink
+                      className="header__nav__link header__nav__link__img header__nav__link__img__user"
+                      as={Link}
+                      to="/editprofile"
+                      style={{color: 'black'}}
+                    >Edit Profile</NavLink>
                   </NavDropdown.Item>
+                  <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
                 </NavDropdown>
               </NavLink>
             </Nav>
@@ -129,11 +136,7 @@ function Header({ isLoggedIn }) {
         </Navbar.Collapse>
       </Navbar>
 
-      <Dialog
-        show={!!modal}
-        onHide={handleModal}
-        type={modal}
-      />
+      <Dialog show={!!modal} onHide={handleModal} type={modal} />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import { Layout, ProfileCard } from "../../components";
-import "./Profile.scss";
+import "./EditProfile.scss";
 
 import Hero from "../../assets/images/Profile/hero.png";
 import { Card, Col, Image, Nav, Row } from "react-bootstrap";
@@ -15,9 +15,9 @@ import FamilyImg from "../../assets/icons/svg icon/Family Details.svg";
 import AboutMe from "../../assets/icons/svg icon/About me.svg";
 import PreferenceImg from "../../assets/icons/svg icon/partner preferences.svg";
 
-import ProImg from "../../assets/images/Profile/img.png";
+import ProImg from "../../assets/images/demo9.png";
 
-function Profile() {
+function EditProfile() {
   const heroData = {
       title: "Profile Preview",
       subtitle:
@@ -442,4 +442,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default EditProfile;

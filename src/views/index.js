@@ -6,4 +6,5 @@ export { default as Interests } from "./Interests/Interests";
 export { default as Account } from "./Account/Account";
 export { default as MembershipPlans } from "./MembershipPlans/MembershipPlans";
 export { default as Profile } from "./Profile/Profile";
+export { default as EditProfile } from "./EditProfile/EditProfile";
 export { default as Search } from "./Search/Search";
