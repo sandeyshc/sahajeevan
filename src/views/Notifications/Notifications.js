@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Layout, ListOptions, ProfileCard } from "../../components";
 import "./Notifications.scss";
 import { Row } from "react-bootstrap";
@@ -34,13 +34,35 @@ function Notifications() {
         icon: ViewAll,
         text: "view all notifications",
       },
-    ];
+    ],
+    obj = {
+      birth_date: "2021-02-09",
+      caste: "96 kuli Maratha",
+      height: 5.5,
+      interest_status: "Cancel Interest",
+      last_seen: "2021-02-09T04:48:12Z",
+      location: "Thane",
+      marital_status: "Never Married",
+      mother_tongue: "Marathi",
+      occupation: "Government sector",
+      preference_match: "12/20",
+      profile: "Shrutika B",
+      profile_id: "S_EYTCBK",
+      profile_photo_url: "",
+      religion: "Hindu",
+      total_photos: 9,
+    },
+    [optionSelected, setOptionSelected] = useState(1);
   return (
     <Layout heroImg={HeroImg} heroData={heroData}>
       <section className="notifications col-lg-10 col-12">
         <Row className="notifications__section">
           <div className="notifications__section__filter">
-            <ListOptions options={listOptions}></ListOptions>
+            <ListOptions
+              options={listOptions}
+              active={optionSelected}
+              activeChange={setOptionSelected}
+            ></ListOptions>
           </div>
           <div className="notifications__section__content col-sm-12">
             <p className="notifications__section__content__title">
@@ -54,20 +76,24 @@ function Notifications() {
               <ProfileCard
                 isPremium={true}
                 profileImage={profileImage1}
+                card={obj}
               ></ProfileCard>
               <ProfileCard
                 isPremium={true}
                 profileImage={profileImage2}
+                card={obj}
               ></ProfileCard>
               <ProfileCard
                 isPremium={true}
                 profileImage={profileImage3}
+                card={obj}
               ></ProfileCard>
               <ProfileCard
                 isPremium={true}
                 profileImage={profileImage4}
+                card={obj}
               ></ProfileCard>
-              <ProfileCard isPremium={true}></ProfileCard>
+              <ProfileCard isPremium={true} card={obj}></ProfileCard>
             </div>
           </div>
         </Row>
