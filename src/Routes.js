@@ -10,6 +10,7 @@ import {
   MembershipPlans,
   Profile,
   Search,
+  EditProfile
 } from "./views";
 
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -45,6 +46,9 @@ const Routes = () => {
         </Route>
         <Route path="/profile/:id" exact>
           <Profile />
+        </Route>
+        <Route path="/editprofile" exact>
+          <EditProfile />
         </Route>
       </Switch>
     </QueryClientProvider>

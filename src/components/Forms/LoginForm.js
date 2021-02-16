@@ -1,18 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Form, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { login } from "../../services/api";
+import { Link, useHistory } from "react-router-dom";
+import { login, setSession } from "../../services/api";
 import "./LoginForm.scss";
+import { useMutation } from "react-query";
 
 function LoginForm({ close }) {
   const [formValue, setFormValue] = useState({ username: "", password: "" }),
     submit = (e) => {
       e.preventDefault();
-      login(formValue);
+      mutate(formValue);
+    },
+    { mutate, isError, isSuccess, error, data } = useMutation((formData) =>
+      login(formData)
+    ),
+    history = useHistory();
+  useEffect(() => {
+    if (isSuccess) {
+      setSession(data?.data?.access);
+      history.push("/home");
       close();
-    };
+    }
+  }, [isSuccess]);
   return (
     <Form className="loginForm" onSubmit={submit}>
+      <Form.Control.Feedback type="invalid" style={{ display: "block" }}>
+        {error?.data?.detail}
+      </Form.Control.Feedback>
       <Form.Group controlId="name" className="loginForm__email">
         <Form.Label>Email ID / Phone No.</Form.Label>
         <Form.Control
