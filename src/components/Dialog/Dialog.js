@@ -4,7 +4,7 @@ import "./Dialog.scss";
 import Close from "../../assets/icons/svg icon/camera (2).svg";
 import { LoginForm, RegisterForm, OTPForm, StepForm } from "../";
 
-function Dialog({ show, onHide, type }) {
+function Dialog({ show, onHide, type, data }) {
   const [currentStep, setCurrentStep] = useState(0),
     Modals = {
       login: "LOGIN",
@@ -26,7 +26,6 @@ function Dialog({ show, onHide, type }) {
     getTitle = (type) => {
       switch (type) {
         case Modals.step:
-            console.log(ModalTitles[Modals.step][currentStep],currentStep)
           return ModalTitles[Modals.step][currentStep];
 
         default:
@@ -40,7 +39,7 @@ function Dialog({ show, onHide, type }) {
         case Modals.register:
           return <RegisterForm close={onHide} />;
         case Modals.otp:
-          return <OTPForm close={onHide} />;
+          return <OTPForm close={onHide} modalData={data} />;
         case Modals.step:
           return <StepForm setActive={setCurrentStep} />;
       }

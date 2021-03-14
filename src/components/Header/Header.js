@@ -16,21 +16,20 @@ function Header({ isLoggedIn }) {
       { text: "SEARCH ME", link: "home" },
       { text: "MEMBERSHIP PLANS", link: "searchresults" },
       { text: "WHY US?" },
-      { text: "TESTIMONIALS" },
+      { text: "TESTIMONIALS" }
     ],
     Modals = {
       login: "LOGIN",
       register: "REGISTER",
       otp: "OTP",
-      step: "STEP",
-    },
-    ModalTitles = {
-      [Modals.login]: "WELCOME BACK! PLEASE LOGIN",
-      [Modals.register]: "LET'S SET UP YOUR ACCOUNT",
-      [Modals.otp]: "VERIFY OTP",
+      step: "STEP"
     },
     [modal, setModal] = useState(""),
-    handleModal = (form) => setModal(form);
+    [modalData, setModalData] = useState({}),
+    handleModal = (form, formData) => {
+      setModal(form);
+      setModalData(formData);
+    };
 
   return (
     <div className="header">
@@ -87,8 +86,10 @@ function Header({ isLoggedIn }) {
                       className="header__nav__link header__nav__link__img header__nav__link__img__user"
                       as={Link}
                       to="/editprofile"
-                      style={{color: 'black'}}
-                    >Edit Profile</NavLink>
+                      style={{ color: "black" }}
+                    >
+                      Edit Profile
+                    </NavLink>
                   </NavDropdown.Item>
                   <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
                 </NavDropdown>
@@ -136,7 +137,7 @@ function Header({ isLoggedIn }) {
         </Navbar.Collapse>
       </Navbar>
 
-      <Dialog show={!!modal} onHide={handleModal} type={modal} />
+      <Dialog show={!!modal} onHide={handleModal} type={modal} data={modalData} />
     </div>
   );
 }
