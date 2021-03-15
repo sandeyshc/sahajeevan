@@ -68,7 +68,7 @@ function Home() {
             <p className="section__header__title__text">
               My Profile Visitors
               <span className="section__header__title__text__count">
-                {profileVisitorsCards?.length}
+                {profileVisitorsCards?.results?.length}
               </span>
             </p>
             <p className="section__header__title__subtext">
@@ -116,7 +116,7 @@ function Home() {
         </div>
         <div className="section__cards">
           <CardCarousel
-            cards={profileVisitorsCards}
+            cards={profileVisitorsCards?.results}
             activeIndex={visitorIndex}
           ></CardCarousel>
         </div>
@@ -241,7 +241,7 @@ function Home() {
             <p className="section__header__title__text">
               Premium Matches
               <span className="section__header__title__text__count">
-                {premiumCards?.length}
+                {premiumCards?.results?.length}
               </span>
             </p>
             <p className="section__header__title__subtext">
@@ -289,7 +289,7 @@ function Home() {
         </div>
         <div className="section__cards">
           <CardCarousel
-            cards={premiumCards}
+            cards={premiumCards?.results}
             activeIndex={premiumIndex}
           ></CardCarousel>
         </div>

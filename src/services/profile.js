@@ -16,7 +16,8 @@ const URLS = {
   ACCEPTINTEREST: "/profile/accept-interest",
   DECLINEINTEREST: "/profile/decline-interest",
   OPTIONS: "/profile/get-options",
-  CREATEPROFILE: "/profile/create"
+  CREATEPROFILE: "/profile/create",
+  UPDATEPROFILE: "/profile/update"
 };
 
 axios.interceptors.request.use(
@@ -125,13 +126,17 @@ export const getOptions = async () => {
   return await APIGetCall(process.env.REACT_APP_BASE_URL + URLS.OPTIONS);
 };
 
-export const createProfile = async () => {
-  return await APIPostCall(process.env.REACT_APP_BASE_URL + URLS.CREATEPROFILE);
+export const createProfile = async data => {
+  return await APIPostCall(
+    process.env.REACT_APP_BASE_URL + URLS.CREATEPROFILE,
+    data
+  );
 };
 
-export const updateProfile = async () => {
+export const updateProfile = async ([id, data]) => {
   return await APIPatchCall(
-    process.env.REACT_APP_BASE_URL + URLS.CREATEPROFILE
+    process.env.REACT_APP_BASE_URL + URLS.UPDATEPROFILE + `/${id}/`,
+    data
   );
 };
 

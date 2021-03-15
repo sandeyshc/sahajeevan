@@ -70,7 +70,7 @@ function OTPForm({ close, modalData }) {
             required
           />
         </Form.Group>
-        {!error?.data?.otp_verified && (
+        {(isError && !error?.data?.otp_verified) && (
           <Form.Control.Feedback type="invalid" style={{ display: "block" }}>
             OTP is incorrect
           </Form.Control.Feedback>

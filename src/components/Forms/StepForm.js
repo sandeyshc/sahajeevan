@@ -1,17 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./StepForm.scss";
 import Stepper from "react-stepper-horizontal";
 import { Form, Button, Row, Col, Image } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { useQuery } from "react-query";
-import { getOptions } from "../../services/profile";
+import { Link, useHistory } from "react-router-dom";
+import { useQuery, useMutation } from "react-query";
+import {
+  getOptions,
+  createProfile,
+  updateProfile
+} from "../../services/profile";
 
 import BackIcon from "../../assets/icons/svg icon/next (1).svg";
 import NextIcon from "../../assets/icons/svg icon/next (-1.svg";
 import SkipIcon from "../../assets/icons/svg icon/skip.svg";
 import SaveIcon from "../../assets/icons/svg icon/save-file.svg";
 
-function StepForm({ setActive }) {
+function StepForm({ setActive, close }) {
   const [activeStep, setActiveStep] = useState(0),
     [profileData, setProfileData] = useState(0),
     {
@@ -29,6 +33,19 @@ function StepForm({ setActive }) {
         }
       }
     } = useQuery("getOptions", getOptions),
+    history = useHistory(),
+    {
+      mutate: CreateProfile,
+      error: CreateProfileError,
+      isSuccess: CreateProfileSuccess,
+      data: CreateProfileData
+    } = useMutation(formData => createProfile(formData)),
+    {
+      mutate: UpdateProfile,
+      error: UpdateProfileError,
+      isSuccess: UpdateProfileSuccess,
+      data: UpdateProfileData
+    } = useMutation((id, formData) => updateProfile(id, formData)),
     steps = [
       { title: "Step 1" },
       { title: "Step 2" },
@@ -36,8 +53,12 @@ function StepForm({ setActive }) {
       { title: "Step 4" }
     ],
     nextStep = () => {
-      setActiveStep(activeStep + 1);
-      setActive(activeStep + 1);
+      if (activeStep < steps.length) {
+        setActiveStep(activeStep + 1);
+        setActive(activeStep + 1);
+      } else {
+        close();
+      }
     },
     backStep = () => {
       setActiveStep(activeStep - 1);
@@ -48,7 +69,51 @@ function StepForm({ setActive }) {
     },
     handleSubmit = e => {
       e.preventDefault();
+      switch (activeStep) {
+        case 0:
+          CreateProfile({
+            first_name: profileData.first_name,
+            last_name: profileData.last_name,
+            birth_date: profileData.birth_date
+              .split("-")
+              .reverse()
+              .join("-"),
+            age: profileData.age,
+            location: profileData.location,
+            height: +profileData.height,
+            marital_status: profileData.marital_status,
+            gender: 1
+          });
+          break;
+        case 1:
+          UpdateProfile([
+            CreateProfileData?.id,
+            {
+              religion: religion?.filter(
+                val => val.value === profileData.religion
+              )[0]?.id,
+              caste: profileData.caste,
+              mother_tongue: profileData.mother_tongue,
+              occupation: profileData.occupation,
+              qualification: profileData.qualification
+            }
+          ]);
+          break;
+        case 2:
+          nextStep();
+          break;
+        case 3:
+          history.push("/home");
+          close();
+          break;
+      }
     };
+
+  useEffect(() => {
+    if (CreateProfileSuccess || UpdateProfileSuccess) {
+      nextStep();
+    }
+  }, [CreateProfileSuccess, UpdateProfileSuccess]);
   return (
     <>
       <div className="stepper">
@@ -75,6 +140,14 @@ function StepForm({ setActive }) {
         {activeStep === 0 && (
           <>
             <Form.Row className="stepForm__group">
+              {!!CreateProfileError && (
+                <Form.Control.Feedback
+                  type="invalid"
+                  style={{ display: "block" }}
+                >
+                  {CreateProfileError?.data}
+                </Form.Control.Feedback>
+              )}
               <Form.Group as={Col} controlId="firstname">
                 <Form.Label className="stepForm__label">First Name</Form.Label>
                 <Form.Control
@@ -138,7 +211,9 @@ function StepForm({ setActive }) {
                 >
                   <option></option>
                   {location?.map(opt => (
-                    <option key={opt?.key}>{opt?.value}</option>
+                    <option key={opt?.key} value={opt?.key}>
+                      {opt?.value}
+                    </option>
                   ))}
                 </Form.Control>
               </Form.Group>
@@ -154,7 +229,9 @@ function StepForm({ setActive }) {
                 >
                   <option></option>
                   {height?.map(opt => (
-                    <option key={opt?.key}>{opt?.value}</option>
+                    <option key={opt?.key} value={opt?.key}>
+                      {opt?.value}
+                    </option>
                   ))}
                 </Form.Control>
               </Form.Group>
@@ -176,7 +253,9 @@ function StepForm({ setActive }) {
               >
                 <option></option>
                 {marital_status?.map(opt => (
-                  <option key={opt?.key}>{opt?.value}</option>
+                  <option key={opt?.key} value={opt?.key}>
+                    {opt?.value}
+                  </option>
                 ))}
               </Form.Control>
             </Form.Group>
@@ -196,7 +275,9 @@ function StepForm({ setActive }) {
                 >
                   <option></option>
                   {religion.map(opt => (
-                    <option key={opt?.key}>{opt?.value}</option>
+                    <option key={opt?.key} value={opt?.value}>
+                      {opt?.value}
+                    </option>
                   ))}
                 </Form.Control>
               </Form.Group>
@@ -214,7 +295,9 @@ function StepForm({ setActive }) {
                   <option></option>
                   {profileData?.religion &&
                     caste[profileData?.religion].map(opt => (
-                      <option key={opt?.key}>{opt?.value}</option>
+                      <option key={opt?.key} value={opt?.key}>
+                        {opt?.value}
+                      </option>
                     ))}
                 </Form.Control>
               </Form.Group>
@@ -233,7 +316,9 @@ function StepForm({ setActive }) {
                 >
                   <option></option>
                   {mother_tongue?.map(opt => (
-                    <option key={opt?.key}>{opt?.value}</option>
+                    <option key={opt?.key} value={opt?.key}>
+                      {opt?.value}
+                    </option>
                   ))}
                 </Form.Control>
               </Form.Group>
@@ -248,7 +333,9 @@ function StepForm({ setActive }) {
                 >
                   <option></option>
                   {occupation?.map(opt => (
-                    <option key={opt?.key}>{opt?.value}</option>
+                    <option key={opt?.key} value={opt?.key}>
+                      {opt?.value}
+                    </option>
                   ))}
                 </Form.Control>
               </Form.Group>
@@ -270,7 +357,9 @@ function StepForm({ setActive }) {
               >
                 <option></option>
                 {qualification?.map(opt => (
-                  <option key={opt?.key}>{opt?.value}</option>
+                  <option key={opt?.key} value={opt?.key}>
+                    {opt?.value}
+                  </option>
                 ))}
               </Form.Control>
             </Form.Group>
@@ -424,30 +513,16 @@ function StepForm({ setActive }) {
         )}
         <Row className="stepForm__actions col-lg-10">
           <Button
-            className="stepForm__back"
-            onClick={backStep}
-            disabled={activeStep < 1}
-          >
-            <Image src={BackIcon} alt="back" height={15} />
-          </Button>
-          <Button
             className="stepForm__save"
             onClick={nextStep}
-            disabled={activeStep < 3}
+            disabled={activeStep < 2}
           >
             SKIP
             <Image src={SkipIcon} alt="skip" height={15} />
           </Button>
           <Button className="stepForm__submit" type="submit">
-            SAVE
+            {activeStep === 3 ? "Search" : "SAVE & Next"}
             <Image src={SaveIcon} alt="save" height={20} />
-          </Button>
-          <Button
-            className="stepForm__next"
-            onClick={nextStep}
-            disabled={activeStep > steps.length - 2}
-          >
-            <Image src={NextIcon} alt="next" height={15} />
           </Button>
         </Row>
         <p className="stepForm__postscript">

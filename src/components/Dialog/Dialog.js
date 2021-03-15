@@ -41,7 +41,7 @@ function Dialog({ show, onHide, type, data }) {
         case Modals.otp:
           return <OTPForm close={onHide} modalData={data} />;
         case Modals.step:
-          return <StepForm setActive={setCurrentStep} />;
+          return <StepForm close={onHide} setActive={setCurrentStep} />;
       }
     };
   return (

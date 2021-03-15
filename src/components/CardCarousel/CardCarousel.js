@@ -9,7 +9,7 @@ import Demo4 from "../../assets/images/demo2.png";
 import Demo1 from "../../assets/images/demo3.png";
 import Demo3 from "../../assets/images/demo4.png";
 
-function CardCarousel({ cards, activeIndex }) {
+function CardCarousel({ cards = [], activeIndex }) {
   return (
     <Carousel
       controls={false}
