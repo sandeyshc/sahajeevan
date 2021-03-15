@@ -10,31 +10,39 @@ const URLS = {
   SHORTLISTED: "/profile/get-shortlisted-profiles",
   SENTINTERESTS: "/profile/get-sent-interests",
   VIEWEDPROFIFLES: "/profile/get-viewed-profiles",
+  VIEWOTHERS: "/profile/view-other-contacts",
+  SENDINTEREST: "/profile/send-interest",
+  CANCELINTEREST: "/profile/cancel-interest",
+  ACCEPTINTEREST: "/profile/accept-interest",
+  DECLINEINTEREST: "/profile/decline-interest",
+  OPTIONS: "/profile/get-options",
+  CREATEPROFILE: "/profile/create",
+  UPDATEPROFILE: "/profile/update"
 };
 
 axios.interceptors.request.use(
-  (request) => {
+  request => {
     request.headers = {
       ...request.headers,
       ...(!!localStorage.getItem("token") && {
-        Authorization: "Bearer " + localStorage.getItem("token"),
+        Authorization: "Bearer " + localStorage.getItem("token")
       }),
       Accept: "application/json",
       "Content-Type": "application/json; charset=utf-8",
-      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Origin": "*"
     };
     return request;
   },
-  (err) => {
+  err => {
     return Promise.reject(err);
   }
 );
 
 axios.interceptors.response.use(
-  (response) => {
+  response => {
     return response;
   },
-  (err) => {
+  err => {
     if (err?.response?.status === 401 && localStorage.getItem("token")) {
       logout();
     } else {
@@ -43,10 +51,18 @@ axios.interceptors.response.use(
   }
 );
 
-const APIGetCall = async (url) => {
-  const response = await axios.get(url);
-  return response?.data;
-};
+const APIGetCall = async url => {
+    const response = await axios.get(url);
+    return response?.data;
+  },
+  APIPostCall = async (url, data) => {
+    const response = await axios.post(url, data);
+    return response?.data;
+  },
+  APIPatchCall = async (url, data) => {
+    const response = await axios.patch(url, data);
+    return response?.data;
+  };
 
 export const premiumMatches = async () => {
   return await APIGetCall(process.env.REACT_APP_BASE_URL + URLS.PREMIUM);
@@ -78,6 +94,50 @@ export const acceptedByMe = async () => {
 
 export const acceptedByOthers = async () => {
   return await APIGetCall(process.env.REACT_APP_BASE_URL + URLS.ACCEPTEDME);
+};
+
+export const viewOthers = async () => {
+  return await APIGetCall(process.env.REACT_APP_BASE_URL + URLS.VIEWOTHERS);
+};
+
+export const sendInterest = async () => {
+  return await APIPostCall(process.env.REACT_APP_BASE_URL + URLS.SENDINTEREST);
+};
+
+export const cancelInterest = async () => {
+  return await APIPostCall(
+    process.env.REACT_APP_BASE_URL + URLS.CANCELINTEREST
+  );
+};
+
+export const acceptInterest = async () => {
+  return await APIPostCall(
+    process.env.REACT_APP_BASE_URL + URLS.ACCEPTINTEREST
+  );
+};
+
+export const declineInterest = async () => {
+  return await APIPostCall(
+    process.env.REACT_APP_BASE_URL + URLS.DECLINEINTEREST
+  );
+};
+
+export const getOptions = async () => {
+  return await APIGetCall(process.env.REACT_APP_BASE_URL + URLS.OPTIONS);
+};
+
+export const createProfile = async data => {
+  return await APIPostCall(
+    process.env.REACT_APP_BASE_URL + URLS.CREATEPROFILE,
+    data
+  );
+};
+
+export const updateProfile = async ([id, data]) => {
+  return await APIPatchCall(
+    process.env.REACT_APP_BASE_URL + URLS.UPDATEPROFILE + `/${id}/`,
+    data
+  );
 };
 
 export const viewedProfiles = async () => {

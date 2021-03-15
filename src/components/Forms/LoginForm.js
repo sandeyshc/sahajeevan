@@ -28,7 +28,7 @@ function LoginForm({ close }) {
         {error?.data?.detail}
       </Form.Control.Feedback>
       <Form.Group controlId="name" className="loginForm__email">
-        <Form.Label>Email ID / Phone No.</Form.Label>
+        <Form.Label>Email ID</Form.Label>
         <Form.Control
           placeholder="Enter Email ID / Phone No"
           onChange={({ target: { value } }) =>
