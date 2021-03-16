@@ -2,15 +2,37 @@ import React, { useState, useEffect } from "react";
 import "./RegisterForm.scss";
 import { Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { useMutation } from "react-query";
-import { register, setSession } from "../../services/api";
+import { useQuery, useMutation } from "react-query";
+import {
+  register,
+  setSession,
+  checkUsernameAvailability
+} from "../../services/api";
+import Spinner from "react-bootstrap/Spinner";
+import Alert from "react-bootstrap/Alert";
 
 function RegisterForm({ close }) {
   const { mutate, isError, isSuccess, error, data } = useMutation(formData =>
       register(formData)
     ),
     [formValue, setFormValue] = useState({}),
+    {
+      isError: usernameAvailabilityStatus,
+      refetch,
+      error: usernameAvailabilityData,
+      isSuccess: usernameAvailabilitySuccess,
+      isLoading: usernameAvailabilityLoading
+    } = useQuery(
+      ["checkUsername", formValue?.username],
+      () => checkUsernameAvailability(formValue?.username),
+      {
+        refetchOnWindowFocus: false,
+        enabled: false
+      }
+    ),
     [passwordMatch, setPasswordMatch] = useState(true),
+    [emailError, setEmailError] = useState(""),
+    [passwordError, setPasswordError] = useState(""),
     registerForm = e => {
       e.preventDefault();
       if (formValue.password === formValue.confirmPassword) {
@@ -19,20 +41,54 @@ function RegisterForm({ close }) {
       } else {
         setPasswordMatch(false);
       }
+    },
+    validateEmail = () => {
+      if (
+        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+          formValue.username
+        )
+      ) {
+        refetch();
+      } else {
+        setEmailError("Please enter a valid email");
+      }
+    },
+    validatePassword = () => {
+      if (
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]+$/.test(
+          formValue.password
+        )
+      )
+        setPasswordError("");
+      else
+        setPasswordError(
+          "Password must contain an uppercase, a lowercase, a number and a special character."
+        );
     };
   useEffect(() => {
     if (isSuccess) {
       setSession(data?.data?.access);
       close("OTP", { mobile_no: data?.data?.mobile_no });
     }
-  }, [isSuccess]);
+    if (usernameAvailabilityStatus) {
+      setEmailError(usernameAvailabilityData?.data);
+    } else {
+      setEmailError("");
+    }
+  }, [isSuccess, usernameAvailabilityStatus]);
   return (
     <Form className="registerForm" onSubmit={registerForm}>
       <Form.Control.Feedback type="invalid" style={{ display: "block" }}>
         {error?.data?.username}
       </Form.Control.Feedback>
+      {(!!emailError || !!passwordError) && (
+        <Alert variant="danger">{emailError || passwordError}</Alert>
+      )}
       <Form.Group controlId="name" className="registerForm__email">
         <Form.Label>Email ID</Form.Label>
+        {usernameAvailabilityLoading && (
+          <Spinner className="registerForm__email__loader" animation="border" />
+        )}
         <Form.Control
           placeholder="Enter Email ID"
           required
@@ -40,6 +96,7 @@ function RegisterForm({ close }) {
           onChange={({ target: { value } }) =>
             setFormValue({ ...formValue, username: value })
           }
+          onBlur={validateEmail}
         />
       </Form.Group>
       <Form.Group controlId="password" className="registerForm__password">
@@ -48,11 +105,12 @@ function RegisterForm({ close }) {
           type="password"
           placeholder="Enter Password"
           required
-          isInvalid={!passwordMatch}
+          isInvalid={!passwordMatch || !!passwordError}
           autoComplete="new-password"
           onChange={({ target: { value } }) =>
             setFormValue({ ...formValue, password: value })
           }
+          onBlur={validatePassword}
         />
       </Form.Group>
       <Form.Group controlId="repassword" className="registerForm__repassword">
@@ -82,7 +140,11 @@ function RegisterForm({ close }) {
           }
         />
       </Form.Group>
-      <Button className="registerForm__submit" type="submit">
+      <Button
+        className="registerForm__submit"
+        type="submit"
+        disabled={!!emailError || !!passwordError}
+      >
         REGISTER NOW
       </Button>
       <p className="registerForm__links">

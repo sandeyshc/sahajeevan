@@ -5,6 +5,11 @@
     &__password,
     &__repassword,
     &__phone {
+        &__loader {
+            height: 1.5rem;
+            width: 1.5rem;
+            margin: 0 10px;
+        }
         & input {
             height: auto;
             padding: 10px;

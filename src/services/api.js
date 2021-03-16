@@ -3,7 +3,8 @@ import axios from "axios";
 const URLS = {
     LOGIN: "/api/token/",
     REGISTER: "/user-management/account/register/",
-    OTP: "/user-management/account/verify-otp"
+    OTP: "/user-management/account/verify-otp",
+    USERNAMEAVAILABILITY: "/user-management/check-username-availability"
   },
   setSession = token => {
     localStorage.setItem("token", token);
@@ -56,10 +57,19 @@ export const register = async ({ username, password, mobile_no }) => {
   return response;
 };
 
-export const otp = async (otp) => {
+export const otp = async otp => {
   const response = await axios.post(process.env.REACT_APP_BASE_URL + URLS.OTP, {
     otp
   });
+  return response;
+};
+
+export const checkUsernameAvailability = async username => {
+  const response = await axios.get(
+    process.env.REACT_APP_BASE_URL +
+      URLS.USERNAMEAVAILABILITY +
+      `?username=${username}`
+  );
   return response;
 };
 

@@ -5,7 +5,9 @@ import { useQuery } from "react-query";
 import { getOptions } from "../../services/profile";
 
 function LandingForm() {
-  const { data } = useQuery("getOptions", getOptions);
+  const { data } = useQuery("getOptions", getOptions, {
+    refetchOnWindowFocus: false
+  });
   return (
     <div className="landing__form col-lg-6">
       <Form>

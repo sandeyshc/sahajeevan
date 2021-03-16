@@ -14,6 +14,7 @@ import BackIcon from "../../assets/icons/svg icon/next (1).svg";
 import NextIcon from "../../assets/icons/svg icon/next (-1.svg";
 import SkipIcon from "../../assets/icons/svg icon/skip.svg";
 import SaveIcon from "../../assets/icons/svg icon/save-file.svg";
+import { DateTime } from "luxon";
 
 function StepForm({ setActive, close }) {
   const [activeStep, setActiveStep] = useState(0),
@@ -66,6 +67,16 @@ function StepForm({ setActive, close }) {
     },
     handleChange = ({ target: { name, value } }) => {
       setProfileData({ ...profileData, [name]: value });
+    },
+    populateAge = () => {
+      setProfileData({
+        ...profileData,
+        age: parseInt(
+          DateTime.fromJSDate(new Date())
+            .diff(DateTime.fromISO(profileData.birth_date), ["years"])
+            .toObject().years
+        )
+      });
     },
     handleSubmit = e => {
       e.preventDefault();
@@ -178,6 +189,7 @@ function StepForm({ setActive, close }) {
                   className="stepForm__control"
                   name="birth_date"
                   onChange={handleChange}
+                  onBlur={populateAge}
                   required
                 />
               </Form.Group>
@@ -185,17 +197,11 @@ function StepForm({ setActive, close }) {
               <Form.Group as={Col} controlId="age">
                 <Form.Label className="stepForm__label">Age</Form.Label>
                 <Form.Control
-                  as="select"
                   className="stepForm__control"
                   name="age"
-                  onChange={handleChange}
-                  required
-                >
-                  <option></option>
-                  {age?.map(opt => (
-                    <option key={opt?.key}>{opt?.value}</option>
-                  ))}
-                </Form.Control>
+                  value={profileData.age}
+                  disabled
+                />
               </Form.Group>
             </Form.Row>
             <Form.Row className="stepForm__group">
