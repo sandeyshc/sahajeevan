@@ -29,10 +29,11 @@ function StepForm({ setActive, close }) {
           qualification,
           caste,
           height,
-          age,
+          gender,
           location
         }
-      }
+      },
+      isSuccess: optionsSuccess
     } = useQuery("getOptions", getOptions),
     history = useHistory(),
     {
@@ -85,15 +86,14 @@ function StepForm({ setActive, close }) {
           CreateProfile({
             first_name: profileData.first_name,
             last_name: profileData.last_name,
-            birth_date: profileData.birth_date
-              .split("-")
-              .reverse()
-              .join("-"),
+            birth_date: DateTime.fromISO(profileData.birth_date).toFormat(
+              "dd-MM-yyyy"
+            ),
             age: profileData.age,
             location: profileData.location,
             height: +profileData.height,
             marital_status: profileData.marital_status,
-            gender: 1
+            gender: profileData.gender
           });
           break;
         case 1:
@@ -102,7 +102,7 @@ function StepForm({ setActive, close }) {
             {
               religion: religion?.filter(
                 val => val.value === profileData.religion
-              )[0]?.id,
+              )[0]?.key,
               caste: profileData.caste,
               mother_tongue: profileData.mother_tongue,
               occupation: profileData.occupation,
@@ -124,7 +124,20 @@ function StepForm({ setActive, close }) {
     if (CreateProfileSuccess || UpdateProfileSuccess) {
       nextStep();
     }
-  }, [CreateProfileSuccess, UpdateProfileSuccess]);
+    if (optionsSuccess) {
+      setProfileData({
+        location: location[0].key,
+        height: height[0].key,
+        marital_status: marital_status[0].key,
+        gender: gender[0].key,
+        religion: religion[0].value,
+        caste: caste[religion[0].value][0].key,
+        mother_tongue: mother_tongue[0].key,
+        occupation: occupation[0].key,
+        qualification: qualification[0].key
+      });
+    }
+  }, [CreateProfileSuccess, UpdateProfileSuccess, optionsSuccess]);
   return (
     <>
       <div className="stepper">
@@ -215,7 +228,6 @@ function StepForm({ setActive, close }) {
                   onChange={handleChange}
                   required
                 >
-                  <option></option>
                   {location?.map(opt => (
                     <option key={opt?.key} value={opt?.key}>
                       {opt?.value}
@@ -233,7 +245,6 @@ function StepForm({ setActive, close }) {
                   onChange={handleChange}
                   required
                 >
-                  <option></option>
                   {height?.map(opt => (
                     <option key={opt?.key} value={opt?.key}>
                       {opt?.value}
@@ -242,29 +253,46 @@ function StepForm({ setActive, close }) {
                 </Form.Control>
               </Form.Group>
             </Form.Row>
-            <Form.Group
-              as={Col}
-              controlId="marital"
-              className="stepForm__group"
-            >
-              <Form.Label className="stepForm__label">
-                Marital Status
-              </Form.Label>
-              <Form.Control
-                as="select"
-                className="stepForm__control"
-                name="marital_status"
-                onChange={handleChange}
-                required
+            <Form.Row>
+              <Form.Group as={Col} controlId="gender">
+                <Form.Label className="stepForm__label">Gender</Form.Label>
+                <Form.Control
+                  as="select"
+                  className="stepForm__control"
+                  name="gender"
+                  onChange={handleChange}
+                  required
+                >
+                  {gender?.map(opt => (
+                    <option key={opt?.key} value={opt?.key}>
+                      {opt?.value}
+                    </option>
+                  ))}
+                </Form.Control>
+              </Form.Group>
+              <Form.Group
+                as={Col}
+                controlId="marital"
+                className="stepForm__group"
               >
-                <option></option>
-                {marital_status?.map(opt => (
-                  <option key={opt?.key} value={opt?.key}>
-                    {opt?.value}
-                  </option>
-                ))}
-              </Form.Control>
-            </Form.Group>
+                <Form.Label className="stepForm__label">
+                  Marital Status
+                </Form.Label>
+                <Form.Control
+                  as="select"
+                  className="stepForm__control"
+                  name="marital_status"
+                  onChange={handleChange}
+                  required
+                >
+                  {marital_status?.map(opt => (
+                    <option key={opt?.key} value={opt?.key}>
+                      {opt?.value}
+                    </option>
+                  ))}
+                </Form.Control>
+              </Form.Group>
+            </Form.Row>
           </>
         )}
         {activeStep === 1 && (
@@ -279,7 +307,6 @@ function StepForm({ setActive, close }) {
                   name="religion"
                   onChange={handleChange}
                 >
-                  <option></option>
                   {religion.map(opt => (
                     <option key={opt?.key} value={opt?.value}>
                       {opt?.value}
@@ -298,7 +325,6 @@ function StepForm({ setActive, close }) {
                   onChange={handleChange}
                   disabled={!profileData?.religion}
                 >
-                  <option></option>
                   {profileData?.religion &&
                     caste[profileData?.religion].map(opt => (
                       <option key={opt?.key} value={opt?.key}>
@@ -320,7 +346,6 @@ function StepForm({ setActive, close }) {
                   name="mother_tongue"
                   onChange={handleChange}
                 >
-                  <option></option>
                   {mother_tongue?.map(opt => (
                     <option key={opt?.key} value={opt?.key}>
                       {opt?.value}
@@ -337,7 +362,6 @@ function StepForm({ setActive, close }) {
                   name="occupation"
                   onChange={handleChange}
                 >
-                  <option></option>
                   {occupation?.map(opt => (
                     <option key={opt?.key} value={opt?.key}>
                       {opt?.value}
@@ -361,7 +385,6 @@ function StepForm({ setActive, close }) {
                 name="qualification"
                 onChange={handleChange}
               >
-                <option></option>
                 {qualification?.map(opt => (
                   <option key={opt?.key} value={opt?.key}>
                     {opt?.value}

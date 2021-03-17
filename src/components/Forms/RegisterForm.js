@@ -33,6 +33,7 @@ function RegisterForm({ close }) {
     [passwordMatch, setPasswordMatch] = useState(true),
     [emailError, setEmailError] = useState(""),
     [passwordError, setPasswordError] = useState(""),
+    [mobileError, setMobileError] = useState(""),
     registerForm = e => {
       e.preventDefault();
       if (formValue.password === formValue.confirmPassword) {
@@ -64,6 +65,18 @@ function RegisterForm({ close }) {
         setPasswordError(
           "Password must contain an uppercase, a lowercase, a number and a special character."
         );
+    },
+    validateMobile = () => {
+      if (
+        /[0-9]{10}/.test(
+          formValue.mobile_no
+        )
+      )
+        setMobileError("");
+      else
+        setMobileError(
+          "Please enter a valid mobile number."
+        );
     };
   useEffect(() => {
     if (isSuccess) {
@@ -81,8 +94,8 @@ function RegisterForm({ close }) {
       <Form.Control.Feedback type="invalid" style={{ display: "block" }}>
         {error?.data?.username}
       </Form.Control.Feedback>
-      {(!!emailError || !!passwordError) && (
-        <Alert variant="danger">{emailError || passwordError}</Alert>
+      {(!!emailError || !!passwordError || !!mobileError) && (
+        <Alert variant="danger">{emailError || passwordError|| mobileError}</Alert>
       )}
       <Form.Group controlId="name" className="registerForm__email">
         <Form.Label>Email ID</Form.Label>
@@ -135,6 +148,8 @@ function RegisterForm({ close }) {
         <Form.Control
           placeholder="Enter Phone No"
           required
+          isInvalid={mobileError}
+          onBlur={validateMobile}
           onChange={({ target: { value } }) =>
             setFormValue({ ...formValue, mobile_no: value })
           }

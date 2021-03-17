@@ -21,7 +21,6 @@ function LandingForm() {
               I am looking for a
             </Form.Label>
             <Form.Control as="select" className="landing__form__control">
-              <option></option>
               <option>Man</option>
               <option>Woman</option>
             </Form.Control>
@@ -32,7 +31,6 @@ function LandingForm() {
               Mother Tongue
             </Form.Label>
             <Form.Control as="select" className="landing__form__control">
-              <option></option>
               {data?.results?.mother_tongue.map(opt => (
                 <option key={opt?.key}>{opt?.value}</option>
               ))}
@@ -45,7 +43,6 @@ function LandingForm() {
             <Form.Group as={Col} controlId="agefrom">
               <Form.Label className="landing__form__label">By age</Form.Label>
               <Form.Control as="select" className="landing__form__control">
-                <option></option>
                 {data?.results?.age?.map(age => (
                   <option key={age.key}>{age.value}</option>
                 ))}
@@ -54,7 +51,6 @@ function LandingForm() {
             <Form.Group as={Col} controlId="ageto">
               <Form.Label className="landing__form__label">By age</Form.Label>
               <Form.Control as="select" className="landing__form__control">
-                <option></option>
                 {data?.results?.age?.map(age => (
                   <option key={age.key}>{age.value}</option>
                 ))}
@@ -65,7 +61,6 @@ function LandingForm() {
           <Form.Group as={Col} controlId="religion">
             <Form.Label className="landing__form__label">Religion</Form.Label>
             <Form.Control as="select" className="landing__form__control">
-              <option></option>
               {data?.results?.religion.map(opt => (
                 <option key={opt?.key}>{opt?.value}</option>
               ))}
@@ -78,7 +73,6 @@ function LandingForm() {
               Marital Status
             </Form.Label>
             <Form.Control as="select" className="landing__form__control">
-              <option></option>
               {data?.results?.marital_status.map(opt => (
                 <option key={opt?.key}>{opt?.value}</option>
               ))}
@@ -88,7 +82,6 @@ function LandingForm() {
           <Form.Group as={Col} controlId="mothertongue">
             <Form.Label className="landing__form__label">Place</Form.Label>
             <Form.Control as="select" className="landing__form__control">
-              <option></option>
               {data?.results?.location?.map(opt => (
                 <option key={opt?.key}>{opt?.value}</option>
               ))}
@@ -103,7 +96,6 @@ function LandingForm() {
               placeholder="Lorem ipsum is simply dummy text"
               className="landing__form__control"
             >
-              <option></option>
               {data?.results?.qualification?.map(opt => (
                 <option key={opt?.key}>{opt?.value}</option>
               ))}
@@ -116,7 +108,6 @@ function LandingForm() {
               placeholder="Lorem ipsum is simply dummy text"
               className="landing__form__control"
             >
-              <option></option>
               {data?.results?.occupation?.map(opt => (
                 <option key={opt?.key}>{opt?.value}</option>
               ))}
