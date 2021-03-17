@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./RegisterForm.scss";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, InputGroup, Spinner, Alert } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useQuery, useMutation } from "react-query";
 import {
@@ -8,8 +8,6 @@ import {
   setSession,
   checkUsernameAvailability
 } from "../../services/api";
-import Spinner from "react-bootstrap/Spinner";
-import Alert from "react-bootstrap/Alert";
 
 function RegisterForm({ close }) {
   const { mutate, isError, isSuccess, error, data } = useMutation(formData =>
@@ -67,16 +65,8 @@ function RegisterForm({ close }) {
         );
     },
     validateMobile = () => {
-      if (
-        /[0-9]{10}/.test(
-          formValue.mobile_no
-        )
-      )
-        setMobileError("");
-      else
-        setMobileError(
-          "Please enter a valid mobile number."
-        );
+      if (/[0-9]{10}/.test(formValue.mobile_no)) setMobileError("");
+      else setMobileError("Please enter a valid mobile number.");
     };
   useEffect(() => {
     if (isSuccess) {
@@ -95,7 +85,9 @@ function RegisterForm({ close }) {
         {error?.data?.username}
       </Form.Control.Feedback>
       {(!!emailError || !!passwordError || !!mobileError) && (
-        <Alert variant="danger">{emailError || passwordError|| mobileError}</Alert>
+        <Alert variant="danger">
+          {emailError || passwordError || mobileError}
+        </Alert>
       )}
       <Form.Group controlId="name" className="registerForm__email">
         <Form.Label>Email ID</Form.Label>
@@ -143,8 +135,11 @@ function RegisterForm({ close }) {
           </p>
         )}
       </Form.Group>
-      <Form.Group controlId="phone" className="registerForm__phone">
-        <Form.Label>Phone No</Form.Label>
+      <Form.Label>Phone No</Form.Label>
+      <InputGroup controlId="phone" className="registerForm__phone">
+        <InputGroup.Prepend className="mr-0">
+          <InputGroup.Text>+91</InputGroup.Text>
+        </InputGroup.Prepend>
         <Form.Control
           placeholder="Enter Phone No"
           required
@@ -154,7 +149,7 @@ function RegisterForm({ close }) {
             setFormValue({ ...formValue, mobile_no: value })
           }
         />
-      </Form.Group>
+      </InputGroup>
       <Button
         className="registerForm__submit"
         type="submit"
