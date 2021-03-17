@@ -56,12 +56,60 @@ function StepForm({ setActive, close }) {
       error: FamilyDetailsError,
       isSuccess: FamilyDetailsSuccess,
       data: FamilyDetailsData
-    } = useMutation((id, formData) => createFamilyDetails(id, formData)),
+    } = useMutation(formData => createFamilyDetails(formData)),
     steps = [
       { title: "Step 1" },
       { title: "Step 2" },
       { title: "Step 3" },
       { title: "Step 4" }
+    ],
+    fatherOcc = [
+      {
+        key: "government_sector",
+        value: "Government Sector"
+      },
+      {
+        key: "private_sector",
+        value: "Private Sector"
+      },
+      {
+        key: "business_man",
+        value: "Business man"
+      },
+      {
+        key: "retired",
+        value: "Retired"
+      },
+      {
+        key: "no_more",
+        value: "No More"
+      }
+    ],
+    motherOcc = [
+      {
+        key: "house_wife",
+        value: "House Wife"
+      },
+      {
+        key: "government_sector",
+        value: "Government Sector"
+      },
+      {
+        key: "private_sector",
+        value: "Private Sector"
+      },
+      {
+        key: "business_woman",
+        value: "Business woman"
+      },
+      {
+        key: "retired",
+        value: "Retired"
+      },
+      {
+        key: "no_more",
+        value: "No More"
+      }
     ],
     initializeDefaults = () => {
       setProfileData({
@@ -74,8 +122,10 @@ function StepForm({ setActive, close }) {
         mother_tongue: mother_tongue[0].key,
         occupation: occupation[0].key,
         qualification: qualification[0].key,
-        father_is: "Retired",
-        mother_is: "House wife",
+        father_is: fatherOcc[0].key,
+        mother_is: motherOcc[0].key,
+        brothers: 0,
+        sisters: 0,
         family_location: location[0].key,
         partner_gender: 1,
         partner_occupation: 1,
@@ -142,17 +192,14 @@ function StepForm({ setActive, close }) {
           ]);
           break;
         case 2:
-          FamilyDetails([
-            CreateProfileData?.id,
-            {
-              father_is: profileData.father_is,
-              mother_is: profileData.mother_is,
-              brothers: profileData.brothers,
-              sisters: profileData.sisters,
-              family_location: profileData.family_location,
-              about_family: profileData.about_family
-            }
-          ]);
+          FamilyDetails({
+            father_is: profileData.father_is,
+            mother_is: profileData.mother_is,
+            brothers: +profileData.brothers,
+            sisters: +profileData.sisters,
+            family_location: profileData.family_location,
+            about_family: profileData.about_family
+          });
           break;
         case 3:
           history.push("/home");
@@ -443,9 +490,11 @@ function StepForm({ setActive, close }) {
                   onChange={handleChange}
                   required
                 >
-                  <option>Retired</option>
-                  <option>Government Sector</option>
-                  <option>Private Sector</option>
+                  {fatherOcc?.map(opt => (
+                    <option key={opt?.key} value={opt?.key}>
+                      {opt?.value}
+                    </option>
+                  ))}
                 </Form.Control>
               </Form.Group>
 
@@ -459,9 +508,11 @@ function StepForm({ setActive, close }) {
                   onChange={handleChange}
                   required
                 >
-                  <option>House wife</option>
-                  <option>Working</option>
-                  <option>Retired</option>
+                  {motherOcc?.map(opt => (
+                    <option key={opt?.key} value={opt?.key}>
+                      {opt?.value}
+                    </option>
+                  ))}
                 </Form.Control>
               </Form.Group>
             </Form.Row>
@@ -473,6 +524,7 @@ function StepForm({ setActive, close }) {
                   name="brothers"
                   className="stepForm__control"
                   onChange={handleChange}
+                  value={profileData.brothers}
                   required
                 />
               </Form.Group>
@@ -484,6 +536,7 @@ function StepForm({ setActive, close }) {
                   name="sisters"
                   className="stepForm__control"
                   onChange={handleChange}
+                  value={profileData.sisters}
                   required
                 />
               </Form.Group>
@@ -496,18 +549,11 @@ function StepForm({ setActive, close }) {
             >
               <Form.Label className="stepForm__label">Location</Form.Label>
               <Form.Control
-                as="select"
                 name="family_location"
                 className="stepForm__control"
                 onChange={handleChange}
                 required
-              >
-                {location?.map(opt => (
-                  <option key={opt?.key} value={opt?.key}>
-                    {opt?.value}
-                  </option>
-                ))}
-              </Form.Control>
+              />
             </Form.Group>
             <Form.Group as={Col} controlId="about" className="stepForm__group">
               <Form.Label className="stepForm__label">About Family</Form.Label>

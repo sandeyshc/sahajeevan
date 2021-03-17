@@ -141,9 +141,9 @@ export const updateProfile = async ([id, data]) => {
   );
 };
 
-export const createFamilyDetails = async ([id, data]) => {
+export const createFamilyDetails = async (data) => {
   return await APIPostCall(
-    process.env.REACT_APP_BASE_URL + URLS.UPDATEPROFILE + `/${id}/`,
+    process.env.REACT_APP_BASE_URL + URLS.FAMILYDETAILS,
     data
   );
 };
