@@ -14,8 +14,10 @@ function OTPForm({ close, modalData }) {
       e.preventDefault();
       mutate(+Object.values(otp).join(""));
     },
-    handleChange = ({ target: { name, value } }) => {
+    handleKeyUp = ({ target: { name, value }, keyCode }) => {
       setOtp({ ...otp, [name]: value });
+      if (keyCode !== 8 && keyCode !== 46 && +name < 4)
+        document.getElementById("otp" + (+name + 1)).focus();
     };
 
   useEffect(() => {
@@ -32,45 +34,21 @@ function OTPForm({ close, modalData }) {
         A One Time Password Has Been Sent To {modalData?.mobile_no}
       </p>
       <Form onSubmit={submit}>
-        <Form.Group controlId="otp" className="otp__controls">
-          <Form.Control
-            controlId="otp1"
-            type="number"
-            name="1"
-            className="otp__controls__control"
-            onChange={handleChange}
-            maxLength={1}
-            required
-          />
-          <Form.Control
-            controlId="otp2"
-            type="number"
-            name="2"
-            className="otp__controls__control"
-            onChange={handleChange}
-            maxLength={1}
-            required
-          />
-          <Form.Control
-            controlId="otp3"
-            type="number"
-            name="3"
-            className="otp__controls__control"
-            onChange={handleChange}
-            maxLength={1}
-            required
-          />
-          <Form.Control
-            controlId="otp4"
-            type="number"
-            name="4"
-            className="otp__controls__control"
-            onChange={handleChange}
-            maxLength={1}
-            required
-          />
-        </Form.Group>
-        {(isError && !error?.data?.otp_verified) && (
+        <div className="otp__controls">
+          {[1, 2, 3, 4].map(c => (
+            <Form.Group controlId={"otp" + c}>
+              <Form.Control
+                type="number"
+                name={c}
+                className="otp__controls__control"
+                onKeyUp={handleKeyUp}
+                maxLength={1}
+                required
+              />
+            </Form.Group>
+          ))}
+        </div>
+        {isError && !error?.data?.otp_verified && (
           <Form.Control.Feedback type="invalid" style={{ display: "block" }}>
             OTP is incorrect
           </Form.Control.Feedback>
