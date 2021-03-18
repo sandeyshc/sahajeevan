@@ -14,6 +14,7 @@ import {
 } from "./views";
 
 import { QueryClient, QueryClientProvider } from "react-query";
+import RoutesGuard from "./RoutesGuard";
 
 const Routes = () => {
   const queryClient = new QueryClient();
@@ -23,33 +24,23 @@ const Routes = () => {
         <Route path="/" exact>
           <LandingPage />
         </Route>
-        <Route path="/home" exact>
-          <Home />
-        </Route>
-        <Route path="/search" exact>
-          <Search />
-        </Route>
-        <Route path="/searchresults" exact>
-          <SearchResults />
-        </Route>
-        <Route path="/notifications" exact>
-          <Notifications />
-        </Route>
-        <Route path="/interests" exact>
-          <Interests />
-        </Route>
-        <Route path="/settings" exact>
-          <Account />
-        </Route>
-        <Route path="/membership" exact>
-          <MembershipPlans />
-        </Route>
-        <Route path="/profile/:id" exact>
-          <Profile />
-        </Route>
-        <Route path="/editprofile" exact>
-          <EditProfile />
-        </Route>
+        <RoutesGuard path="/home" exact component={<Home />} />
+        <RoutesGuard path="/search" exact component={<Search />} />
+        <RoutesGuard
+          path="/searchresults"
+          exact
+          component={<SearchResults />}
+        />
+        <RoutesGuard
+          path="/notifications"
+          exact
+          component={<Notifications />}
+        />
+        <RoutesGuard path="/interests" exact component={<Interests />} />
+        <RoutesGuard path="/settings" exact component={<Account />} />
+        <RoutesGuard path="/membership" exact component={<MembershipPlans />} />
+        <RoutesGuard path="/profile/:id" exact component={<Profile />} />
+        <RoutesGuard path="/editprofile" exact component={<EditProfile />} />
       </Switch>
     </QueryClientProvider>
   );

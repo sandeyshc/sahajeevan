@@ -166,10 +166,11 @@
         margin-bottom: 1rem;
       }
       &__content {
+        max-width: 320px;
+        margin: 0 auto 1rem;
         &__item {
-          &__text {
-            text-align: left;
-          }
+          justify-content: flex-start;
+          align-items: center;
         }
       }
     }

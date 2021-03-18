@@ -12,6 +12,9 @@ const URLS = {
   clearSession = () => {
     localStorage.removeItem("token");
     window.location.href = "/";
+  },
+  isAuthenticated = () => {
+    return !!localStorage.getItem("token");
   };
 
 axios.interceptors.request.use(
@@ -77,4 +80,4 @@ export const logout = () => {
   clearSession();
 };
 
-export { setSession };
+export { setSession, isAuthenticated };

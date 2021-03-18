@@ -9,7 +9,7 @@ function LandingForm() {
     refetchOnWindowFocus: false
   });
   return (
-    <div className="landing__form col-lg-6">
+    <div className="landing__form col-lg-6 d-none d-lg-block">
       <Form>
         <p className="landing__form__title">
           <span className="landing__form__title__highlight">LOREM IPSUM</span>{" "}
