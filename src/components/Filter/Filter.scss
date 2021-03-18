@@ -1,106 +1,177 @@
 .filter {
-    &__card {
-        &__header {
-            border: 0;
-            background-color: white;
-            border-radius: 5px;
-            box-shadow: 0 0 10px #dedede;
-            margin: 1px 0;
-            color: #5a5a5a;
-            font-weight: 300;
-        }
+  .MuiAccordion-root {
+    box-shadow: none;
+  }
+  &__card {
+    &__header {
+      border: 0;
+      background-color: white;
+      border-radius: 5px;
+      box-shadow: 0 0 10px #dedede;
+      margin: 1px 0;
+      color: #5a5a5a;
+      font-weight: 300;
+      flex-direction: row-reverse;
+      .MuiIconButton-root {
+        margin: 0;
+        padding: 0;
+      }
     }
 
-    &__form {
+    &__title {
+      &__text {
         font-size: 14px;
-        font-weight: 100;
-        color: #585858;
-
-        &__check {
-            display: flex;
-            align-items: center;
-
-            &::before {
-                content: "";
-                position: absolute;
-                width: 12px;
-                height: 12px;
-                box-shadow: 0 0 3px #d6d6d6;
-                border-radius: 3px;
-                margin-left: -1.25rem;
-            }
-
-            & input {
-                width: 0;
-                height: 0;
-
-                &:checked::after {
-                    content: "";
-                    position: absolute;
-                    width: 4px;
-                    height: 8px;
-                    left: 4px;
-                    top: -10px;
-                    border: solid #eec874;
-                    border-width: 0 2px 2px 0;
-                    transform: rotate(45deg);
-                }
-            }
-
-            label {
-                margin-left: 5px;
-            }
+        font-weight: 500;
+        color: #767676;
+      }
+      &__controls {
+        input {
+          max-width: 70px;
+          max-height: 30px;
+          border-radius: 50px;
+          border: none;
+          box-shadow: 0 0 5px 1px #e9eaee;
+          text-align: center;
+          outline: none;
+          margin: 0 10px;
+          color: #8b8b8b;
         }
-
-        &__maritalActions {
-            margin: 10px 0;
-
-            button {
-                border: 0;
-                border-radius: 50px;
-                font-size: 10px;
-                padding: 0;
-                min-height: 20px;
-                min-width: 60px;
-                margin-right: 5px;
-                box-shadow: 0 5px 10px #dcdcdc;
-                line-height: 1;
-            }
-
-            &__positive {
-                background-color: #60c63f !important;
-            }
-
-            &__negative {
-                background-color: #ee4641 !important;
-            }
+        &__separator {
+          width: 10px;
+          background-color: #c8cfd6;
         }
-
-        &__paidmembers {
-
-            margin: 10px 0;
-
-            button {
-                border-radius: 50px;
-                font-size: 10px;
-                padding: 0;
-                min-height: 20px;
-                min-width: 60px;
-                margin-right: 5px;
-                background-color: white !important;
-                box-shadow: 0 5px 10px #dcdcdc;
-                line-height: 1;
-            }
-
-            &__positive {
-                border-color: #60c63f !important;
-                color: #60c63f !important;
-            }
-
-            &__negative {
-                border-color: #ee4641 !important;
-                color: #ee4641 !important;
-            }
-        }
+      }
     }
+  }
+
+  &__form {
+    font-size: 14px;
+    font-weight: 100;
+    color: #585858;
+
+    &__check {
+      display: flex;
+      align-items: center;
+
+      &::before {
+        content: "";
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        box-shadow: 0 0 3px #d6d6d6;
+        border-radius: 3px;
+        margin-left: -1.25rem;
+      }
+
+      & input {
+        width: 0;
+        height: 0;
+
+        &:checked::after {
+          content: "";
+          position: absolute;
+          width: 4px;
+          height: 8px;
+          left: 4px;
+          top: -10px;
+          border: solid #eec874;
+          border-width: 0 2px 2px 0;
+          transform: rotate(45deg);
+        }
+      }
+
+      label {
+        margin-left: 5px;
+      }
+    }
+
+    &__maritalActions {
+      margin: 10px 0;
+
+      button {
+        border: 0;
+        border-radius: 50px;
+        font-size: 10px;
+        padding: 0;
+        min-height: 20px;
+        min-width: 60px;
+        margin-right: 5px;
+        box-shadow: 0 5px 10px #dcdcdc;
+        line-height: 1;
+      }
+
+      &__positive {
+        background-color: #60c63f !important;
+      }
+
+      &__negative {
+        background-color: #ee4641 !important;
+      }
+    }
+
+    &__paidmembers {
+      margin: 10px 0;
+
+      button {
+        border-radius: 50px;
+        font-size: 10px;
+        padding: 0;
+        min-height: 20px;
+        min-width: 60px;
+        margin-right: 5px;
+        background-color: white !important;
+        box-shadow: 0 5px 10px #dcdcdc;
+        line-height: 1;
+      }
+
+      &__positive {
+        border-color: #60c63f !important;
+        color: #60c63f !important;
+      }
+
+      &__negative {
+        border-color: #ee4641 !important;
+        color: #ee4641 !important;
+      }
+    }
+
+    &__height,
+    &__income {
+      .MuiSlider-thumb {
+        background-color: #fcb432;
+        border: 1px solid #dea12c;
+        box-shadow: 0 0 5px 1px #e6c477;
+        &:hover {
+          box-shadow: 0 0 0 8px #e6c47750;
+        }
+      }
+      .MuiSlider-track {
+        color: #ebb43f;
+      }
+      .MuiSlider-rail {
+        color: #dde2e8;
+      }
+      &__actions {
+        button {
+          border-radius: 50px;
+          font-size: 10px;
+          padding: 0;
+          min-height: 20px;
+          min-width: 60px;
+          margin-right: 5px;
+          background-color: white !important;
+          box-shadow: 0 5px 10px #dcdcdc;
+          line-height: 1;
+        }
+        &__positive {
+          border-color: #60c63f !important;
+          color: #60c63f !important;
+        }
+        &__negative {
+          border-color: #ee4641 !important;
+          color: #ee4641 !important;
+        }
+      }
+    }
+  }
 }

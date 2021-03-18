@@ -85,7 +85,7 @@ function Interests() {
     getIndex = (text) => {
       return listOptions.findIndex((c) => c.text === text) + 1; // index of list starts at 1
     },
-    { data: cards, refetch } = useQuery({
+    { data: cards, refetch, isLoading: loading } = useQuery({
       queryKey: listOptions[optionSelected - 1].text,
       queryFn: listOptions[optionSelected - 1].queryFn || null,
     });
@@ -122,6 +122,7 @@ function Interests() {
                   card={{ ...card, name: card?.from_user }}
                 ></ProfileCard>
               ))}
+              {(!cards?.length && !loading) && <p>No {listOptions[optionSelected - 1].text} found.</p>}
             </div>
           </div>
         </Row>
