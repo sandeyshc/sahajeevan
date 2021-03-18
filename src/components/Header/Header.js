@@ -6,10 +6,12 @@ import NotificationIcon from "../../assets/icons/svg icon/notification.svg";
 import UserIcon from "../../assets/icons/svg icon/about.svg";
 import LoginIcon from "../../assets/icons/svg icon/user.svg";
 import RegisterIcon from "../../assets/icons/svg icon/Register.svg";
+import Drawer from "@material-ui/core/Drawer";
 
 import { Navbar, Nav, NavLink, NavDropdown, Image } from "react-bootstrap";
 import { Dialog } from "../";
 import { logout } from "../../services/api.js";
+import DrawerContent from "../DrawerContent/DrawerContent";
 
 function Header({ isLoggedIn }) {
   const landLinks = [
@@ -26,14 +28,21 @@ function Header({ isLoggedIn }) {
     },
     [modal, setModal] = useState(""),
     [modalData, setModalData] = useState({}),
+    [drawerState, setDrawerState] = useState(false),
     handleModal = (form, formData) => {
       setModal(form);
       setModalData(formData);
+    },
+    toggleDrawer = () => {
+      setDrawerState(!drawerState);
     };
 
   return (
     <div className="header">
-      <Navbar expand="xl" className="header__nav">
+      <Drawer anchor="right" open={drawerState} onClose={toggleDrawer}>
+        <DrawerContent close={toggleDrawer}></DrawerContent>
+      </Drawer>
+      <Navbar className="header__nav justify-content-between">
         <Navbar.Brand className="header__nav__brand">
           <Image
             height={50}
@@ -42,10 +51,15 @@ function Header({ isLoggedIn }) {
             className="header__nav__img"
           />
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse>
+        <div
+          className="header__menu text-white d-sm-flex d-xl-none"
+          onClick={toggleDrawer}
+        >
+          <span class="material-icons header__menu__icon">menu</span>
+        </div>
+        <Nav className="d-xl-flex d-none">
           {isLoggedIn ? (
-            <Nav>
+            <>
               <NavLink className="header__nav__link" as={Link} to="/home">
                 Home
               </NavLink>
@@ -94,9 +108,9 @@ function Header({ isLoggedIn }) {
                   <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
                 </NavDropdown>
               </NavLink>
-            </Nav>
+            </>
           ) : (
-            <Nav>
+            <>
               <NavLink className="header__nav__link" as={Link} to="/home">
                 Search Me
               </NavLink>
@@ -132,12 +146,17 @@ function Header({ isLoggedIn }) {
                   REGISTER
                 </button>
               </NavLink>
-            </Nav>
+            </>
           )}
-        </Navbar.Collapse>
+        </Nav>
       </Navbar>
 
-      <Dialog show={!!modal} onHide={handleModal} type={modal} data={modalData} />
+      <Dialog
+        show={!!modal}
+        onHide={handleModal}
+        type={modal}
+        data={modalData}
+      />
     </div>
   );
 }

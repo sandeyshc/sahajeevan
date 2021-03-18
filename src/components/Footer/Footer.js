@@ -17,7 +17,7 @@ function Footer() {
     return (
         <footer className="footer">
           <Row className="footer__row">
-            <Col className="footer__details" lg={3} md={12} sm={12} xs={12}>
+            <Col className="footer__details" lg={3} md={12} sm={11} xs={11}>
               <Image src={FooterLogo} height={35} />
               <p className="footer__details__description">
                 Lorem Ipsum is simply dummy text of printing and typesetting
