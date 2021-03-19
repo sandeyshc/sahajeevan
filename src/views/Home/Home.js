@@ -10,7 +10,7 @@ import Left from "../../assets/icons/svg icon/Right1.svg";
 import Right from "../../assets/icons/svg icon/Stroke 1.svg";
 import RightRedArrow from "../../assets/icons/svg icon/arrow-1.svg";
 import RightWhiteArrow from "../../assets/icons/svg icon/arrow.svg";
-import { premiumMatches, profileVisitors } from "../../services/profile";
+import { premiumMatches, profileVisitors, nearbyMatches, dailyRecommendations } from "../../services/profile";
 
 function Home() {
   const cards = [
@@ -51,6 +51,8 @@ function Home() {
       btnText: "Upgrade",
     },
     { data: premiumCards } = useQuery("premiumMatches", premiumMatches),
+    { data: nearbyCards } = useQuery("nearbyMatches", nearbyMatches),
+    { data: dailyRecommendationsCards } = useQuery("dailyRecommendations", dailyRecommendations),
     { data: profileVisitorsCards } = useQuery(
       "profileVisitorsCards",
       profileVisitors
@@ -127,7 +129,8 @@ function Home() {
           <div className="section__header__title">
             <p className="section__header__title__text">
               Nearby Matches
-              <span className="section__header__title__text__count">34</span>
+              <span className="section__header__title__text__count">
+              {nearbyCards?.count}</span>
             </p>
             <p className="section__header__title__subtext">
               Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -169,7 +172,10 @@ function Home() {
           </div>
         </div>
         <div className="section__cards">
-          <CardCarousel cards={cards} activeIndex={nearByIndex}></CardCarousel>
+            <CardCarousel
+            cards={nearbyCards?.results}
+            activeIndex={nearByIndex}
+          ></CardCarousel>
         </div>
       </section>
 
@@ -229,7 +235,7 @@ function Home() {
         </div>
         <div className="section__cards">
           <CardCarousel
-            cards={cards}
+            cards={dailyRecommendationsCards?.results}
             activeIndex={recommendationIndex}
           ></CardCarousel>
         </div>
