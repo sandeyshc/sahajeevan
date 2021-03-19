@@ -1,6 +1,5 @@
 import axios from "axios";
 import { logout } from "./api";
-import { Snackbar } from "@material-ui/core";
 
 const URLS = {
   PREMIUM: "/profile/get-premium-matches",
@@ -161,3 +160,11 @@ export const viewedProfiles = async () => {
     process.env.REACT_APP_BASE_URL + URLS.VIEWEDPROFIFLES
   );
 };
+
+export const saveFilter = (filter) => {
+  localStorage.setItem('filter', JSON.stringify(filter));
+}
+
+export const getFilter = (filter) => {
+  return JSON.parse(localStorage.getItem('filter'));
+}

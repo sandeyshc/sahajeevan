@@ -5,9 +5,7 @@ export const SnackBarContext = createContext();
 
 export function SnackBarProvider({ children }) {
   const [message, setMessage] = useState("");
-  useEffect(() => {
-    console.log("Hook", message);
-  }, [message]);
+
   return (
     <SnackBarContext.Provider value={setMessage}>
       {children}

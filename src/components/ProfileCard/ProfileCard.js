@@ -21,15 +21,17 @@ import useSnackBar from "../../hooks/SnackBarHook";
 
 function ProfileCard({
   isFullCard,
-  isPremium,
   profileImage,
   card: {
-    profile,
+    name,
     id,
+    premium,
     display_id,
+    profile_photo_url,
     last_seen,
     height,
     occupation,
+    qualification,
     marital_status,
     religion,
     caste
@@ -67,11 +69,11 @@ function ProfileCard({
         <Col className="profile__card__left" lg={4} md={4} sm={12}>
           <div className="profile__card__left__container">
             <Image
-              src={profileImage || dummyImage}
+              src={profile_photo_url || dummyImage}
               alt="profile image"
               className="profile__card__left__container__img"
             />
-            {isPremium && (
+            {premium && (
               <Image
                 src={Premium}
                 alt="premium banner"
@@ -111,7 +113,7 @@ function ProfileCard({
           <div className="profile__card__right__container">
             <Row className="profile__card__right__container__header">
               <p className="profile__card__right__container__header__name">
-                {profile} ({display_id})
+                {name} ({display_id})
               </p>
               <p className="profile__card__right__container__header__seen">
                 <Image
@@ -140,7 +142,7 @@ function ProfileCard({
               </Col>
               <Col className="profile__card__right__container__details__personal col-lg-3">
                 <Row>{height}</Row>
-                <Row>MBA/PGDM, BBA</Row>
+                <Row>{qualification}</Row>
                 <Row>{religion}</Row>
                 <Row>{caste}</Row>
               </Col>

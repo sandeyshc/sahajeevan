@@ -11,6 +11,7 @@ const URLS = {
   },
   clearSession = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("filter");
     window.location.href = "/";
   },
   isAuthenticated = () => {

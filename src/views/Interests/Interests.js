@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useQuery } from "react-query";
 import "./Interests.scss";
 import { Layout, ListOptions, ProfileCard } from "../../components";
-import { Row } from "react-bootstrap";
+import { Row, Spinner } from "react-bootstrap";
 
 import Hero from "../../assets/images/Interests/hero.png";
 import profileImage1 from "../../assets/images/demo2.png";
@@ -22,7 +22,7 @@ import {
   shortlisted,
   viewedProfiles,
   acceptedByMe,
-  acceptedByOthers,
+  acceptedByOthers
 } from "../../services/profile";
 
 function Interests() {
@@ -31,7 +31,7 @@ function Interests() {
       subtitle:
         "Lorem ipsum is simply dummy text of the printing and typesetting industry.",
       isLoggedIn: true,
-      isSmallBanner: true,
+      isSmallBanner: true
     },
     listText = {
       viewedProfiles: "Viewed Profiles",
@@ -40,55 +40,58 @@ function Interests() {
       receivedInterests: "Received Interests",
       sentInterests: "Sent interests",
       shortlisted: "Shortlisted",
-      acceptedByOthers: "Accepted By others",
+      acceptedByOthers: "Accepted By others"
     },
     listOptions = [
       {
         icon: Viewed,
         text: listText.viewedProfiles,
-        queryFn: viewedProfiles,
+        queryFn: viewedProfiles
       },
       {
         icon: AcceptedBYMe,
         text: listText.acceptedByMe,
-        queryFn: acceptedByMe,
+        queryFn: acceptedByMe
       },
       {
         icon: Messages,
-        text: listText.messages,
+        text: listText.messages
       },
       {
         icon: Received,
         text: listText.receivedInterests,
-        queryFn: receivedInterests,
+        queryFn: receivedInterests
       },
       {
         icon: Sent,
         text: listText.sentInterests,
-        queryFn: sentInterests,
+        queryFn: sentInterests
       },
       {
         icon: Team,
         text: listText.shortlisted,
-        queryFn: shortlisted,
+        queryFn: shortlisted
       },
       {
         icon: Heart,
         text: listText.acceptedByOthers,
-        queryFn: acceptedByOthers,
-      },
+        queryFn: acceptedByOthers
+      }
     ],
     [optionSelected, setOptionSelected] = useState(1),
-    checkSelected = (index) => {
+    checkSelected = index => {
       return optionSelected === index;
     },
-    getIndex = (text) => {
-      return listOptions.findIndex((c) => c.text === text) + 1; // index of list starts at 1
+    getIndex = text => {
+      return listOptions.findIndex(c => c.text === text) + 1; // index of list starts at 1
     },
-    { data: cards, refetch, isLoading: loading } = useQuery({
-      queryKey: listOptions[optionSelected - 1].text,
-      queryFn: listOptions[optionSelected - 1].queryFn || null,
-    });
+    { data: cards, refetch, isLoading: loading } = useQuery(
+      {
+        queryKey: listOptions[optionSelected - 1].text,
+        queryFn: listOptions[optionSelected - 1].queryFn || null
+      },
+      { refetchOnWindowFocus: false }
+    );
 
   useEffect(() => {
     refetch();
@@ -114,7 +117,7 @@ function Interests() {
               industry.
             </p>
             <div className="interests__section__content__cards">
-              {cards?.results?.map((card) => (
+              {cards?.results?.map(card => (
                 <ProfileCard
                   key={card?.profile_id}
                   isPremium={true}
@@ -122,7 +125,10 @@ function Interests() {
                   card={{ ...card, name: card?.from_user }}
                 ></ProfileCard>
               ))}
-              {(!cards?.results?.length && !loading) && <p>No {listOptions[optionSelected - 1].text} found.</p>}
+              {loading && <Spinner animation="border" />}
+              {!cards?.results?.length && !loading && (
+                <p>No {listOptions[optionSelected - 1].text} found.</p>
+              )}
             </div>
           </div>
         </Row>
