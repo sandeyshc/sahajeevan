@@ -4,12 +4,8 @@ import { Layout, ProfileCard, ListOptions, Filter } from "../../components";
 import "./SearchResults.scss";
 
 import heroImg from "../../assets/images/SearchResults/hero.png";
-import profileImage1 from "../../assets/images/demo2.png";
-
-import AcceptedByMe from "../../assets/icons/svg icon/Accepted by me.svg";
-import DeclinedRequest from "../../assets/icons/svg icon/declined request_.svg";
-import ViewAll from "../../assets/icons/svg icon/view all.svg";
 import { getFilter } from "../../services/profile";
+import Pagination from "@material-ui/lab/Pagination";
 
 function SearchResults() {
   const [profiles, setProfiles] = useState([]),
@@ -57,6 +53,11 @@ function SearchResults() {
                 <ProfileCard card={profile} />
               ))}
             </div>
+            <Pagination
+              className="d-flex justify-content-end results__section__content__pagination"
+              count={profiles?.length}
+              size="large"
+            />
           </div>
         </Row>
       </section>

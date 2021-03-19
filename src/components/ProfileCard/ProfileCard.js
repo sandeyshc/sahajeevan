@@ -34,7 +34,8 @@ function ProfileCard({
     qualification,
     marital_status,
     religion,
-    caste
+    caste,
+    online
   }
 }) {
   const uploadPhoto = () => {
@@ -112,7 +113,11 @@ function ProfileCard({
         <Col className="profile__card__right" lg={8} md={8} sm={12}>
           <div className="profile__card__right__container">
             <Row className="profile__card__right__container__header">
-              <p className="profile__card__right__container__header__name">
+              <p className="profile__card__right__container__header__name d-flex align-items-center">
+                <div
+                  className="profile__card__right__container__header__name__status d-inline-block mr-2 rounded-circle"
+                  style={{ borderColor: online ? "#52ac3b" : "#f2ae30" }}
+                ></div>
                 {name} ({display_id})
               </p>
               <p className="profile__card__right__container__header__seen">

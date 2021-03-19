@@ -95,7 +95,7 @@ function Filter({ data, setProfiles }) {
                   className="filter__form__check"
                   label={opt?.value}
                   value={opt?.key}
-                  checked={filterData?.marital_status.indexOf(opt.key) > -1}
+                  checked={filterData?.marital_status?.indexOf(opt.key) > -1}
                   onChange={({ target: { checked } }) =>
                     handleCheck("marital_status", opt.key, checked)
                   }
@@ -132,22 +132,22 @@ function Filter({ data, setProfiles }) {
               <div className="d-flex filter__card__title__controls">
                 <input
                   type="text"
-                  value={filterData?.height.from}
+                  value={filterData?.height?.from}
                   onChange={({ target: { value } }) =>
                     setFilterData({
                       ...filterData,
-                      height: { ...filterData.height, from: value }
+                      height: { ...filterData?.height, from: value }
                     })
                   }
                 />
                 <hr className="filter__card__title__controls__separator" />
                 <input
                   type="text"
-                  value={filterData?.height.to}
+                  value={filterData?.height?.to}
                   onChange={({ target: { value } }) =>
                     setFilterData({
                       ...filterData,
-                      height: { ...filterData.height, to: value }
+                      height: { ...filterData?.height, to: value }
                     })
                   }
                 />

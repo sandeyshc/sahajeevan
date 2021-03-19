@@ -95,6 +95,12 @@
             font-size: 28px;
             font-weight: 400;
             color: #6d6d6d;
+
+            &__status {
+              width: 20px;
+              height: 20px;
+              border: 5px solid;
+            }
           }
 
           &__seen {
@@ -112,14 +118,16 @@
           --dash-color: #e46e79;
           margin: 0;
           position: relative;
-          background: linear-gradient(to right,
-              var(--dash-color) 2%,
-              white 2% 4%,
-              var(--dash-color) 4% 6%,
-              white 6% 8%,
-              var(--dash-color) 8% 10%,
-              white 10% 12%,
-              #d9d9d9 12%);
+          background: linear-gradient(
+            to right,
+            var(--dash-color) 2%,
+            white 2% 4%,
+            var(--dash-color) 4% 6%,
+            white 6% 8%,
+            var(--dash-color) 8% 10%,
+            white 10% 12%,
+            #d9d9d9 12%
+          );
           height: 2px;
           border: 0;
         }
@@ -177,13 +185,17 @@
             min-height: 45px;
           }
 
-          &__view {}
+          &__view {
+          }
 
-          &__send {}
+          &__send {
+          }
 
-          &__chat {}
+          &__chat {
+          }
 
-          &__share {}
+          &__share {
+          }
         }
       }
     }
@@ -254,8 +266,8 @@
 
           &__premium {
             position: absolute;
-            top: 0;
-            left: 0;
+            top: -16px;
+            left: -16px;
           }
         }
       }
@@ -296,7 +308,7 @@
                 hr {
                   margin: 0;
 
-                  &+p {
+                  & + p {
                     font-size: 10px;
                     margin: 0;
                     display: flex;
@@ -390,11 +402,13 @@
           }
 
           &__splitter {
-            background: linear-gradient(to right,
-                var(--dash-color) 5%,
-                white 5% 10%,
-                var(--dash-color) 10% 15%,
-                white 15%);
+            background: linear-gradient(
+              to right,
+              var(--dash-color) 5%,
+              white 5% 10%,
+              var(--dash-color) 10% 15%,
+              white 15%
+            );
           }
 
           &__details {

@@ -8,7 +8,8 @@ import {
   getOptions,
   createProfile,
   updateProfile,
-  createFamilyDetails
+  createFamilyDetails,
+  saveFilter
 } from "../../services/profile";
 
 import BackIcon from "../../assets/icons/svg icon/next (1).svg";
@@ -136,11 +137,12 @@ function StepForm({ setActive, close }) {
       });
     },
     nextStep = () => {
-      if (activeStep < steps.length) {
+      if (activeStep < steps.length - 1) {
         setActiveStep(activeStep + 1);
         setActive(activeStep + 1);
       } else {
         close();
+        history.push('/home');
       }
     },
     backStep = () => {
@@ -202,8 +204,26 @@ function StepForm({ setActive, close }) {
           });
           break;
         case 3:
-          history.push("/home");
-          close();
+          saveFilter({
+            gender: profileData.partner_gender,
+            occupation: [profileData.partner_occupation],
+            qualification: [profileData.partner_qualification],
+            income: [profileData.partner_income],
+            age: {
+              from: profileData.partner_age,
+              to: +profileData.partner_age + 50
+            },
+            location: [profileData.location],
+            height: {
+              from: 4.5,
+              to: 5.5
+            },
+            marital_status: [1, 2, 3, 4],
+            mother_tongue: [profileData.mother_tongue],
+            religion: profileData.religion,
+            caste: [profileData.caste]
+          });
+          history.push("/searchresults");
           break;
       }
     };

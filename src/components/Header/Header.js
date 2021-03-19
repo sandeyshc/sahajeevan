@@ -44,12 +44,14 @@ function Header({ isLoggedIn }) {
       </Drawer>
       <Navbar className="header__nav justify-content-between">
         <Navbar.Brand className="header__nav__brand">
-          <Image
-            height={50}
-            src={logo}
-            alt="logo"
-            className="header__nav__img"
-          />
+          <Link to="/">
+            <Image
+              height={50}
+              src={logo}
+              alt="logo"
+              className="header__nav__img"
+            />
+          </Link>
         </Navbar.Brand>
         <div
           className="header__menu text-white d-sm-flex d-xl-none"
