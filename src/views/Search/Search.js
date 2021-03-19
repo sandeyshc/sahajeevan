@@ -79,7 +79,7 @@ function Search() {
               </Form.Group>
               <Form.Group className="search__form__controls__group">
                 <Form.Label className="search__form__controls__group__label">
-                  Age
+                  Height
                 </Form.Label>
                 <div className="search__form__controls__group__wrapper">
                   <Form.Control

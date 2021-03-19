@@ -15,30 +15,45 @@ import ViewAll from "../../assets/icons/svg icon/view all.svg";
 
 function SearchResults() {
   const listOptions = [
-    {
-      icon: AcceptedByMe,
-      text: "Accepted By Me",
+      {
+        icon: AcceptedByMe,
+        text: "Accepted By Me"
+      },
+      {
+        icon: DeclinedRequest,
+        text: "Declined request"
+      },
+      {
+        icon: ViewAll,
+        text: "view all notifications"
+      }
+    ],
+    heroData = {
+      subtitle:
+        "Lorem Ipsum is simply the dummy text for printing and typesetting industry.",
+      title: "Search Results",
+      isSmallBanner: true,
+      isLoggedIn: true
     },
-    {
-      icon: DeclinedRequest,
-      text: "Declined request",
-    },
-    {
-      icon: ViewAll,
-      text: "view all notifications",
-    },
-  ],
-  heroData = {
-    subtitle: 'Lorem Ipsum is simply the dummy text for printing and typesetting industry.',
-    title: 'Search Results',
-    isSmallBanner: true,
-    isLoggedIn: true
-  };
+    obj = {
+      birth_date: "2021-02-09",
+      caste: "96 kuli Maratha",
+      height: 5.5,
+      interest_status: "Cancel Interest",
+      last_seen: "2021-02-09T04:48:12Z",
+      location: "Thane",
+      marital_status: "Never Married",
+      mother_tongue: "Marathi",
+      occupation: "Government sector",
+      preference_match: "12/20",
+      profile: "Shrutika B",
+      profile_id: "S_EYTCBK",
+      profile_photo_url: "",
+      religion: "Hindu",
+      total_photos: 9
+    };
   return (
-    <Layout
-      heroImg={heroImg}
-      heroData={heroData}
-    >
+    <Layout heroImg={heroImg} heroData={heroData}>
       <section className="results col-lg-10 col-12">
         <Row className="results__section">
           <div className="results__section__filter">
@@ -56,20 +71,24 @@ function SearchResults() {
               <ProfileCard
                 isPremium={true}
                 profileImage={profileImage1}
+                card={obj}
               ></ProfileCard>
               <ProfileCard
                 isPremium={true}
                 profileImage={profileImage2}
+                card={obj}
               ></ProfileCard>
               <ProfileCard
                 isPremium={true}
                 profileImage={profileImage3}
+                card={obj}
               ></ProfileCard>
               <ProfileCard
                 isPremium={true}
                 profileImage={profileImage4}
+                card={obj}
               ></ProfileCard>
-              <ProfileCard isPremium={true}></ProfileCard>
+              <ProfileCard isPremium={true} card={obj}></ProfileCard>
             </div>
           </div>
         </Row>
