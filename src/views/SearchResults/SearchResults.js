@@ -55,8 +55,8 @@ function SearchResults() {
   return (
     <Layout heroImg={heroImg} heroData={heroData}>
       <section className="results col-lg-10 col-12">
-        <Row className="results__section">
-          <div className="results__section__filter">
+        <Row className="results__section m-0">
+          <div className="results__section__filter d-none d-xl-block">
             <Filter />
           </div>
           <div className="results__section__content">

@@ -114,7 +114,7 @@ function Interests() {
               industry.
             </p>
             <div className="interests__section__content__cards">
-              {cards?.map((card) => (
+              {cards?.results?.map((card) => (
                 <ProfileCard
                   key={card?.profile_id}
                   isPremium={true}
@@ -122,7 +122,7 @@ function Interests() {
                   card={{ ...card, name: card?.from_user }}
                 ></ProfileCard>
               ))}
-              {(!cards?.length && !loading) && <p>No {listOptions[optionSelected - 1].text} found.</p>}
+              {(!cards?.results?.length && !loading) && <p>No {listOptions[optionSelected - 1].text} found.</p>}
             </div>
           </div>
         </Row>

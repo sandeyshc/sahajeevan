@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./ProfileCard.scss";
 
-import { Card, Image, Col, Row } from "react-bootstrap";
+import { Card, Image, Col, Row, Spinner } from "react-bootstrap";
 
 import Camera from "../../assets/icons/svg icon/camera.svg";
 import Privacy from "../../assets/icons/svg icon/privacy.svg";
@@ -15,35 +15,52 @@ import Kundli from "../../assets/icons/svg icon/Kundli Match.svg";
 import Graph from "../../assets/icons/svg icon/graph.svg";
 import Premium from "../../assets/icons/svg icon/premium.svg";
 import dummyImage from "../../assets/images/dummy.png";
+import { sendInterest } from "../../services/profile";
+import { useMutation } from "react-query";
+import useSnackBar from "../../hooks/SnackBarHook";
 
 function ProfileCard({
   isFullCard,
   isPremium,
   profileImage,
   card: {
-    name,
-    profile_id,
+    profile,
+    id,
+    display_id,
     last_seen,
     height,
     occupation,
     marital_status,
     religion,
-    caste,
-  },
+    caste
+  }
 }) {
   const uploadPhoto = () => {
       document.getElementsByName("upload")[0].click();
     },
-    parseDate = (date) => {
+    parseDate = date => {
       return new Intl.DateTimeFormat("en-AU", {
         day: "numeric",
         year: "2-digit",
-        month: "short",
+        month: "short"
       })
         .format(new Date(date))
         .split(" ")
         .join(".");
+    },
+    message = useSnackBar(),
+    {
+      mutate: SendInterestMutate,
+      isLoading: SendInterestLoading,
+      isError,
+      error
+    } = useMutation(id => sendInterest(id)),
+    handleSendInterest = () => {
+      SendInterestMutate(id);
     };
+  useEffect(() => {
+    isError && message(error?.data);
+  }, [isError]);
   return (
     <section className={isFullCard ? "profile" : "search-profile"}>
       <Card className="profile__card">
@@ -94,7 +111,7 @@ function ProfileCard({
           <div className="profile__card__right__container">
             <Row className="profile__card__right__container__header">
               <p className="profile__card__right__container__header__name">
-                {name} ({profile_id})
+                {profile} ({display_id})
               </p>
               <p className="profile__card__right__container__header__seen">
                 <Image
@@ -139,9 +156,27 @@ function ProfileCard({
                 <Image src={ViewContact} alt="View Contact" height={18} />
                 View Contact
               </button>
-              <button className="profile__card__right__container__actions__send">
-                <Image src={Send} alt="Send Request" height={18} />
-                Send Request
+              <button
+                className="profile__card__right__container__actions__send"
+                onClick={handleSendInterest}
+              >
+                {SendInterestLoading ? (
+                  <>
+                    <Spinner
+                      as="span"
+                      animation="border"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                    />
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    <Image src={Send} alt="Send Request" height={18} />
+                    Send Interest
+                  </>
+                )}
               </button>
               <button className="profile__card__right__container__actions__chat">
                 <Image src={Chat} alt="Chat" height={18} />

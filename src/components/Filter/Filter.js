@@ -12,7 +12,7 @@ import { useQuery } from "react-query";
 import { getOptions } from "../../services/profile";
 
 function Filter() {
-  const [heightValue, setHeightValue] = useState([4.2, 5]),
+  const [heightValue, setHeightValue] = useState([4.5, 5]),
     [incomeValue, setIncomeValue] = useState([2, 20]),
     { data } = useQuery("getOptions", getOptions, {
       refetchOnWindowFocus: false
