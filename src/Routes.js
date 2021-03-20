@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import {
   LandingPage,
   Home,
@@ -15,15 +15,24 @@ import {
 
 import { QueryClient, QueryClientProvider } from "react-query";
 import RoutesGuard from "./RoutesGuard";
+import { isAuthenticated } from "./services/api";
 
 const Routes = () => {
   const queryClient = new QueryClient();
   return (
     <QueryClientProvider client={queryClient}>
       <Switch>
-        <Route path="/" exact>
-          <LandingPage />
-        </Route>
+        <Route
+          path="/"
+          exact
+          render={() =>
+            isAuthenticated() ? (
+              <Redirect to={{ pathname: "/home" }} />
+            ) : (
+              <LandingPage />
+            )
+          }
+        ></Route>
         <RoutesGuard path="/home" exact component={<Home />} />
         <RoutesGuard path="/search" exact component={<Search />} />
         <RoutesGuard

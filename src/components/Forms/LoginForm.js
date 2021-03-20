@@ -50,7 +50,7 @@ function LoginForm({ close }) {
       </Form.Group>
       <Row className="loginForm__options">
         <Form.Group controlId="stay" className="loginForm__options__check">
-          <Form.Check label="Stay Logged in" />
+          <Form.Check label="Remember me" />
         </Form.Group>
         <Link className="loginForm__options__forgot">Forgot Password?</Link>
       </Row>

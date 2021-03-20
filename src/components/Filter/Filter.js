@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Button, Form } from "react-bootstrap";
 import "./Filter.scss";
 import {
@@ -8,18 +8,18 @@ import {
   AccordionSummary,
   AccordionDetails
 } from "@material-ui/core";
-import { useQuery } from "react-query";
-import { getOptions } from "../../services/profile";
+import { useQuery, useMutation } from "react-query";
+import { getOptions, search, saveFilter } from "../../services/profile";
 
-function Filter() {
-  const [heightValue, setHeightValue] = useState([4.2, 5]),
+function Filter({ data, setProfiles }) {
+  const [filterData, setFilterData] = useState(),
     [incomeValue, setIncomeValue] = useState([2, 20]),
-    { data } = useQuery("getOptions", getOptions, {
+    { data: Options } = useQuery("getOptions", getOptions, {
       refetchOnWindowFocus: false
     }),
-    heightChange = (e, newValue) => {
-      setHeightValue(newValue);
-    },
+    { mutate, isSuccess, data: SearchProfiles } = useMutation(formData =>
+      search(formData)
+    ),
     incomeChange = (e, newValue) => {
       setIncomeValue(newValue);
     },
@@ -43,7 +43,37 @@ function Filter() {
           {children}
         </Tooltip>
       );
+    },
+    handleCheck = (name, id, checked) => {
+      setFilterData({
+        ...filterData,
+        [name]: checked
+          ? [...filterData[name], id]
+          : filterData[name].filter(v => v !== id)
+      });
+    },
+    handleSlide = (name, value) => {
+      setFilterData({
+        ...filterData,
+        [name]: {
+          from: value[0],
+          to: value[1]
+        }
+      });
+    },
+    applyFilter = () => {
+      saveFilter(filterData);
+      mutate(filterData);
     };
+  useEffect(() => {
+    if (data) {
+      setFilterData(data);
+    }
+  }, [data]);
+  useEffect(() => {
+    isSuccess && setProfiles(SearchProfiles?.results);
+    !SearchProfiles && mutate(data);
+  }, [isSuccess, SearchProfiles]);
   return (
     <div className="filter">
       <Accordion defaultExpanded={true}>
@@ -58,28 +88,24 @@ function Filter() {
         <AccordionDetails eventKey="0">
           <Card.Body>
             <Form className="filter__form">
-              <Form.Check
-                className="filter__form__check"
-                label="Never Married"
-                id="marital__never"
-              />
-              <Form.Check
-                className="filter__form__check"
-                label="Divorced"
-                id="marital__divorced"
-              />
-              <Form.Check
-                className="filter__form__check"
-                label="Separated"
-                id="marital__separate"
-              />
-              <Form.Check
-                className="filter__form__check"
-                label="Widowed"
-                id="marital__widow"
-              />
+              {Options?.results?.marital_status.map(opt => (
+                <Form.Check
+                  key={opt.key}
+                  id={"marital_status" + opt.key}
+                  className="filter__form__check"
+                  label={opt?.value}
+                  value={opt?.key}
+                  checked={filterData?.marital_status?.indexOf(opt.key) > -1}
+                  onChange={({ target: { checked } }) =>
+                    handleCheck("marital_status", opt.key, checked)
+                  }
+                />
+              ))}
               <div className="filter__form__maritalActions">
-                <Button className="filter__form__maritalActions__positive">
+                <Button
+                  className="filter__form__maritalActions__positive"
+                  onClick={applyFilter}
+                >
                   APPLY
                 </Button>
                 <Button className="filter__form__maritalActions__negative">
@@ -106,28 +132,35 @@ function Filter() {
               <div className="d-flex filter__card__title__controls">
                 <input
                   type="text"
-                  value={heightValue[0]}
+                  value={filterData?.height?.from}
                   onChange={({ target: { value } }) =>
-                    setHeightValue([value, heightValue[1]])
+                    setFilterData({
+                      ...filterData,
+                      height: { ...filterData?.height, from: value }
+                    })
                   }
                 />
                 <hr className="filter__card__title__controls__separator" />
                 <input
                   type="text"
-                  value={heightValue[1]}
+                  value={filterData?.height?.to}
                   onChange={({ target: { value } }) =>
-                    setHeightValue([heightValue[0], value])
+                    setFilterData({
+                      ...filterData,
+                      height: { ...filterData?.height, to: value }
+                    })
                   }
                 />
               </div>
             </div>
             <Slider
               className="filter__form__height my-2"
-              value={heightValue}
-              onChange={heightChange}
-              min={data?.results?.height[0].key}
+              value={[filterData?.height?.from, filterData?.height?.to]}
+              onChange={(e, newValue) => handleSlide("height", newValue)}
+              min={Options?.results?.height[0].key}
               max={
-                data?.results?.height[data?.results?.height?.length - 1]?.key
+                Options?.results?.height[Options?.results?.height?.length - 1]
+                  ?.key
               }
               step={0.1}
               valueLabelDisplay="auto"
@@ -139,7 +172,10 @@ function Filter() {
               }
             />
             <div className="filter__form__height__actions mt-3">
-              <Button className="filter__form__height__actions__positive">
+              <Button
+                className="filter__form__height__actions__positive"
+                onClick={applyFilter}
+              >
                 APPLY
               </Button>
               <Button className="filter__form__height__actions__negative">
@@ -161,36 +197,30 @@ function Filter() {
         <AccordionDetails eventKey="0">
           <Card.Body>
             <Form className="filter__form">
-              <Form.Check
-                className="filter__form__check"
-                label="All"
-                id="qualification__all"
-              />
-              <Form.Check
-                className="filter__form__check"
-                label="BCom"
-                id="qualification__bcom"
-              />
-              <Form.Check
-                className="filter__form__check"
-                label="BSc"
-                id="qualification__bsc"
-              />
-              <Form.Check
-                className="filter__form__check"
-                label="BE/BTech"
-                id="qualification__be"
-              />
-              <Form.Check
-                className="filter__form__check"
-                label="BCA"
-                id="qualification__bca"
-              />
-              <Form.Check
-                className="filter__form__check"
-                label="BBA"
-                id="qualification__bba"
-              />
+              {Options?.results?.qualification.map(opt => (
+                <Form.Check
+                  key={opt.key}
+                  id={"qualification" + opt.key}
+                  className="filter__form__check"
+                  label={opt?.value}
+                  value={opt?.key}
+                  checked={filterData?.qualification.indexOf(opt.key) > -1}
+                  onChange={({ target: { checked } }) =>
+                    handleCheck("qualification", opt.key, checked)
+                  }
+                />
+              ))}
+              <div className="filter__form__maritalActions">
+                <Button
+                  className="filter__form__maritalActions__positive"
+                  onClick={applyFilter}
+                >
+                  APPLY
+                </Button>
+                <Button className="filter__form__maritalActions__negative">
+                  CLEAR
+                </Button>
+              </div>
             </Form>
           </Card.Body>
         </AccordionDetails>
@@ -207,31 +237,30 @@ function Filter() {
         <AccordionDetails eventKey="0">
           <Card.Body>
             <Form className="filter__form">
-              <Form.Check
-                className="filter__form__check"
-                label="All"
-                id="occupation__all"
-              />
-              <Form.Check
-                className="filter__form__check"
-                label="Government Sector"
-                id="occupation__public"
-              />
-              <Form.Check
-                className="filter__form__check"
-                label="Private Sector"
-                id="occupation__private"
-              />
-              <Form.Check
-                className="filter__form__check"
-                label="Own Business"
-                id="occupation__own"
-              />
-              <Form.Check
-                className="filter__form__check"
-                label="Others"
-                id="occupation__others"
-              />
+              {Options?.results?.occupation.map(opt => (
+                <Form.Check
+                  key={opt.key}
+                  id={"occupation" + opt.key}
+                  className="filter__form__check"
+                  label={opt?.value}
+                  value={opt?.key}
+                  checked={filterData?.occupation.indexOf(opt.key) > -1}
+                  onChange={({ target: { checked } }) =>
+                    handleCheck("occupation", opt.key, checked)
+                  }
+                />
+              ))}
+              <div className="filter__form__maritalActions">
+                <Button
+                  className="filter__form__maritalActions__positive"
+                  onClick={applyFilter}
+                >
+                  APPLY
+                </Button>
+                <Button className="filter__form__maritalActions__negative">
+                  CLEAR
+                </Button>
+              </div>
             </Form>
           </Card.Body>
         </AccordionDetails>

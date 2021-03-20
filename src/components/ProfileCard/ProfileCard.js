@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./ProfileCard.scss";
 
-import { Card, Image, Col, Row } from "react-bootstrap";
+import { Card, Image, Col, Row, Spinner } from "react-bootstrap";
 
 import Camera from "../../assets/icons/svg icon/camera.svg";
 import Privacy from "../../assets/icons/svg icon/privacy.svg";
@@ -15,46 +15,66 @@ import Kundli from "../../assets/icons/svg icon/Kundli Match.svg";
 import Graph from "../../assets/icons/svg icon/graph.svg";
 import Premium from "../../assets/icons/svg icon/premium.svg";
 import dummyImage from "../../assets/images/dummy.png";
+import { sendInterest } from "../../services/profile";
+import { useMutation } from "react-query";
+import useSnackBar from "../../hooks/SnackBarHook";
 
 function ProfileCard({
   isFullCard,
-  isPremium,
   profileImage,
   card: {
     name,
-    profile_id,
+    id,
+    premium,
+    display_id,
+    profile_photo_url,
     last_seen,
     height,
     occupation,
+    qualification,
     marital_status,
     religion,
     caste,
-  },
+    online
+  }
 }) {
   const uploadPhoto = () => {
       document.getElementsByName("upload")[0].click();
     },
-    parseDate = (date) => {
+    parseDate = date => {
       return new Intl.DateTimeFormat("en-AU", {
         day: "numeric",
         year: "2-digit",
-        month: "short",
+        month: "short"
       })
         .format(new Date(date))
         .split(" ")
         .join(".");
+    },
+    message = useSnackBar(),
+    {
+      mutate: SendInterestMutate,
+      isLoading: SendInterestLoading,
+      isError,
+      error
+    } = useMutation(id => sendInterest(id)),
+    handleSendInterest = () => {
+      SendInterestMutate(id);
     };
+  useEffect(() => {
+    isError && message(error?.data);
+  }, [isError]);
   return (
     <section className={isFullCard ? "profile" : "search-profile"}>
       <Card className="profile__card">
         <Col className="profile__card__left" lg={4} md={4} sm={12}>
           <div className="profile__card__left__container">
             <Image
-              src={profileImage || dummyImage}
+              src={profile_photo_url || dummyImage}
               alt="profile image"
               className="profile__card__left__container__img"
             />
-            {isPremium && (
+            {premium && (
               <Image
                 src={Premium}
                 alt="premium banner"
@@ -93,8 +113,12 @@ function ProfileCard({
         <Col className="profile__card__right" lg={8} md={8} sm={12}>
           <div className="profile__card__right__container">
             <Row className="profile__card__right__container__header">
-              <p className="profile__card__right__container__header__name">
-                {name} ({profile_id})
+              <p className="profile__card__right__container__header__name d-flex align-items-center">
+                <div
+                  className="profile__card__right__container__header__name__status d-inline-block mr-2 rounded-circle"
+                  style={{ borderColor: online ? "#52ac3b" : "#f2ae30" }}
+                ></div>
+                {name} ({display_id})
               </p>
               <p className="profile__card__right__container__header__seen">
                 <Image
@@ -123,7 +147,7 @@ function ProfileCard({
               </Col>
               <Col className="profile__card__right__container__details__personal col-lg-3">
                 <Row>{height}</Row>
-                <Row>MBA/PGDM, BBA</Row>
+                <Row>{qualification}</Row>
                 <Row>{religion}</Row>
                 <Row>{caste}</Row>
               </Col>
@@ -139,9 +163,27 @@ function ProfileCard({
                 <Image src={ViewContact} alt="View Contact" height={18} />
                 View Contact
               </button>
-              <button className="profile__card__right__container__actions__send">
-                <Image src={Send} alt="Send Request" height={18} />
-                Send Request
+              <button
+                className="profile__card__right__container__actions__send"
+                onClick={handleSendInterest}
+              >
+                {SendInterestLoading ? (
+                  <>
+                    <Spinner
+                      as="span"
+                      animation="border"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                    />
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    <Image src={Send} alt="Send Request" height={18} />
+                    Send Interest
+                  </>
+                )}
               </button>
               <button className="profile__card__right__container__actions__chat">
                 <Image src={Chat} alt="Chat" height={18} />

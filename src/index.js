@@ -4,15 +4,21 @@ import "./index.scss";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router } from "react-router-dom";
 import Routes from "./Routes";
+import SnackBarProvider from "./components/snackBar";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <Router>
-      <Routes />
-    </Router>
-  </React.StrictMode>,
-  document.getElementById("root")
-);
+const App = () => {
+  return (
+    <React.StrictMode>
+      <SnackBarProvider>
+        <Router>
+          <Routes />
+        </Router>
+      </SnackBarProvider>
+    </React.StrictMode>
+  );
+};
+
+ReactDOM.render(<App />, document.getElementById("root"));
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

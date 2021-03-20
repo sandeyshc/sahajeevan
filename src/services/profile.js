@@ -20,7 +20,8 @@ const URLS = {
   OPTIONS: "/profile/get-options",
   CREATEPROFILE: "/profile/create",
   UPDATEPROFILE: "/profile/update",
-  FAMILYDETAILS: "/profile/family-details"
+  FAMILYDETAILS: "/profile/family-details",
+  SEARCH: "/profile/search"
 };
 
 axios.interceptors.request.use(
@@ -111,8 +112,10 @@ export const viewOthers = async () => {
   return await APIGetCall(process.env.REACT_APP_BASE_URL + URLS.VIEWOTHERS);
 };
 
-export const sendInterest = async () => {
-  return await APIPostCall(process.env.REACT_APP_BASE_URL + URLS.SENDINTEREST);
+export const sendInterest = async id => {
+  return await APIPostCall(process.env.REACT_APP_BASE_URL + URLS.SENDINTEREST, {
+    to_profile_id: id
+  });
 };
 
 export const cancelInterest = async () => {
@@ -151,11 +154,15 @@ export const updateProfile = async ([id, data]) => {
   );
 };
 
-export const createFamilyDetails = async (data) => {
+export const createFamilyDetails = async data => {
   return await APIPostCall(
     process.env.REACT_APP_BASE_URL + URLS.FAMILYDETAILS,
     data
   );
+};
+
+export const search = async data => {
+  return await APIPostCall(process.env.REACT_APP_BASE_URL + URLS.SEARCH, data);
 };
 
 export const viewedProfiles = async () => {
@@ -163,3 +170,11 @@ export const viewedProfiles = async () => {
     process.env.REACT_APP_BASE_URL + URLS.VIEWEDPROFIFLES
   );
 };
+
+export const saveFilter = (filter) => {
+  localStorage.setItem('filter', JSON.stringify(filter));
+}
+
+export const getFilter = (filter) => {
+  return JSON.parse(localStorage.getItem('filter'));
+}
