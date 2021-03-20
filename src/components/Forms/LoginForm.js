@@ -5,7 +5,7 @@ import { login, setSession } from "../../services/api";
 import "./LoginForm.scss";
 import { useMutation } from "react-query";
 
-function LoginForm({ close }) {
+function LoginForm({ close, modalData }) {
   const [formValue, setFormValue] = useState({ username: "", password: "" }),
     submit = (e) => {
       e.preventDefault();
@@ -18,7 +18,7 @@ function LoginForm({ close }) {
   useEffect(() => {
     if (isSuccess) {
       setSession(data?.data?.access);
-      history.push("/home");
+      history.push(modalData?.url ? modalData?.url : "/home");
       close();
     }
   }, [isSuccess]);

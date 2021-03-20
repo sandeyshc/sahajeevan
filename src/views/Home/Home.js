@@ -10,7 +10,12 @@ import Left from "../../assets/icons/svg icon/Right1.svg";
 import Right from "../../assets/icons/svg icon/Stroke 1.svg";
 import RightRedArrow from "../../assets/icons/svg icon/arrow-1.svg";
 import RightWhiteArrow from "../../assets/icons/svg icon/arrow.svg";
-import { premiumMatches, profileVisitors, nearbyMatches, dailyRecommendations } from "../../services/profile";
+import {
+  premiumMatches,
+  profileVisitors,
+  nearbyMatches,
+  dailyRecommendations
+} from "../../services/profile";
 
 function Home() {
   const cards = [
@@ -19,29 +24,29 @@ function Home() {
         language: "Hindi-Delhi, kashmiri",
         education: "M.Com, other",
         profession: "Rs 2 - 3 Lakh, BPO/ITES Profession",
-        pictureCount: 3,
+        pictureCount: 3
       },
       {
         title: "28, 5' 0'', Delhi and allahabad, Uttarpradesh",
         language: "Hindi-Delhi, kashmiri",
         education: "M.Com, other",
         profession: "Rs 2 - 3 Lakh, BPO/ITES Profession",
-        pictureCount: 3,
+        pictureCount: 3
       },
       {
         title: "28, 5' 0'', Delhi and allahabad, Uttarpradesh",
         language: "Hindi-Delhi, kashmiri",
         education: "M.Com, other",
         profession: "Rs 2 - 3 Lakh, BPO/ITES Profession",
-        pictureCount: 2,
+        pictureCount: 2
       },
       {
         title: "28, 5' 0'', Delhi and allahabad, Uttarpradesh",
         language: "Hindi-Delhi, kashmiri",
         education: "M.Com, other",
         profession: "Rs 2 - 3 Lakh, BPO/ITES Profession",
-        pictureCount: 4,
-      },
+        pictureCount: 4
+      }
     ],
     heroData = {
       isLoggedIn: true,
@@ -49,13 +54,25 @@ function Home() {
       subtitle:
         "Lorem ipsum is simply dummy text for printing and typesetting industry. Loreum ipsum has been the industry's.",
       btnText: "Upgrade",
+      className: 'd-none d-lg-block'
     },
-    { data: premiumCards } = useQuery("premiumMatches", premiumMatches),
-    { data: nearbyCards } = useQuery("nearbyMatches", nearbyMatches),
-    { data: dailyRecommendationsCards } = useQuery("dailyRecommendations", dailyRecommendations),
+    { data: premiumCards } = useQuery("premiumMatches", premiumMatches, {
+      refetchOnWindowFocus: false
+    }),
+    { data: nearbyCards } = useQuery("nearbyMatches", nearbyMatches, {
+      refetchOnWindowFocus: false
+    }),
+    { data: dailyRecommendationsCards } = useQuery(
+      "dailyRecommendations",
+      dailyRecommendations,
+      {
+        refetchOnWindowFocus: false
+      }
+    ),
     { data: profileVisitorsCards } = useQuery(
       "profileVisitorsCards",
-      profileVisitors
+      profileVisitors,
+      { refetchOnWindowFocus: false }
     ),
     [visitorIndex, setVisitorIndex] = useState(0),
     [nearByIndex, setNearByIndex] = useState(0),
@@ -64,7 +81,7 @@ function Home() {
 
   return (
     <Layout heroImg={Hero} heroData={heroData} bannerContent={<HomeForm />}>
-      <section className="section col-lg-10 col-12">
+      <section className="section col-xl-10 col-12">
         <div className="section__header">
           <div className="section__header__title">
             <p className="section__header__title__text">
@@ -80,7 +97,7 @@ function Home() {
           </div>
           <div className="section__header__actions">
             <button
-              className="section__header__actions__left"
+              className="section__header__actions__left d-none d-lg-inline-block"
               onClick={() =>
                 setVisitorIndex(
                   visitorIndex > 0 ? visitorIndex - 1 : visitorIndex
@@ -90,7 +107,7 @@ function Home() {
               <Image src={Left} alt="left icon" height="15" />
             </button>
             <button
-              className="section__header__actions__right"
+              className="section__header__actions__right d-none d-lg-inline-block"
               onClick={() =>
                 setVisitorIndex(
                   visitorIndex < 1 ? visitorIndex + 1 : visitorIndex
@@ -124,13 +141,14 @@ function Home() {
         </div>
       </section>
 
-      <section className="section col-lg-10 col-12">
+      <section className="section col-xl-10 col-12">
         <div className="section__header">
           <div className="section__header__title">
             <p className="section__header__title__text">
               Nearby Matches
               <span className="section__header__title__text__count">
-              {nearbyCards?.count}</span>
+                {nearbyCards?.count}
+              </span>
             </p>
             <p className="section__header__title__subtext">
               Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -139,7 +157,7 @@ function Home() {
           </div>
           <div className="section__header__actions">
             <button
-              className="section__header__actions__left"
+              className="section__header__actions__left d-none d-lg-inline-block"
               onClick={() =>
                 setNearByIndex(nearByIndex > 0 ? nearByIndex - 1 : nearByIndex)
               }
@@ -147,7 +165,7 @@ function Home() {
               <Image src={Left} alt="left icon" height="15" />
             </button>
             <button
-              className="section__header__actions__right"
+              className="section__header__actions__right d-none d-lg-inline-block"
               onClick={() =>
                 setNearByIndex(nearByIndex < 1 ? nearByIndex + 1 : nearByIndex)
               }
@@ -172,14 +190,14 @@ function Home() {
           </div>
         </div>
         <div className="section__cards">
-            <CardCarousel
+          <CardCarousel
             cards={nearbyCards?.results}
             activeIndex={nearByIndex}
           ></CardCarousel>
         </div>
       </section>
 
-      <section className="section col-lg-10 col-12">
+      <section className="section col-xl-10 col-12">
         <div className="section__header">
           <div className="section__header__title">
             <p className="section__header__title__text">
@@ -193,7 +211,7 @@ function Home() {
           </div>
           <div className="section__header__actions">
             <button
-              className="section__header__actions__left"
+              className="section__header__actions__left d-none d-lg-inline-block"
               onClick={() =>
                 setRecommendationIndex(
                   recommendationIndex > 0
@@ -205,7 +223,7 @@ function Home() {
               <Image src={Left} alt="left icon" height="15" />
             </button>
             <button
-              className="section__header__actions__right"
+              className="section__header__actions__right d-none d-lg-inline-block"
               onClick={() =>
                 setRecommendationIndex(
                   recommendationIndex < 1
@@ -241,7 +259,7 @@ function Home() {
         </div>
       </section>
 
-      <section className="section col-lg-10 col-12">
+      <section className="section col-xl-10 col-12">
         <div className="section__header">
           <div className="section__header__title">
             <p className="section__header__title__text">
@@ -257,7 +275,7 @@ function Home() {
           </div>
           <div className="section__header__actions">
             <button
-              className="section__header__actions__left"
+              className="section__header__actions__left d-none d-lg-inline-block"
               onClick={() =>
                 setPremiumIndex(
                   premiumIndex > 0 ? premiumIndex - 1 : premiumIndex
@@ -267,7 +285,7 @@ function Home() {
               <Image src={Left} alt="left icon" height="15" />
             </button>
             <button
-              className="section__header__actions__right"
+              className="section__header__actions__right d-none d-lg-inline-block"
               onClick={() =>
                 setPremiumIndex(
                   premiumIndex < 1 ? premiumIndex + 1 : premiumIndex

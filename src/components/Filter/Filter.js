@@ -13,22 +13,18 @@ import { getOptions, search, saveFilter } from "../../services/profile";
 
 function Filter({ data, setProfiles }) {
   const [filterData, setFilterData] = useState(),
-    [incomeValue, setIncomeValue] = useState([2, 20]),
     { data: Options } = useQuery("getOptions", getOptions, {
       refetchOnWindowFocus: false
     }),
     { mutate, isSuccess, data: SearchProfiles } = useMutation(formData =>
       search(formData)
     ),
-    incomeChange = (e, newValue) => {
-      setIncomeValue(newValue);
-    },
     heightText = value => {
       let temp = String(value).split(".");
       return temp[0] + "'" + (temp[1] ? temp[1] + '"' : "");
     },
-    incomeText = value => {
-      return "Rs " + value + " Lakh(s)";
+    ageText = value => {
+      return value + " Years";
     },
     ValueLabelComponent = props => {
       const { children, open, value, labelFn } = props;
@@ -127,8 +123,8 @@ function Filter({ data, setProfiles }) {
         </AccordionSummary>
         <AccordionDetails eventKey="0">
           <Card.Body>
-            <div className="d-flex filter__card__title justify-content-between">
-              <p className="filter__card__title__text">Lorem</p>
+            <div className="d-flex filter__card__title justify-content-between align-items-center">
+              <p className="filter__card__title__text m-0">Lorem</p>
               <div className="d-flex filter__card__title__controls">
                 <input
                   type="text"
@@ -272,47 +268,58 @@ function Filter({ data, setProfiles }) {
           className="filter__card__header"
           expandIcon={<span class="material-icons">expand_more</span>}
         >
-          Income
+          Age
         </AccordionSummary>
         <AccordionDetails eventKey="0">
           <Card.Body>
-            <div className="d-flex filter__card__title justify-content-between">
-              <p className="filter__card__title__text">Lorem</p>
+            <div className="d-flex filter__card__title justify-content-between align-items-center">
+              <p className="filter__card__title__text m-0">Lorem</p>
               <div className="d-flex filter__card__title__controls">
                 <input
                   type="text"
-                  value={incomeValue[0]}
+                  value={filterData?.age?.from}
                   onChange={({ target: { value } }) =>
-                    setIncomeValue([value, incomeValue[1]])
+                    setFilterData({
+                      ...filterData,
+                      age: { ...filterData?.age, from: value }
+                    })
                   }
                 />
                 <hr className="filter__card__title__controls__separator" />
                 <input
                   type="text"
-                  value={incomeValue[1]}
+                  value={filterData?.age?.to}
                   onChange={({ target: { value } }) =>
-                    setIncomeValue([incomeValue[0], value])
+                    setFilterData({
+                      ...filterData,
+                      age: { ...filterData?.age, to: value }
+                    })
                   }
                 />
               </div>
             </div>
             <Slider
-              className="filter__form__income"
-              value={incomeValue}
-              onChange={incomeChange}
-              min={0}
-              max={30}
+              className="filter__form__height my-2"
+              value={[filterData?.age?.from, filterData?.age?.to]}
+              onChange={(e, newValue) => handleSlide("age", newValue)}
+              min={18}
+              max={60}
+              step={1}
               valueLabelDisplay="auto"
               aria-labelledby="range-slider"
+              getAriaValueText={ageText}
               ValueLabelComponent={props =>
-                ValueLabelComponent({ ...props, labelFn: incomeText })
+                ValueLabelComponent({ ...props, labelFn: ageText })
               }
             />
-            <div className="filter__form__income__actions">
-              <Button className="filter__form__income__actions__positive">
+            <div className="filter__form__height__actions mt-3">
+              <Button
+                className="filter__form__height__actions__positive"
+                onClick={applyFilter}
+              >
                 APPLY
               </Button>
-              <Button className="filter__form__income__actions__negative">
+              <Button className="filter__form__height__actions__negative">
                 CLEAR
               </Button>
             </div>

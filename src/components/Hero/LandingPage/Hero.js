@@ -4,8 +4,8 @@ import HeroBanner from "./HeroBanner";
 
 function Hero({ data: { isSmallBanner, ...bannerProps }, children}) {
   return (
-    <div className={"col-lg-10 " + (isSmallBanner ? "banner" : "hero")}>
-      <HeroBanner {...bannerProps} className="col-lg-6" />
+    <div className={"col-xl-10 justify-content-center " + (isSmallBanner ? "banner" : "hero")}>
+      <HeroBanner {...bannerProps} />
       {children}
     </div>
   );

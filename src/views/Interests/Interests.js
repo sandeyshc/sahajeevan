@@ -122,7 +122,7 @@ function Interests() {
                   key={card?.profile_id}
                   isPremium={true}
                   profileImage={profileImage1}
-                  card={{ ...card, name: card?.name }}
+                  card={card}
                 ></ProfileCard>
               ))}
               {loading && <Spinner animation="border" />}

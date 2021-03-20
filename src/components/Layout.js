@@ -12,7 +12,7 @@ function Layout({ children, heroImg, heroData, bannerContent }) {
     <div className="layout">
       <div className="layout__header">
         <Image src={heroImg} className="layout__header__hero__image" alt="hero image" />
-        <Header isLoggedIn={heroData?.isLoggedIn} />
+        <Header />
         <Hero data={heroData}>
           {bannerContent}
         </Hero>

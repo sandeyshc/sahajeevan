@@ -75,25 +75,26 @@ function Search() {
     };
 
   useEffect(() => {
-    OptionsSuccess && setFormData({
-      gender: Options?.results?.gender[0].key,
-      age: {
-        from: 18,
-        to: 18
-      },
-      religion: Options?.results?.religion[0],
-      height: {
-        from: Options?.results?.height[0].key,
-        to: Options?.results?.height[0].key
-      },
-      location: [Options?.results?.location[0]],
-      marital_status: [Options?.results?.marital_status[0]],
-      caste: [],
-      mother_tongue: [Options?.results?.mother_tongue[0]],
-      occupation: [Options?.results?.occupation[0]],
-      qualification: [Options?.results?.qualification[0]],
-      income: [Options?.results?.income[0]]
-    });
+    OptionsSuccess &&
+      setFormData({
+        gender: Options?.results?.gender[0].key,
+        age: {
+          from: 23,
+          to: 28
+        },
+        religion: Options?.results?.religion[0],
+        height: {
+          from: 5,
+          to: 5.5
+        },
+        location: [Options?.results?.location[0]],
+        marital_status: [Options?.results?.marital_status[0]],
+        caste: [Options?.results?.caste[Options?.results?.religion[0].value][0]],
+        mother_tongue: [Options?.results?.mother_tongue[0]],
+        occupation: [Options?.results?.occupation[0]],
+        qualification: [Options?.results?.qualification[0]],
+        income: [Options?.results?.income[0]]
+      });
   }, [OptionsSuccess]);
   return (
     <Layout heroImg={Hero} heroData={heroData}>
@@ -125,6 +126,7 @@ function Search() {
                     >
                       {Options?.results?.gender.map(gen => (
                         <FormControlLabel
+                          key={gen.key}
                           value={gen.key}
                           control={<Radio color="primary" />}
                           label={gen.value}
@@ -135,10 +137,12 @@ function Search() {
                 </div>
               </div>
               <div className="search__form__controls__group mb-3">
-                <p className="search__form__controls__group__label">Age</p>
+                <p className="search__form__controls__group__label">Age*</p>
                 <div className="search__form__controls__group__wrapper">
                   <TextField
                     type="number"
+                    required
+                    error={!formData?.age?.from}
                     InputProps={{ inputProps: { min: 18 } }}
                     value={formData?.age?.from}
                     name="from"
@@ -152,6 +156,8 @@ function Search() {
 
                   <TextField
                     type="number"
+                    required
+                    error={!formData?.age?.to}
                     InputProps={{ inputProps: { min: 18 } }}
                     value={formData?.age?.to}
                     name="to"
@@ -165,14 +171,23 @@ function Search() {
                 </div>
               </div>
               <div className="search__form__controls__group  mb-3">
-                <p className="search__form__controls__group__label">Location</p>
+                <p className="search__form__controls__group__label">Location*</p>
                 <div className="search__form__controls__group__wrapper">
                   <Select
+                    required
+                    error={!formData?.location?.length}
                     labelId="location"
                     className="w-100 my-2"
                     id="location"
                     name="location"
                     multiple
+                    MenuProps={{
+                      getContentAnchorEl: null,
+                      anchorOrigin: {
+                        vertical: "bottom",
+                        horizontal: "left"
+                      }
+                    }}
                     value={formData?.location}
                     onChange={({ target: { name, value } }) =>
                       handleChange({ [name]: value })
@@ -193,7 +208,7 @@ function Search() {
                             }
                             deleteIcon={
                               <span
-                                class="text-dark"
+                                className="text-dark"
                                 onMouseDown={event => event.stopPropagation()}
                               >
                                 &#10005;
@@ -213,12 +228,21 @@ function Search() {
                 </div>
               </div>
               <div className="search__form__controls__group mb-3">
-                <p className="search__form__controls__group__label">Height</p>
+                <p className="search__form__controls__group__label">Height*</p>
                 <div className="search__form__controls__group__wrapper">
                   <Select
+                    required
+                    error={!formData?.height?.from}
                     labelId="demo-simple-select-label"
                     value={+formData?.height?.from}
                     name="from"
+                    MenuProps={{
+                      getContentAnchorEl: null,
+                      anchorOrigin: {
+                        vertical: "bottom",
+                        horizontal: "left"
+                      }
+                    }}
                     className="search__form__controls__group__wrapper__control w-100"
                     onChange={({ target: { name, value } }) =>
                       handleChange({
@@ -235,8 +259,17 @@ function Search() {
 
                   <Select
                     name="to"
+                    required
+                    error={!formData?.height?.to}
                     className="search__form__controls__group__wrapper__control w-100"
                     value={+formData?.height?.to}
+                    MenuProps={{
+                      getContentAnchorEl: null,
+                      anchorOrigin: {
+                        vertical: "bottom",
+                        horizontal: "left"
+                      }
+                    }}
                     onChange={({ target: { name, value } }) =>
                       handleChange({
                         height: { ...formData?.height, [name]: value }
@@ -262,6 +295,13 @@ function Search() {
                     id="marital_status"
                     name="marital_status"
                     multiple
+                    MenuProps={{
+                      getContentAnchorEl: null,
+                      anchorOrigin: {
+                        vertical: "bottom",
+                        horizontal: "left"
+                      }
+                    }}
                     value={formData?.marital_status}
                     onChange={({ target: { name, value } }) =>
                       handleChange({ [name]: value })
@@ -282,7 +322,7 @@ function Search() {
                             }
                             deleteIcon={
                               <span
-                                class="text-dark"
+                                className="text-dark"
                                 onMouseDown={event => event.stopPropagation()}
                               >
                                 &#10005;
@@ -302,14 +342,23 @@ function Search() {
                 </div>
               </div>
               <div className="search__form__controls__group  mb-3">
-                <p className="search__form__controls__group__label">Religion</p>
+                <p className="search__form__controls__group__label">Religion*</p>
                 <div className="search__form__controls__group__wrapper">
                   <Select
+                    required
+                    error={!formData?.religion?.key}
                     labelId="religion"
                     className="w-100 my-2"
                     id="religion"
+                    MenuProps={{
+                      getContentAnchorEl: null,
+                      anchorOrigin: {
+                        vertical: "bottom",
+                        horizontal: "left"
+                      }
+                    }}
                     name="religion"
-                    value={formData?.religion || ''}
+                    value={formData?.religion || ""}
                     onChange={({ target: { name, value } }) =>
                       handleChange({ [name]: value, caste: [] })
                     }
@@ -324,13 +373,22 @@ function Search() {
                 </div>
               </div>
               <div className="search__form__controls__group  mb-3">
-                <p className="search__form__controls__group__label">Caste</p>
+                <p className="search__form__controls__group__label">Caste*</p>
                 <div className="search__form__controls__group__wrapper">
                   <Select
+                    required
+                    error={!formData?.caste?.length}
                     labelId="caste"
                     className="w-100 my-2"
                     id="caste"
                     name="caste"
+                    MenuProps={{
+                      getContentAnchorEl: null,
+                      anchorOrigin: {
+                        vertical: "bottom",
+                        horizontal: "left"
+                      }
+                    }}
                     disabled={!formData.religion}
                     multiple
                     value={formData?.caste}
@@ -354,7 +412,7 @@ function Search() {
                               }
                               deleteIcon={
                                 <span
-                                  class="text-dark"
+                                  className="text-dark"
                                   onMouseDown={event => event.stopPropagation()}
                                 >
                                   &#10005;
@@ -378,14 +436,23 @@ function Search() {
               </div>
               <div className="search__form__controls__group  mb-3">
                 <p className="search__form__controls__group__label">
-                  Mother Tongue
+                  Mother Tongue*
                 </p>
                 <div className="search__form__controls__group__wrapper">
                   <Select
+                    required
+                    error={!formData?.mother_tongue?.length}
                     labelId="mother_tongue"
                     className="w-100 my-2"
                     id="mother_tongue"
                     name="mother_tongue"
+                    MenuProps={{
+                      getContentAnchorEl: null,
+                      anchorOrigin: {
+                        vertical: "bottom",
+                        horizontal: "left"
+                      }
+                    }}
                     multiple
                     value={formData?.mother_tongue}
                     onChange={({ target: { name, value } }) =>
@@ -407,7 +474,7 @@ function Search() {
                             }
                             deleteIcon={
                               <span
-                                class="text-dark"
+                                className="text-dark"
                                 onMouseDown={event => event.stopPropagation()}
                               >
                                 &#10005;
@@ -436,6 +503,13 @@ function Search() {
                     className="w-100 my-2"
                     id="occupation"
                     name="occupation"
+                    MenuProps={{
+                      getContentAnchorEl: null,
+                      anchorOrigin: {
+                        vertical: "bottom",
+                        horizontal: "left"
+                      }
+                    }}
                     multiple
                     value={formData?.occupation}
                     onChange={({ target: { name, value } }) =>
@@ -457,7 +531,7 @@ function Search() {
                             }
                             deleteIcon={
                               <span
-                                class="text-dark"
+                                className="text-dark"
                                 onMouseDown={event => event.stopPropagation()}
                               >
                                 &#10005;
@@ -487,6 +561,13 @@ function Search() {
                     id="qualification"
                     name="qualification"
                     multiple
+                    MenuProps={{
+                      getContentAnchorEl: null,
+                      anchorOrigin: {
+                        vertical: "bottom",
+                        horizontal: "left"
+                      }
+                    }}
                     value={formData?.qualification}
                     onChange={({ target: { name, value } }) =>
                       handleChange({ [name]: value })
@@ -507,7 +588,7 @@ function Search() {
                             }
                             deleteIcon={
                               <span
-                                class="text-dark"
+                                className="text-dark"
                                 onMouseDown={event => event.stopPropagation()}
                               >
                                 &#10005;
@@ -534,6 +615,13 @@ function Search() {
                     className="w-100 my-2"
                     id="income"
                     name="income"
+                    MenuProps={{
+                      getContentAnchorEl: null,
+                      anchorOrigin: {
+                        vertical: "bottom",
+                        horizontal: "left"
+                      }
+                    }}
                     multiple
                     value={formData?.income}
                     onChange={({ target: { name, value } }) =>
@@ -555,7 +643,7 @@ function Search() {
                             }
                             deleteIcon={
                               <span
-                                class="text-dark"
+                                className="text-dark"
                                 onMouseDown={event => event.stopPropagation()}
                               >
                                 &#10005;
@@ -576,10 +664,7 @@ function Search() {
               </div>
             </div>
             <div className="search__form__actions">
-              <Button
-                type="submit"
-                className="search__form__actions__search"
-              >
+              <Button type="submit" className="search__form__actions__search">
                 <Image src={SaveSearch} alt="search" height={22} />
                 SEARCH
               </Button>

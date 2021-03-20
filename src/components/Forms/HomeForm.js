@@ -8,7 +8,7 @@ import INTERESTS from "../../assets/icons/svg icon/Received Interests.svg";
 
 function HomeForm() {
   return (
-    <section className="homeForm col-lg-6 d-none d-xl-block">
+    <section className="homeForm col-lg-6">
       <Row className="homeForm__header">
         <Image src={USER} alt="user image" height="130" />
         <Col className="homeForm__header__content">

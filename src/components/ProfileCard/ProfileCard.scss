@@ -141,7 +141,6 @@
           white-space: nowrap;
 
           &__picture {
-            display: none;
           }
 
           &__personal {
@@ -250,13 +249,13 @@
 
             &__count {
               position: absolute;
-              width: 10px;
-              height: 10px;
-              background-color: #ecbf50;
-              top: 10%;
+              width: 15px;
+              height: 15px;
+              background-color: #de3545;
+              top: -10%;
               right: 10%;
               border-radius: 50%;
-              font-size: 9px;
+              font-size: 11px;
               color: white;
               display: flex;
               justify-content: center;
@@ -413,7 +412,6 @@
 
           &__details {
             &__picture {
-              display: none;
             }
 
             &__personal {
@@ -439,6 +437,23 @@
               img {
                 display: none;
               }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .search-profile {
+    .profile {
+      &__card {
+        max-height: max-content;
+        &__left {
+          &__container {
+            &__img {
+              max-height: 200px;
             }
           }
         }

@@ -10,10 +10,10 @@ import Drawer from "@material-ui/core/Drawer";
 
 import { Navbar, Nav, NavLink, NavDropdown, Image } from "react-bootstrap";
 import { Dialog } from "../";
-import { logout } from "../../services/api.js";
+import { logout, isAuthenticated } from "../../services/api.js";
 import DrawerContent from "../DrawerContent/DrawerContent";
 
-function Header({ isLoggedIn }) {
+function Header() {
   const landLinks = [
       { text: "SEARCH ME", link: "home" },
       { text: "MEMBERSHIP PLANS", link: "searchresults" },
@@ -40,7 +40,10 @@ function Header({ isLoggedIn }) {
   return (
     <div className="header">
       <Drawer anchor="right" open={drawerState} onClose={toggleDrawer}>
-        <DrawerContent close={toggleDrawer}></DrawerContent>
+        <DrawerContent
+          close={toggleDrawer}
+          handleModal={handleModal}
+        ></DrawerContent>
       </Drawer>
       <Navbar className="header__nav justify-content-between">
         <Navbar.Brand className="header__nav__brand">
@@ -57,10 +60,10 @@ function Header({ isLoggedIn }) {
           className="header__menu text-white d-sm-flex d-xl-none"
           onClick={toggleDrawer}
         >
-          <span class="material-icons header__menu__icon">menu</span>
+          <span className="material-icons header__menu__icon">menu</span>
         </div>
         <Nav className="d-xl-flex d-none">
-          {isLoggedIn ? (
+          {isAuthenticated() ? (
             <>
               <NavLink className="header__nav__link" as={Link} to="/home">
                 Home
