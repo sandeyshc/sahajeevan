@@ -75,7 +75,7 @@ function Footer() {
                     alt="location"
                     className="footer__contact__content__item__icon"
                   />
-                  <p className="footer__contact__content__item__text">
+                  <p className="footer__contact__content__item__text text-left">
                     Lorem Ipsum is simply dummy text of the printing and
                     typesetting.
                   </p>

@@ -1,18 +1,18 @@
 .stepper {
+  div {
     div {
+      div {
         div {
-            div {
-                div {
-                    display: flex !important;
-                    align-items: center;
-                    justify-content: center;
-                }
-            }
+          display: flex !important;
+          align-items: center;
+          justify-content: center;
         }
+      }
     }
+  }
 }
 .stepForm {
-    margin-top: 30px;
+  margin-top: 30px;
   &__group {
     padding: 0;
   }
@@ -38,6 +38,8 @@
   &__actions {
     flex-wrap: nowrap;
     margin: 20px auto;
+    align-items: center;
+    justify-content: center;
     .btn {
       margin: 0 10px;
       font-weight: 500;
@@ -137,6 +139,20 @@
 
     &__privacy {
       margin-left: 5px;
+    }
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .stepForm {
+    &__actions {
+      .btn {
+        margin: 10px;
+      }
+    }
+    &__save,
+    &__submit {
+      width: 100%;
     }
   }
 }

@@ -40,7 +40,10 @@ function Header({ isLoggedIn }) {
   return (
     <div className="header">
       <Drawer anchor="right" open={drawerState} onClose={toggleDrawer}>
-        <DrawerContent close={toggleDrawer}></DrawerContent>
+        <DrawerContent
+          close={toggleDrawer}
+          handleModal={handleModal}
+        ></DrawerContent>
       </Drawer>
       <Navbar className="header__nav justify-content-between">
         <Navbar.Brand className="header__nav__brand">

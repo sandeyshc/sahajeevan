@@ -4,6 +4,8 @@ import { logout } from "./api";
 const URLS = {
   PREMIUM: "/profile/get-premium-matches",
   PROFILEVISITORS: "/profile/get-profile-visitors",
+  NEARBYMATCHES: "/profile/get-nearby-matches",
+  DAILYRECOMMENDATIONS: "/profile/get-daily-recommendations",
   RECEIVEDINTERESTS: "/profile/get-received-interests",
   ACCEPTEDME: "/profile/get-who-accepted-me",
   ACCEPTEDBYME: "/profile/get-accepted-by-me",
@@ -68,6 +70,14 @@ const APIGetCall = async url => {
 
 export const premiumMatches = async () => {
   return await APIGetCall(process.env.REACT_APP_BASE_URL + URLS.PREMIUM);
+};
+
+export const nearbyMatches = async () => {
+  return await APIGetCall(process.env.REACT_APP_BASE_URL + URLS.NEARBYMATCHES);
+};
+
+export const dailyRecommendations = async () => {
+  return await APIGetCall(process.env.REACT_APP_BASE_URL + URLS.DAILYRECOMMENDATIONS);
 };
 
 export const profileVisitors = async () => {

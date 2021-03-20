@@ -142,7 +142,7 @@ function StepForm({ setActive, close }) {
         setActive(activeStep + 1);
       } else {
         close();
-        history.push('/home');
+        history.push("/home");
       }
     },
     backStep = () => {
@@ -266,7 +266,7 @@ function StepForm({ setActive, close }) {
       <Form className="stepForm" onSubmit={handleSubmit}>
         {activeStep === 0 && (
           <>
-            <Form.Row className="stepForm__group">
+            <Form.Row className="stepForm__group flex-column flex-lg-row">
               {!!CreateProfileError && (
                 <Form.Control.Feedback
                   type="invalid"
@@ -320,7 +320,7 @@ function StepForm({ setActive, close }) {
                 />
               </Form.Group>
             </Form.Row>
-            <Form.Row className="stepForm__group">
+            <Form.Row className="stepForm__group flex-column flex-lg-row">
               <Form.Group as={Col} controlId="residing">
                 <Form.Label className="stepForm__label">Location</Form.Label>
                 <Form.Control
@@ -356,7 +356,7 @@ function StepForm({ setActive, close }) {
                 </Form.Control>
               </Form.Group>
             </Form.Row>
-            <Form.Row>
+            <Form.Row className="stepForm__group flex-column flex-lg-row">
               <Form.Group as={Col} controlId="gender">
                 <Form.Label className="stepForm__label">Gender</Form.Label>
                 <Form.Control
@@ -400,7 +400,7 @@ function StepForm({ setActive, close }) {
         )}
         {activeStep === 1 && (
           <>
-            <Form.Row className="stepForm__group">
+            <Form.Row className="stepForm__group flex-column flex-lg-row">
               <Form.Group as={Col} controlId="religion">
                 <Form.Label className="stepForm__label">Religion</Form.Label>
                 <Form.Control
@@ -437,7 +437,7 @@ function StepForm({ setActive, close }) {
                 </Form.Control>
               </Form.Group>
             </Form.Row>
-            <Form.Row className="stepForm__group">
+            <Form.Row className="stepForm__group flex-column flex-lg-row">
               <Form.Group as={Col} controlId="mothertongue">
                 <Form.Label className="stepForm__label">
                   Mother Tongue
@@ -499,7 +499,7 @@ function StepForm({ setActive, close }) {
         )}
         {activeStep === 2 && (
           <>
-            <Form.Row className="stepForm__group">
+            <Form.Row className="stepForm__group flex-column flex-lg-row">
               <Form.Group as={Col} controlId="father">
                 <Form.Label className="stepForm__label">Father Is</Form.Label>
                 <Form.Control
@@ -536,7 +536,7 @@ function StepForm({ setActive, close }) {
                 </Form.Control>
               </Form.Group>
             </Form.Row>
-            <Form.Row className="stepForm__group">
+            <Form.Row className="stepForm__group flex-column flex-lg-row">
               <Form.Group as={Col} controlId="brother">
                 <Form.Label className="stepForm__label">Brothers</Form.Label>
                 <Form.Control
@@ -593,7 +593,7 @@ function StepForm({ setActive, close }) {
         )}
         {activeStep === 3 && (
           <>
-            <Form.Row className="stepForm__group">
+            <Form.Row className="stepForm__group flex-column flex-lg-row">
               <Form.Group as={Col} controlId="partner_for">
                 <Form.Label className="stepForm__label">Looking For</Form.Label>
                 <Form.Control
@@ -626,7 +626,7 @@ function StepForm({ setActive, close }) {
                 </Form.Control>
               </Form.Group>
             </Form.Row>
-            <Form.Row className="stepForm__group">
+            <Form.Row className="stepForm__group flex-column flex-lg-row">
               <Form.Group as={Col} controlId="partner_income">
                 <Form.Label className="stepForm__label">Income</Form.Label>
                 <Form.Control
@@ -696,9 +696,9 @@ function StepForm({ setActive, close }) {
             </Form.Group>
           </>
         )}
-        <Row className="stepForm__actions col-lg-10">
+        <Row className="stepForm__actions flex-column flex-sm-row col-12 col-lg-10">
           <Button
-            className="stepForm__save"
+            className="stepForm__save "
             onClick={nextStep}
             disabled={activeStep < 2}
           >

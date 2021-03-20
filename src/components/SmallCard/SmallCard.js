@@ -14,6 +14,10 @@ function SmallCard({
     total_photos,
     location,
     birth_date,
+    age,
+    caste,
+    marital_status,
+    religion,
   },
   children,
 }) {
@@ -33,11 +37,11 @@ function SmallCard({
       </button>
       {children}
       <div className="smallcard__content">
-        <p className="smallcard__content__title pb-2">{name}</p>
-        <p className="smallcard__content__location">{birth_date}</p>
-        <p className="smallcard__content__location">{mother_tongue}</p>
+        <p className="smallcard__content__title pb-2">{name}, {age} yrs, {height}</p>
+        <p className="smallcard__content__location">{religion}-{caste}</p>
+        <p className="smallcard__content__location">{mother_tongue}, {location}</p>
         <p className="smallcard__content__profession">{occupation}</p>
-        <p className="smallcard__content__profession">{location}</p>
+        <p className="smallcard__content__profession">{marital_status}</p>
       </div>
     </Card>
   );
