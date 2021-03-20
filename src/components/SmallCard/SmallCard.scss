@@ -89,6 +89,16 @@
             text-overflow: ellipsis;
             position: relative;
             color: #6b6b6b;
+
+            &::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                height: 3px;
+                width: 50px;
+                background: linear-gradient(to right, #d75474 40%, transparent 40% 60%, #d75474 60% 100%);
+            }
         }
 
         &__location,

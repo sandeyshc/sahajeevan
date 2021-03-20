@@ -19,41 +19,44 @@ function Home() {
         language: "Hindi-Delhi, kashmiri",
         education: "M.Com, other",
         profession: "Rs 2 - 3 Lakh, BPO/ITES Profession",
-        pictureCount: 3,
+        pictureCount: 3
       },
       {
         title: "28, 5' 0'', Delhi and allahabad, Uttarpradesh",
         language: "Hindi-Delhi, kashmiri",
         education: "M.Com, other",
         profession: "Rs 2 - 3 Lakh, BPO/ITES Profession",
-        pictureCount: 3,
+        pictureCount: 3
       },
       {
         title: "28, 5' 0'', Delhi and allahabad, Uttarpradesh",
         language: "Hindi-Delhi, kashmiri",
         education: "M.Com, other",
         profession: "Rs 2 - 3 Lakh, BPO/ITES Profession",
-        pictureCount: 2,
+        pictureCount: 2
       },
       {
         title: "28, 5' 0'', Delhi and allahabad, Uttarpradesh",
         language: "Hindi-Delhi, kashmiri",
         education: "M.Com, other",
         profession: "Rs 2 - 3 Lakh, BPO/ITES Profession",
-        pictureCount: 4,
-      },
+        pictureCount: 4
+      }
     ],
     heroData = {
       isLoggedIn: true,
       title: "Lorem ipsum is simply dummy text of the printing.",
       subtitle:
         "Lorem ipsum is simply dummy text for printing and typesetting industry. Loreum ipsum has been the industry's.",
-      btnText: "Upgrade",
+      btnText: "Upgrade"
     },
-    { data: premiumCards } = useQuery("premiumMatches", premiumMatches),
+    { data: premiumCards } = useQuery("premiumMatches", premiumMatches, {
+      refetchOnWindowFocus: false
+    }),
     { data: profileVisitorsCards } = useQuery(
       "profileVisitorsCards",
-      profileVisitors
+      profileVisitors,
+      { refetchOnWindowFocus: false }
     ),
     [visitorIndex, setVisitorIndex] = useState(0),
     [nearByIndex, setNearByIndex] = useState(0),

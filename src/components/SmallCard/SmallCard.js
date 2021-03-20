@@ -33,7 +33,7 @@ function SmallCard({
       </button>
       {children}
       <div className="smallcard__content">
-        <p className="smallcard__content__title">{name}</p>
+        <p className="smallcard__content__title pb-2">{name}</p>
         <p className="smallcard__content__location">{birth_date}</p>
         <p className="smallcard__content__location">{mother_tongue}</p>
         <p className="smallcard__content__profession">{occupation}</p>
