@@ -53,7 +53,8 @@ function Home() {
       title: "Lorem ipsum is simply dummy text of the printing.",
       subtitle:
         "Lorem ipsum is simply dummy text for printing and typesetting industry. Loreum ipsum has been the industry's.",
-      btnText: "Upgrade"
+      btnText: "Upgrade",
+      className: 'd-none d-lg-block'
     },
     { data: premiumCards } = useQuery("premiumMatches", premiumMatches, {
       refetchOnWindowFocus: false
@@ -80,7 +81,7 @@ function Home() {
 
   return (
     <Layout heroImg={Hero} heroData={heroData} bannerContent={<HomeForm />}>
-      <section className="section col-lg-10 col-12">
+      <section className="section col-xl-10 col-12">
         <div className="section__header">
           <div className="section__header__title">
             <p className="section__header__title__text">
@@ -96,7 +97,7 @@ function Home() {
           </div>
           <div className="section__header__actions">
             <button
-              className="section__header__actions__left"
+              className="section__header__actions__left d-none d-lg-inline-block"
               onClick={() =>
                 setVisitorIndex(
                   visitorIndex > 0 ? visitorIndex - 1 : visitorIndex
@@ -106,7 +107,7 @@ function Home() {
               <Image src={Left} alt="left icon" height="15" />
             </button>
             <button
-              className="section__header__actions__right"
+              className="section__header__actions__right d-none d-lg-inline-block"
               onClick={() =>
                 setVisitorIndex(
                   visitorIndex < 1 ? visitorIndex + 1 : visitorIndex
@@ -140,7 +141,7 @@ function Home() {
         </div>
       </section>
 
-      <section className="section col-lg-10 col-12">
+      <section className="section col-xl-10 col-12">
         <div className="section__header">
           <div className="section__header__title">
             <p className="section__header__title__text">
@@ -156,7 +157,7 @@ function Home() {
           </div>
           <div className="section__header__actions">
             <button
-              className="section__header__actions__left"
+              className="section__header__actions__left d-none d-lg-inline-block"
               onClick={() =>
                 setNearByIndex(nearByIndex > 0 ? nearByIndex - 1 : nearByIndex)
               }
@@ -164,7 +165,7 @@ function Home() {
               <Image src={Left} alt="left icon" height="15" />
             </button>
             <button
-              className="section__header__actions__right"
+              className="section__header__actions__right d-none d-lg-inline-block"
               onClick={() =>
                 setNearByIndex(nearByIndex < 1 ? nearByIndex + 1 : nearByIndex)
               }
@@ -196,7 +197,7 @@ function Home() {
         </div>
       </section>
 
-      <section className="section col-lg-10 col-12">
+      <section className="section col-xl-10 col-12">
         <div className="section__header">
           <div className="section__header__title">
             <p className="section__header__title__text">
@@ -210,7 +211,7 @@ function Home() {
           </div>
           <div className="section__header__actions">
             <button
-              className="section__header__actions__left"
+              className="section__header__actions__left d-none d-lg-inline-block"
               onClick={() =>
                 setRecommendationIndex(
                   recommendationIndex > 0
@@ -222,7 +223,7 @@ function Home() {
               <Image src={Left} alt="left icon" height="15" />
             </button>
             <button
-              className="section__header__actions__right"
+              className="section__header__actions__right d-none d-lg-inline-block"
               onClick={() =>
                 setRecommendationIndex(
                   recommendationIndex < 1
@@ -258,7 +259,7 @@ function Home() {
         </div>
       </section>
 
-      <section className="section col-lg-10 col-12">
+      <section className="section col-xl-10 col-12">
         <div className="section__header">
           <div className="section__header__title">
             <p className="section__header__title__text">
@@ -274,7 +275,7 @@ function Home() {
           </div>
           <div className="section__header__actions">
             <button
-              className="section__header__actions__left"
+              className="section__header__actions__left d-none d-lg-inline-block"
               onClick={() =>
                 setPremiumIndex(
                   premiumIndex > 0 ? premiumIndex - 1 : premiumIndex
@@ -284,7 +285,7 @@ function Home() {
               <Image src={Left} alt="left icon" height="15" />
             </button>
             <button
-              className="section__header__actions__right"
+              className="section__header__actions__right d-none d-lg-inline-block"
               onClick={() =>
                 setPremiumIndex(
                   premiumIndex < 1 ? premiumIndex + 1 : premiumIndex

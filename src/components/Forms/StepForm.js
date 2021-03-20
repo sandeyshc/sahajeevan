@@ -21,7 +21,7 @@ import { DateTime } from "luxon";
 
 function StepForm({ setActive, close }) {
   const [activeStep, setActiveStep] = useState(0),
-    [profileData, setProfileData] = useState(0),
+    [profileData, setProfileData] = useState({}),
     {
       data: {
         results: {
@@ -218,10 +218,12 @@ function StepForm({ setActive, close }) {
               from: 4.5,
               to: 5.5
             },
-            marital_status: [1, 2, 3, 4],
+            marital_status: marital_status.filter(v => v.key),
             mother_tongue: [profileData.mother_tongue],
-            religion: profileData.religion,
-            caste: [profileData.caste]
+            religion: religion?.filter(
+              val => val.value === profileData.religion
+            )[0]?.key,
+            caste: caste[profileData.religion].map(v => v.key)
           });
           history.push("/searchresults");
           break;

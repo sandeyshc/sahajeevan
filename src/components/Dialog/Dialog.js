@@ -35,7 +35,7 @@ function Dialog({ show, onHide, type, data }) {
     getModalContent = (type) => {
       switch (type) {
         case Modals.login:
-          return <LoginForm close={onHide} />;
+          return <LoginForm close={onHide} modalData={data} />;
         case Modals.register:
           return <RegisterForm close={onHide} />;
         case Modals.otp:

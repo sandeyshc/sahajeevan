@@ -25,6 +25,7 @@ function ProfileCard({
   card: {
     name,
     id,
+    age,
     premium,
     display_id,
     profile_photo_url,
@@ -33,9 +34,13 @@ function ProfileCard({
     occupation,
     qualification,
     marital_status,
+    mother_tongue,
+    location,
     religion,
     caste,
-    online
+    online,
+    preference_match,
+    total_photos
   }
 }) {
   const uploadPhoto = () => {
@@ -66,8 +71,8 @@ function ProfileCard({
   }, [isError]);
   return (
     <section className={isFullCard ? "profile" : "search-profile"}>
-      <Card className="profile__card">
-        <Col className="profile__card__left" lg={4} md={4} sm={12}>
+      <Card className="profile__card flex-column flex-sm-row">
+        <Col className="profile__card__left" sm={4} xs={12}>
           <div className="profile__card__left__container">
             <Image
               src={profile_photo_url || dummyImage}
@@ -81,26 +86,15 @@ function ProfileCard({
                 className="profile__card__left__container__premium"
               />
             )}
-            {!!profileImage && (
-              <>
-                <input
-                  type="file"
-                  name="upload"
-                  className="profile__card__left__container__upload"
-                  accept=".jpg,.png,.jpeg"
-                />
-                <a
-                  href="javascript:void(0)"
-                  className="profile__card__left__container__camera"
-                  onClick={uploadPhoto}
-                >
-                  <Image src={Camera} alt="camera" height="28" />
-                  <span className="profile__card__left__container__camera__count">
-                    8
-                  </span>
-                </a>
-              </>
-            )}
+            <a
+              href="javascript:void(0)"
+              className="profile__card__left__container__camera"
+            >
+              <Image src={Camera} alt="camera" height="28" />
+              <span className="profile__card__left__container__camera__count">
+                {total_photos}
+              </span>
+            </a>
 
             <a
               href="javascript:void(0)"
@@ -110,7 +104,7 @@ function ProfileCard({
             </a>
           </div>
         </Col>
-        <Col className="profile__card__right" lg={8} md={8} sm={12}>
+        <Col className="profile__card__right" sm={8}>
           <div className="profile__card__right__container">
             <Row className="profile__card__right__container__header">
               <p className="profile__card__right__container__header__name d-flex align-items-center">
@@ -120,7 +114,7 @@ function ProfileCard({
                 ></div>
                 {name} ({display_id})
               </p>
-              <p className="profile__card__right__container__header__seen">
+              <p className="profile__card__right__container__header__seen d-none d-md-block">
                 <Image
                   src={Calendar}
                   alt="Calendar"
@@ -133,32 +127,38 @@ function ProfileCard({
             <Row className="profile__card__right__container__details">
               <Col className="profile__card__right__container__details__picture col-lg-3">
                 <Card>
-                  <Image
-                    src={Graph}
-                    alt="kundli graph"
-                    height={isFullCard ? 90 : 50}
-                  />
+                  <p className="text-center font-weight-bolder text-danger my-3">
+                    {preference_match}
+                  </p>
                   <hr />
                   <p>
                     <Image src={Kundli} alt="Kundli match" height="10" />
-                    Kundli Match
+                    Preference Match
                   </p>
                 </Card>
               </Col>
               <Col className="profile__card__right__container__details__personal col-lg-3">
-                <Row>{height}</Row>
+                <Row>
+                  {age} yrs, {height}
+                </Row>
                 <Row>{qualification}</Row>
-                <Row>{religion}</Row>
-                <Row>{caste}</Row>
+                <Row>
+                  {religion}
+                  <span className="d-inline d-lg-none"> - {caste}</span>
+                </Row>
+                <Row className="d-none d-lg-flex">{caste}</Row>
+                <Row className="d-flex d-lg-none">
+                  {mother_tongue}, {location}
+                </Row>
               </Col>
-              <Col className="profile__card__right__container__details__professional col-lg-5">
-                <Row>Studied at D.Y. Patil, Tilak College</Row>
+              <Col className="profile__card__right__container__details__professional d-none d-lg-block col-lg-5">
+                <Row>{location}</Row>
                 <Row>{occupation}</Row>
                 <Row>Rs. 5 - 7.5 Lakh, Buxar & Amingaon</Row>
                 <Row>{marital_status}</Row>
               </Col>
             </Row>
-            <Row className="profile__card__right__container__actions">
+            <Row className="profile__card__right__container__actions d-none d-sm-flex">
               <button className="profile__card__right__container__actions__view">
                 <Image src={ViewContact} alt="View Contact" height={18} />
                 View Contact
