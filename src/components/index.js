@@ -5,6 +5,7 @@ export { default as SmallCard } from "./SmallCard/SmallCard";
 export { default as CardCarousel } from "./CardCarousel/CardCarousel";
 export { default as ListOptions } from "./ListOptions/ListOptions";
 export { default as Filter } from "./Filter/Filter";
+export { default as EditCard } from "./EditCard/EditCard";
 
 export { default as Dialog } from "./Dialog/Dialog";
 export { default as LandingForm } from "./Forms/LandingForm";

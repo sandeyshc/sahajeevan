@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useParams } from "react-router";
+import { useQuery } from "react-query";
+import { Card, Col, Image, Nav, Row } from "react-bootstrap";
+
 import { Layout, ProfileCard } from "../../components";
 import "./Profile.scss";
-
 import Hero from "../../assets/images/Profile/hero.png";
-import { Card, Col, Image, Nav, Row } from "react-bootstrap";
 
 import About from "../../assets/icons/svg icon/about.svg";
 import Education from "../../assets/icons/svg icon/Page-4.svg";
@@ -16,39 +18,38 @@ import AboutMe from "../../assets/icons/svg icon/About me.svg";
 import PreferenceImg from "../../assets/icons/svg icon/partner preferences.svg";
 
 import ProImg from "../../assets/images/Profile/img.png";
+import { viewProfile } from "../../services/profile";
 
 function Profile() {
-  const heroData = {
-      title: "Profile Preview",
+  const { id } = useParams(),
+    heroData = {
+      title: !!id ? "Profile" : "Preview Profile",
       subtitle:
         "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
       isSmallBanner: true,
-      isLoggedIn: true,
-      profileView: true,
+      profileView: true
     },
-    obj = {
-      birth_date: "2021-02-09",
-      caste: "96 kuli Maratha",
-      height: 5.5,
-      interest_status: "Cancel Interest",
-      last_seen: "2021-02-09T04:48:12Z",
-      location: "Thane",
-      marital_status: "Never Married",
-      mother_tongue: "Marathi",
-      occupation: "Government sector",
-      preference_match: "12/20",
-      profile: "Shrutika B",
-      profile_id: "S_EYTCBK",
-      profile_photo_url: "",
-      religion: "Hindu",
-      total_photos: 9,
-    };
+    { data, isSuccess } = useQuery("profileData", () => viewProfile(id), {
+      refetchOnWindowFocus: false
+    });
+    useEffect(() => {
+      console.log(isSuccess)
+    }, [isSuccess])
   return (
     <Layout heroImg={Hero} heroData={heroData}>
-      <section className="profileCard col-lg-10 col-md-12 col-sm-12">
-        <ProfileCard profileImage={ProImg} isFullCard card={obj}></ProfileCard>
+      <section className="profileCard col-xl-10 col-lg-12 col-md-12 col-sm-12 p-xl-0">
+        {isSuccess && (
+          <ProfileCard
+            isFullCard
+            card={{
+              ...data?.basic_info,
+              birth_date: data?.basic_info?.dob,
+              profile_photo_url: data?.basic_info?.photo_url
+            }}
+          ></ProfileCard>
+        )}
       </section>
-      <section className="profileView col-lg-10 col-md-12 col-sm-12">
+      <section className="profileView col-xl-10 col-lg-12 col-md-12 col-sm-12">
         <Nav
           className="profileView__nav"
           defaultActiveKey="#profileView__about"
@@ -140,18 +141,22 @@ function Profile() {
                   Mother Tongue
                 </p>
                 <p className="profileView__card__content__item__text">
-                  Hindi-Delhi
+                  {data?.basic_info?.mother_tongue || "-"}
                 </p>
               </Row>
               <Row className="profileView__card__content__item">
                 <p className="profileView__card__content__item__label">
                   Religion
                 </p>
-                <p className="profileView__card__content__item__text">Hindu</p>
+                <p className="profileView__card__content__item__text">
+                  {data?.basic_info?.religion || "-"}
+                </p>
               </Row>
               <Row className="profileView__card__content__item">
                 <p className="profileView__card__content__item__label">Caste</p>
-                <p className="profileView__card__content__item__text">Rajput</p>
+                <p className="profileView__card__content__item__text">
+                  {data?.basic_info?.caste || "-"}
+                </p>
               </Row>
             </Col>
             <Col>
@@ -160,7 +165,7 @@ function Profile() {
                   Date Of Birth
                 </p>
                 <p className="profileView__card__content__item__text">
-                  18-05-1990
+                  {data?.basic_info?.dob || "-"}
                 </p>
               </Row>
               <Row className="profileView__card__content__item">
@@ -168,7 +173,7 @@ function Profile() {
                   Qualification
                 </p>
                 <p className="profileView__card__content__item__text">
-                  MBA/PGDM, BBA
+                  {data?.basic_info?.qualification || "-"}
                 </p>
               </Row>
               <Row className="profileView__card__content__item">
@@ -176,7 +181,7 @@ function Profile() {
                   Marital Status
                 </p>
                 <p className="profileView__card__content__item__text">
-                  Never Married
+                  {data?.basic_info?.marital_status || "-"}
                 </p>
               </Row>
             </Col>
@@ -206,7 +211,7 @@ function Profile() {
                   Highest Education
                 </p>
                 <p className="profileView__card__content__item__text">
-                  B.E/B.Tech
+                  {data?.education_and_career?.qualification || "-"}
                 </p>
               </Row>
               <Row className="profileView__card__content__item">
@@ -214,7 +219,7 @@ function Profile() {
                   Other Degreee
                 </p>
                 <p className="profileView__card__content__item__text">
-                  B.E/B.Tech
+                  {data?.education_and_career?.other_degree || "-"}
                 </p>
               </Row>
               <Row className="profileView__card__content__item">
@@ -222,7 +227,7 @@ function Profile() {
                   Organization Name
                 </p>
                 <p className="profileView__card__content__item__text">
-                  D.Y. Patil, Tilak College
+                  {data?.education_and_career?.org_name || "-"}
                 </p>
               </Row>
             </Col>
@@ -232,7 +237,7 @@ function Profile() {
                   Employed In
                 </p>
                 <p className="profileView__card__content__item__text">
-                  Private Sector
+                  {data?.education_and_career?.occupation || "-"}
                 </p>
               </Row>
               <Row className="profileView__card__content__item">
@@ -240,7 +245,7 @@ function Profile() {
                   Occupation
                 </p>
                 <p className="profileView__card__content__item__text">
-                  Admin Professional
+                  {data?.education_and_career?.occupation || "-"}
                 </p>
               </Row>
               <Row className="profileView__card__content__item">
@@ -248,7 +253,7 @@ function Profile() {
                   Annual Income
                 </p>
                 <p className="profileView__card__content__item__text">
-                  Rs. 5 - 7.5 Lakh
+                  {data?.education_and_career?.annual_income || "-"}
                 </p>
               </Row>
             </Col>
@@ -278,7 +283,7 @@ function Profile() {
                   Father is
                 </p>
                 <p className="profileView__card__content__item__text">
-                  Retired
+                  {data?.family_details?.father || "-"}
                 </p>
               </Row>
               <Row className="profileView__card__content__item">
@@ -286,25 +291,25 @@ function Profile() {
                   Mother is
                 </p>
                 <p className="profileView__card__content__item__text">
-                  Housewife
+                  {data?.family_details?.mother || "-"}
                 </p>
               </Row>
               <Row className="profileView__card__content__item">
                 <p className="profileView__card__content__item__label">
-                  Sisters
+                  Sister(s)
                 </p>
                 <p className="profileView__card__content__item__text">
-                  Working
+                  {data?.family_details?.sister || "-"}
                 </p>
               </Row>
             </Col>
             <Col>
               <Row className="profileView__card__content__item">
                 <p className="profileView__card__content__item__label">
-                  Brothers
+                  Brother(s)
                 </p>
                 <p className="profileView__card__content__item__text">
-                  Working
+                  {data?.family_details?.brother || "-"}
                 </p>
               </Row>
               <Row className="profileView__card__content__item">
@@ -312,7 +317,7 @@ function Profile() {
                   Family Type
                 </p>
                 <p className="profileView__card__content__item__text">
-                  Joint Family
+                  {data?.family_details?.type || "-"}
                 </p>
               </Row>
               <Row className="profileView__card__content__item">
@@ -320,7 +325,7 @@ function Profile() {
                   Family Based
                 </p>
                 <p className="profileView__card__content__item__text">
-                  Lorem Ipsum is simply dummy text
+                  {data?.family_details?.based || "-"}
                 </p>
               </Row>
             </Col>
@@ -345,31 +350,13 @@ function Profile() {
           </div>
           <div className="profileView__card__content">
             <p className="profileView__card__content__desc">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially unchanged. It was
-              popularised in the 1960s with the release of Letraset sheets
-              containing Lorem Ipsum passages, and more recently with desktop
-              publishing software like Aldus PageMaker including versions of
-              Lorem Ipsum.
+              {data?.about?.me || "-"}
             </p>
             <p className="profileView__card__content__subheading">
               About My Family
             </p>
             <p className="profileView__card__content__about">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially unchanged. It was
-              popularised in the 1960s with the release of Letraset sheets
-              containing Lorem Ipsum passages, and more recently with desktop
-              publishing software like Aldus PageMaker including versions of
-              Lorem Ipsum.
+              {data?.about?.me || "-"}
             </p>
           </div>
         </Card>
@@ -395,21 +382,23 @@ function Profile() {
               <Row className="profileView__card__content__item">
                 <p className="profileView__card__content__item__label">Age</p>
                 <p className="profileView__card__content__item__text">
-                  29 Years
+                  {data?.partner_preferences?.age?.expected || "-"}
                 </p>
               </Row>
               <Row className="profileView__card__content__item">
                 <p className="profileView__card__content__item__label">
                   Height
                 </p>
-                <p className="profileView__card__content__item__text">5'4"</p>
+                <p className="profileView__card__content__item__text">
+                  {data?.partner_preferences?.height?.expected || "-"}
+                </p>
               </Row>
               <Row className="profileView__card__content__item">
                 <p className="profileView__card__content__item__label">
                   Marital Status
                 </p>
                 <p className="profileView__card__content__item__text">
-                  Never Married
+                  {data?.partner_preferences?.marital_status?.expected || "-"}
                 </p>
               </Row>
             </Col>
@@ -418,12 +407,14 @@ function Profile() {
                 <p className="profileView__card__content__item__label">
                   Religion
                 </p>
-                <p className="profileView__card__content__item__text">Hindu</p>
+                <p className="profileView__card__content__item__text">
+                  {data?.partner_preferences?.religion?.expected || "-"}
+                </p>
               </Row>
               <Row className="profileView__card__content__item">
                 <p className="profileView__card__content__item__label">Caste</p>
                 <p className="profileView__card__content__item__text">
-                  Hindu: Rajput - All
+                  {data?.partner_preferences?.caste?.expected || "-"}
                 </p>
               </Row>
               <Row className="profileView__card__content__item">
@@ -431,7 +422,7 @@ function Profile() {
                   Income
                 </p>
                 <p className="profileView__card__content__item__text">
-                  Rs.2 Lakh and above
+                  {data?.partner_preferences?.income?.expected || "-"}
                 </p>
               </Row>
             </Col>

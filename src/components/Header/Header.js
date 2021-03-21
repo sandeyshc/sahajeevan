@@ -68,7 +68,7 @@ function Header() {
               <NavLink className="header__nav__link" as={Link} to="/home">
                 Home
               </NavLink>
-              <NavLink className="header__nav__link" as={Link} to="/profile/1">
+              <NavLink className="header__nav__link" as={Link} to="/editprofile">
                 My Profile
               </NavLink>
               <NavLink className="header__nav__link" as={Link} to="/search">
@@ -101,14 +101,6 @@ function Header() {
                   className="header__nav__link__dropdown"
                 >
                   <NavDropdown.Item>
-                    <NavLink
-                      className="header__nav__link header__nav__link__img header__nav__link__img__user"
-                      as={Link}
-                      to="/editprofile"
-                      style={{ color: "black" }}
-                    >
-                      Edit Profile
-                    </NavLink>
                   </NavDropdown.Item>
                   <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
                 </NavDropdown>

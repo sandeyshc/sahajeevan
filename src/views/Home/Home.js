@@ -54,7 +54,7 @@ function Home() {
       subtitle:
         "Lorem ipsum is simply dummy text for printing and typesetting industry. Loreum ipsum has been the industry's.",
       btnText: "Upgrade",
-      className: 'd-none d-lg-block'
+      className: "d-none d-lg-block"
     },
     { data: premiumCards } = useQuery("premiumMatches", premiumMatches, {
       refetchOnWindowFocus: false
