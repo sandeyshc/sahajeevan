@@ -21,7 +21,10 @@ const URLS = {
   CREATEPROFILE: "/profile/create",
   UPDATEPROFILE: "/profile/update",
   FAMILYDETAILS: "/profile/family-details",
-  SEARCH: "/profile/search"
+  SEARCH: "/profile/search",
+  HOMEINFO: "/profile/get-homepage-info",
+  VIEWPROFILE: "/profile/view-full-profile",
+  VIEWMYPROFILE: "/profile/view-my-profile"
 };
 
 axios.interceptors.request.use(
@@ -56,125 +59,128 @@ axios.interceptors.response.use(
 );
 
 const APIGetCall = async url => {
-    const response = await axios.get(url);
+    const response = await axios.get(process.env.REACT_APP_BASE_URL + url);
     return response?.data;
   },
   APIPostCall = async (url, data) => {
-    const response = await axios.post(url, data);
+    const response = await axios.post(
+      process.env.REACT_APP_BASE_URL + url,
+      data
+    );
     return response?.data;
   },
   APIPatchCall = async (url, data) => {
-    const response = await axios.patch(url, data);
+    const response = await axios.patch(
+      process.env.REACT_APP_BASE_URL + url,
+      data
+    );
     return response?.data;
   };
 
 export const premiumMatches = async () => {
-  return await APIGetCall(process.env.REACT_APP_BASE_URL + URLS.PREMIUM);
+  return await APIGetCall(URLS.PREMIUM);
 };
 
 export const nearbyMatches = async () => {
-  return await APIGetCall(process.env.REACT_APP_BASE_URL + URLS.NEARBYMATCHES);
+  return await APIGetCall(URLS.NEARBYMATCHES);
 };
 
 export const dailyRecommendations = async () => {
-  return await APIGetCall(process.env.REACT_APP_BASE_URL + URLS.DAILYRECOMMENDATIONS);
+  return await APIGetCall(URLS.DAILYRECOMMENDATIONS);
 };
 
 export const profileVisitors = async () => {
-  return await APIGetCall(
-    process.env.REACT_APP_BASE_URL + URLS.PROFILEVISITORS
-  );
+  return await APIGetCall(URLS.PROFILEVISITORS);
 };
 
 export const receivedInterests = async () => {
-  return await APIGetCall(
-    process.env.REACT_APP_BASE_URL + URLS.RECEIVEDINTERESTS
-  );
+  return await APIGetCall(URLS.RECEIVEDINTERESTS);
 };
 
 export const sentInterests = async () => {
-  return await APIGetCall(process.env.REACT_APP_BASE_URL + URLS.SENTINTERESTS);
+  return await APIGetCall(URLS.SENTINTERESTS);
 };
 
 export const shortlisted = async () => {
-  return await APIGetCall(process.env.REACT_APP_BASE_URL + URLS.SHORTLISTED);
+  return await APIGetCall(URLS.SHORTLISTED);
 };
 
 export const acceptedByMe = async () => {
-  return await APIGetCall(process.env.REACT_APP_BASE_URL + URLS.ACCEPTEDBYME);
+  return await APIGetCall(URLS.ACCEPTEDBYME);
 };
 
 export const acceptedByOthers = async () => {
-  return await APIGetCall(process.env.REACT_APP_BASE_URL + URLS.ACCEPTEDME);
+  return await APIGetCall(URLS.ACCEPTEDME);
 };
 
 export const viewOthers = async () => {
-  return await APIGetCall(process.env.REACT_APP_BASE_URL + URLS.VIEWOTHERS);
+  return await APIGetCall(URLS.VIEWOTHERS);
 };
 
 export const sendInterest = async id => {
-  return await APIPostCall(process.env.REACT_APP_BASE_URL + URLS.SENDINTEREST, {
+  return await APIPostCall(URLS.SENDINTEREST, {
     to_profile_id: id
   });
 };
 
-export const cancelInterest = async () => {
-  return await APIPostCall(
-    process.env.REACT_APP_BASE_URL + URLS.CANCELINTEREST
-  );
+export const cancelInterest = async id => {
+  return await APIPostCall(URLS.CANCELINTEREST, {
+    to_profile_id: id
+  });
 };
 
 export const acceptInterest = async () => {
-  return await APIPostCall(
-    process.env.REACT_APP_BASE_URL + URLS.ACCEPTINTEREST
-  );
+  return await APIPostCall(URLS.ACCEPTINTEREST);
 };
 
 export const declineInterest = async () => {
-  return await APIPostCall(
-    process.env.REACT_APP_BASE_URL + URLS.DECLINEINTEREST
-  );
+  return await APIPostCall(URLS.DECLINEINTEREST);
 };
 
 export const getOptions = async () => {
-  return await APIGetCall(process.env.REACT_APP_BASE_URL + URLS.OPTIONS);
+  return await APIGetCall(URLS.OPTIONS);
 };
 
 export const createProfile = async data => {
-  return await APIPostCall(
-    process.env.REACT_APP_BASE_URL + URLS.CREATEPROFILE,
-    data
-  );
+  return await APIPostCall(URLS.CREATEPROFILE, data);
 };
 
 export const updateProfile = async ([id, data]) => {
-  return await APIPatchCall(
-    process.env.REACT_APP_BASE_URL + URLS.UPDATEPROFILE + `/${id}/`,
-    data
-  );
+  return await APIPatchCall(URLS.UPDATEPROFILE + `/${id}/`, data);
 };
 
 export const createFamilyDetails = async data => {
-  return await APIPostCall(
-    process.env.REACT_APP_BASE_URL + URLS.FAMILYDETAILS,
-    data
-  );
+  return await APIPostCall(URLS.FAMILYDETAILS, data);
+};
+
+export const updateFamilyDetails = async data => {
+  return await APIPatchCall(URLS.FAMILYDETAILS, data);
 };
 
 export const search = async data => {
-  return await APIPostCall(process.env.REACT_APP_BASE_URL + URLS.SEARCH, data);
+  return await APIPostCall(URLS.SEARCH, data);
 };
 
 export const viewedProfiles = async () => {
-  return await APIGetCall(
-    process.env.REACT_APP_BASE_URL + URLS.VIEWEDPROFIFLES
-  );
+  return await APIGetCall(URLS.VIEWEDPROFIFLES);
 };
 
-export const saveFilter = (filter) => {
-  localStorage.setItem('filter', JSON.stringify(filter));
-}
+export const homeInfo = async () => {
+  return await APIGetCall(URLS.HOMEINFO);
+};
 
-export const getFilter = (filter) => {
-  return JSON.parse(localStorage.getItem('filter'));
-}
+export const viewProfile = async id => {
+  return await APIGetCall(URLS.VIEWPROFILE + (id ? `?profile_id=${id}` : ""));
+};
+
+export const viewMyProfile = async id => {
+  return await APIGetCall(URLS.VIEWMYPROFILE);
+};
+
+export const saveFilter = filter => {
+  localStorage.setItem("filter", JSON.stringify(filter));
+};
+
+export const getFilter = filter => {
+  return JSON.parse(localStorage.getItem("filter"));
+};

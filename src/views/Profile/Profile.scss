@@ -1,12 +1,13 @@
 .profileCard {
     margin: -90px auto 0;
-    padding: 0 10px;
+    max-width: 1200px;
 }
 .profileView {
+    max-width: 1200px;
     margin: 30px auto 50px;
     box-shadow: 0 0 5px 1px #e1e1e1;
     border-radius: 5px;
-    padding: 20px 0 0;
+    padding-top: 20px;
 
     &__nav {
         border-bottom: 1px solid #e0e0e0;

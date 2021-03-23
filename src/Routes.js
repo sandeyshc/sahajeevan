@@ -48,6 +48,7 @@ const Routes = () => {
         <RoutesGuard path="/interests" exact component={<Interests />} />
         <RoutesGuard path="/settings" exact component={<Account />} />
         <RoutesGuard path="/membership" exact component={<MembershipPlans />} />
+        <RoutesGuard path="/profile" exact component={<Profile />} />
         <RoutesGuard path="/profile/:id" exact component={<Profile />} />
         <RoutesGuard path="/editprofile" exact component={<EditProfile />} />
       </Switch>

@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import { useMutation } from "react-query";
+import { useHistory } from "react-router";
 import "./ProfileCard.scss";
 
 import { Card, Image, Col, Row, Spinner } from "react-bootstrap";
@@ -15,13 +17,11 @@ import Kundli from "../../assets/icons/svg icon/Kundli Match.svg";
 import Graph from "../../assets/icons/svg icon/graph.svg";
 import Premium from "../../assets/icons/svg icon/premium.svg";
 import dummyImage from "../../assets/images/dummy.png";
-import { sendInterest } from "../../services/profile";
-import { useMutation } from "react-query";
+import { sendInterest, cancelInterest } from "../../services/profile";
 import useSnackBar from "../../hooks/SnackBarHook";
 
 function ProfileCard({
   isFullCard,
-  profileImage,
   card: {
     name,
     id,
@@ -39,14 +39,12 @@ function ProfileCard({
     religion,
     caste,
     online,
+    interest_status,
     preference_match,
     total_photos
   }
 }) {
-  const uploadPhoto = () => {
-      document.getElementsByName("upload")[0].click();
-    },
-    parseDate = date => {
+  const parseDate = date => {
       return new Intl.DateTimeFormat("en-AU", {
         day: "numeric",
         year: "2-digit",
@@ -57,28 +55,55 @@ function ProfileCard({
         .join(".");
     },
     message = useSnackBar(),
+    history = useHistory(),
     {
       mutate: SendInterestMutate,
       isLoading: SendInterestLoading,
-      isError,
-      error
+      isError: SendErrorStatus,
+      error: SendError,
+      data: SendData
     } = useMutation(id => sendInterest(id)),
+    {
+      mutate: DeclineInterestMutate,
+      isLoading: DeclineInterestLoading,
+      isError: DeclineErrorStatus,
+      error: DeclineError,
+      data: DeclineData
+    } = useMutation(id => cancelInterest(id)),
     handleSendInterest = () => {
       SendInterestMutate(id);
+    },
+    handleCancelInterest = () => {
+      DeclineInterestMutate(id);
     };
   useEffect(() => {
-    isError && message(error?.data);
-  }, [isError]);
+    SendErrorStatus && message(SendError?.data);
+    DeclineErrorStatus && message(DeclineError?.data);
+    SendData && message(SendData?.data);
+    DeclineData && message(DeclineData?.data);
+  }, [DeclineError, SendError, SendData, DeclineData]);
   return (
     <section className={isFullCard ? "profile" : "search-profile"}>
-      <Card className="profile__card flex-column flex-sm-row">
-        <Col className="profile__card__left" sm={4} xs={12}>
+      <Card
+        className="profile__card flex-column flex-col flex-md-row"
+        onClick={() => !isFullCard && !!id && history.push(`/profile/${id}`)}
+      >
+        <Col className="profile__card__left" md={4} xs={12}>
           <div className="profile__card__left__container">
-            <Image
-              src={profile_photo_url || dummyImage}
-              alt="profile image"
-              className="profile__card__left__container__img"
-            />
+            {isFullCard ? (
+              <div className="profile__card__left__container__img overflow-hidden">
+                <Image
+                  src={profile_photo_url || dummyImage}
+                  alt="profile image"
+                />
+              </div>
+            ) : (
+              <Image
+                className="profile__card__left__container__img overflow-hidden"
+                src={profile_photo_url || dummyImage}
+                alt="profile image"
+              />
+            )}
             {premium && (
               <Image
                 src={Premium}
@@ -104,7 +129,12 @@ function ProfileCard({
             </a>
           </div>
         </Col>
-        <Col className="profile__card__right" sm={8}>
+        <Col
+          className="profile__card__right"
+          xs={12}
+          sm={isFullCard ? 12 : 8}
+          md={8}
+        >
           <div className="profile__card__right__container">
             <Row className="profile__card__right__container__header">
               <p className="profile__card__right__container__header__name d-flex align-items-center">
@@ -120,20 +150,39 @@ function ProfileCard({
                   alt="Calendar"
                   className="profile__card__right__container__header__seen__calendar"
                 />
-                Last seen on {parseDate(last_seen)}
+                Last seen on {last_seen && parseDate(last_seen)}
               </p>
             </Row>
             <hr className="profile__card__right__container__splitter" />
-            <Row className="profile__card__right__container__details">
+            <Row
+              className={
+                "profile__card__right__container__details" +
+                (isFullCard ? " pt-md-4 px-md-4 pt-3" : "")
+              }
+            >
               <Col className="profile__card__right__container__details__picture col-lg-3">
                 <Card>
-                  <p className="text-center font-weight-bolder text-danger my-3">
-                    {preference_match}
-                  </p>
-                  <hr />
-                  <p>
-                    <Image src={Kundli} alt="Kundli match" height="10" />
-                    Preference Match
+                  <div className="d-flex flex-column">
+                    <Image
+                      src={Graph}
+                      alt="graph"
+                      height={isFullCard ? "90" : "40"}
+                    />
+                    <p className="text-center font-weight-bolder text-danger m-0">
+                      {preference_match}
+                    </p>
+                  </div>
+                  <hr className="m-0" />
+                  <p
+                    className={"text-center m-0 " + (isFullCard ? "py-2" : "")}
+                  >
+                    <Image
+                      src={Kundli}
+                      alt="Kundli match"
+                      height={isFullCard ? "20" : "10"}
+                      className="mr-1"
+                    />
+                    Kundli Match
                   </p>
                 </Card>
               </Col>
@@ -158,14 +207,35 @@ function ProfileCard({
                 <Row>{marital_status}</Row>
               </Col>
             </Row>
-            <Row className="profile__card__right__container__actions d-none d-sm-flex">
-              <button className="profile__card__right__container__actions__view">
+            <Row
+              className={
+                "profile__card__right__container__actions d-sm-flex" +
+                (isFullCard ? " flex-md-nowrap" : " d-none")
+              }
+            >
+              <button
+                className={
+                  "profile__card__right__container__actions__view" +
+                  (isFullCard
+                    ? " flex-fill mr-2 col-sm-5 col-md-auto mb-2 mb-md-0"
+                    : "")
+                }
+              >
                 <Image src={ViewContact} alt="View Contact" height={18} />
                 View Contact
               </button>
               <button
-                className="profile__card__right__container__actions__send"
-                onClick={handleSendInterest}
+                className={
+                  "profile__card__right__container__actions__send" +
+                  (isFullCard
+                    ? " flex-fill mr-2 col-sm-5 col-md-auto mb-2 mb-md-0"
+                    : "")
+                }
+                onClick={e => {
+                  e.stopPropagation();
+                  interest_status === 1 && handleSendInterest();
+                  interest_status === 2 && handleCancelInterest();
+                }}
               >
                 {SendInterestLoading ? (
                   <>
@@ -181,15 +251,32 @@ function ProfileCard({
                 ) : (
                   <>
                     <Image src={Send} alt="Send Request" height={18} />
-                    Send Interest
+                    {interest_status === 1 && "Send Interest"}
+                    {interest_status === 2 && "Cancel Interest"}
+                    {interest_status === 3 && "Approved"}
+                    {interest_status === 4 && "Declined"}
                   </>
                 )}
               </button>
-              <button className="profile__card__right__container__actions__chat">
+              <button
+                className={
+                  "profile__card__right__container__actions__chat" +
+                  (isFullCard
+                    ? " flex-fill mr-2 col-sm-5 col-md-auto mb-2 mb-md-0"
+                    : "")
+                }
+              >
                 <Image src={Chat} alt="Chat" height={18} />
                 Chat
               </button>
-              <button className="profile__card__right__container__actions__share">
+              <button
+                className={
+                  "profile__card__right__container__actions__share" +
+                  (isFullCard
+                    ? " flex-fill mr-2 col-sm-5 col-md-auto mb-2 mb-md-0"
+                    : "")
+                }
+              >
                 <Image src={Share} alt="Share Profile" height={18} />
                 Share Profile
               </button>
