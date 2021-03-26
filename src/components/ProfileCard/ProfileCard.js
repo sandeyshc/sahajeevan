@@ -17,7 +17,7 @@ import Kundli from "../../assets/icons/svg icon/Kundli Match.svg";
 import Graph from "../../assets/icons/svg icon/graph.svg";
 import Premium from "../../assets/icons/svg icon/premium.svg";
 import dummyImage from "../../assets/images/dummy.png";
-import { sendInterest, cancelInterest } from "../../services/profile";
+import { sendInterest, cancelInterest, viewContact } from "../../services/profile";
 import useSnackBar from "../../hooks/SnackBarHook";
 
 function ProfileCard({
@@ -72,13 +72,23 @@ function ProfileCard({
       error: DeclineError,
       data: DeclineData
     } = useMutation(id => cancelInterest(id)),
+    {
+      mutate: ViewContactMutate,
+      isLoading: ViewContactLoading,
+      isError: ViewContactErrorStatus,
+      error: ViewContactError,
+      data: ViewContactData
+    } = useMutation(id => viewContact(id)),
     handleSendInterest = () => {
       SendInterestMutate(id);
     },
     handleCancelInterest = () => {
       DeclineInterestMutate(id);
+    },
+    handleViewContact = () => {
+      ViewContactMutate(id);
     };
-  useEffect(() => {
+  useEffect(state=> {
     SendErrorStatus && message(SendError);
     SendData && message(SendData);
     if(SendData){
@@ -86,13 +96,18 @@ function ProfileCard({
     }
   }, [SendError, SendData]);
 
-  useEffect(() => {
+  useEffect(state => {
     DeclineErrorStatus && message(DeclineError);
     DeclineData && message(DeclineData);
     if (DeclineData){
     setStatus(1);
     }
   }, [DeclineError, DeclineData]);
+
+  useEffect(state => {
+   ViewContactErrorStatus && message(ViewContactError?.data);
+   ViewContactData && message(ViewContactData?.name + "-" + ViewContactData?.contact_1);
+  }, [ViewContactErrorStatus, ViewContactData, ViewContactError]);
 
 
   return (
@@ -233,6 +248,10 @@ function ProfileCard({
                     ? " flex-fill mr-2 col-sm-5 col-md-auto mb-2 mb-md-0"
                     : "")
                 }
+                onClick={e => {
+                  e.stopPropagation();
+                  handleViewContact();
+                }}
               >
                 <Image src={ViewContact} alt="View Contact" height={18} />
                 View Contact

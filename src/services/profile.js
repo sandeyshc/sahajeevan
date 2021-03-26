@@ -113,8 +113,8 @@ export const acceptedByOthers = async () => {
   return await APIGetCall(URLS.ACCEPTEDME);
 };
 
-export const viewOthers = async () => {
-  return await APIGetCall(URLS.VIEWOTHERS);
+export const viewContact = async id => {
+  return await APIGetCall(URLS.VIEWOTHERS + (id ? `?profile_id=${id}` : ""));
 };
 
 export const sendInterest = async id => {

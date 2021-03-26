@@ -13,7 +13,7 @@ export function SnackBarProvider({ children }) {
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         open={!!message}
         onClose={() => setMessage("")}
-        autoHideDuration={2000}
+        autoHideDuration={5000}
         message={message}
         key={message}
       />
