@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, {useState, useEffect } from "react";
 import { useMutation } from "react-query";
 import { useHistory } from "react-router";
 import "./ProfileCard.scss";
@@ -44,6 +44,8 @@ function ProfileCard({
     total_photos
   }
 }) {
+
+   const [status, setStatus] = useState(interest_status);
   const parseDate = date => {
       return new Intl.DateTimeFormat("en-AU", {
         day: "numeric",
@@ -77,11 +79,22 @@ function ProfileCard({
       DeclineInterestMutate(id);
     };
   useEffect(() => {
-    SendErrorStatus && message(SendError?.data);
-    DeclineErrorStatus && message(DeclineError?.data);
-    SendData && message(SendData?.data);
-    DeclineData && message(DeclineData?.data);
-  }, [DeclineError, SendError, SendData, DeclineData]);
+    SendErrorStatus && message(SendError);
+    SendData && message(SendData);
+    if(SendData){
+    setStatus(2);
+    }
+  }, [SendError, SendData]);
+
+  useEffect(() => {
+    DeclineErrorStatus && message(DeclineError);
+    DeclineData && message(DeclineData);
+    if (DeclineData){
+    setStatus(1);
+    }
+  }, [DeclineError, DeclineData]);
+
+
   return (
     <section className={isFullCard ? "profile" : "search-profile"}>
       <Card
@@ -233,8 +246,8 @@ function ProfileCard({
                 }
                 onClick={e => {
                   e.stopPropagation();
-                  interest_status === 1 && handleSendInterest();
-                  interest_status === 2 && handleCancelInterest();
+                  status === 1 && handleSendInterest();
+                  status === 2 && handleCancelInterest();
                 }}
               >
                 {SendInterestLoading ? (
@@ -251,10 +264,11 @@ function ProfileCard({
                 ) : (
                   <>
                     <Image src={Send} alt="Send Request" height={18} />
-                    {interest_status === 1 && "Send Interest"}
-                    {interest_status === 2 && "Cancel Interest"}
-                    {interest_status === 3 && "Approved"}
-                    {interest_status === 4 && "Declined"}
+                    {status === 1 && "Send Interest"}
+                    {status === 2 && "Cancel Interest"}
+                    {status === 3 && "Approved"}
+                    {status === 4 && "Declined"}
+                    {status === 5 && "Approve/Reject"}
                   </>
                 )}
               </button>
