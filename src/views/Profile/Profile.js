@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import { useQuery } from "react-query";
 import { Card, Col, Image, Nav, Row } from "react-bootstrap";
 
-import { Layout, ProfileCard } from "../../components";
+import { Layout, ViewProfileCard } from "../../components";
 import "./Profile.scss";
 import Hero from "../../assets/images/Profile/hero.png";
 
@@ -39,14 +39,14 @@ function Profile() {
     <Layout heroImg={Hero} heroData={heroData}>
       <section className="profileCard col-xl-10 col-lg-12 col-md-12 col-sm-12 p-xl-0">
         {isSuccess && (
-          <ProfileCard
+          <ViewProfileCard
             isFullCard
             card={{
               ...data?.basic_info,
               birth_date: data?.basic_info?.dob,
               profile_photo_url: data?.basic_info?.photo_url
             }}
-          ></ProfileCard>
+          ></ViewProfileCard>
         )}
       </section>
       <section className="profileView col-xl-10 col-lg-12 col-md-12 col-sm-12">
