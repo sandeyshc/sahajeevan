@@ -2,6 +2,13 @@ import React, {useState, useEffect } from "react";
 import { useMutation } from "react-query";
 import { useHistory } from "react-router";
 import "./ProfileCard.scss";
+import Modal from "react-bootstrap/Modal";
+import ModalBody from "react-bootstrap/ModalBody";
+import ModalHeader from "react-bootstrap/ModalHeader";
+import ModalFooter from "react-bootstrap/ModalFooter";
+import ModalTitle from "react-bootstrap/ModalTitle";
+import { Button} from 'react-bootstrap';
+
 
 import { Card, Image, Col, Row, Spinner } from "react-bootstrap";
 
@@ -46,6 +53,13 @@ function ProfileCard({
 }) {
 
    const [status, setStatus] = useState(interest_status);
+
+   const [show, setShow] = useState(false);
+   const [popupMsg, setPopupMsg] = useState("Empty data");
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+
   const parseDate = date => {
       return new Intl.DateTimeFormat("en-AU", {
         day: "numeric",
@@ -66,11 +80,11 @@ function ProfileCard({
       data: SendData
     } = useMutation(id => sendInterest(id)),
     {
-      mutate: DeclineInterestMutate,
-      isLoading: DeclineInterestLoading,
-      isError: DeclineErrorStatus,
-      error: DeclineError,
-      data: DeclineData
+      mutate: CancelInterestMutate,
+      isLoading: CancelInterestLoading,
+      isError: CancelErrorStatus,
+      error: CancelError,
+      data: CancelData
     } = useMutation(id => cancelInterest(id)),
     {
       mutate: ViewContactMutate,
@@ -83,10 +97,11 @@ function ProfileCard({
       SendInterestMutate(id);
     },
     handleCancelInterest = () => {
-      DeclineInterestMutate(id);
+      CancelInterestMutate(id);
     },
     handleViewContact = () => {
       ViewContactMutate(id);
+      setShow(true);
     };
   useEffect(state=> {
     SendErrorStatus && message(SendError);
@@ -97,16 +112,16 @@ function ProfileCard({
   }, [SendError, SendData]);
 
   useEffect(state => {
-    DeclineErrorStatus && message(DeclineError);
-    DeclineData && message(DeclineData);
-    if (DeclineData){
+    CancelErrorStatus && message(CancelError);
+    CancelData && message(CancelData);
+    if (CancelData){
     setStatus(1);
     }
-  }, [DeclineError, DeclineData]);
+  }, [CancelError, CancelData]);
 
   useEffect(state => {
-   ViewContactErrorStatus && message(ViewContactError?.data);
-   ViewContactData && message(ViewContactData?.name + "-" + ViewContactData?.contact_1);
+   ViewContactErrorStatus && setPopupMsg(ViewContactError?.data);
+   ViewContactData && setPopupMsg(ViewContactData?.name + " : +91 " + ViewContactData?.contact_1);
   }, [ViewContactErrorStatus, ViewContactData, ViewContactError]);
 
 
@@ -114,7 +129,7 @@ function ProfileCard({
     <section className={isFullCard ? "profile" : "search-profile"}>
       <Card
         className="profile__card flex-column flex-col flex-md-row"
-        onClick={() => !isFullCard && !!id && history.push(`/profile/${id}`)}
+
       >
         <Col className="profile__card__left" md={4} xs={12}>
           <div className="profile__card__left__container">
@@ -165,7 +180,8 @@ function ProfileCard({
         >
           <div className="profile__card__right__container">
             <Row className="profile__card__right__container__header">
-              <p className="profile__card__right__container__header__name d-flex align-items-center">
+              <p className="profile__card__right__container__header__name d-flex align-items-center"
+              onClick={() => !isFullCard && !!id && history.push(`/profile/${id}`)}>
                 <div
                   className="profile__card__right__container__header__name__status d-inline-block mr-2 rounded-circle"
                   style={{ borderColor: online ? "#52ac3b" : "#f2ae30" }}
@@ -269,7 +285,7 @@ function ProfileCard({
                   status === 2 && handleCancelInterest();
                 }}
               >
-                {SendInterestLoading ? (
+                {SendInterestLoading || CancelInterestLoading ? (
                   <>
                     <Spinner
                       as="span"
@@ -278,7 +294,7 @@ function ProfileCard({
                       role="status"
                       aria-hidden="true"
                     />
-                    Sending...
+                    &nbsp; &nbsp; &nbsp; Loading...
                   </>
                 ) : (
                   <>
@@ -314,6 +330,41 @@ function ProfileCard({
                 Share Profile
               </button>
             </Row>
+              <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+
+                </Modal.Header>
+                <Modal.Body>
+
+                {ViewContactLoading ? (
+                  <>
+                    <Spinner
+                      as="span"
+                      animation="border"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                    />
+                    &nbsp; &nbsp; &nbsp; Loading...
+                  </>
+                ) : (
+                  <>
+                    {popupMsg}
+                  </>
+                )}
+
+                </Modal.Body>
+                <Modal.Footer>
+                 <Button variant="danger" onClick={handleClose}>
+                    Upgrade
+                  </Button>
+                  <Button variant="warning" onClick={handleClose}>
+                    Sorry..No money!
+                  </Button>
+
+
+                </Modal.Footer>
+              </Modal>
           </div>
         </Col>
       </Card>

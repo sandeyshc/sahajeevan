@@ -11,6 +11,7 @@ function Dialog({ show, onHide, type, data }) {
       register: "REGISTER",
       otp: "OTP",
       step: "STEP",
+      info: "INFO",
     },
     ModalTitles = {
       [Modals.login]: "WELCOME BACK! PLEASE LOGIN",
@@ -42,6 +43,8 @@ function Dialog({ show, onHide, type, data }) {
           return <OTPForm close={onHide} modalData={data} />;
         case Modals.step:
           return <StepForm close={onHide} setActive={setCurrentStep} />;
+        case Modals.info:
+          return "Message from dialog box";
       }
     };
   return (
