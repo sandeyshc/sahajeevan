@@ -94,8 +94,8 @@ function Interests() {
     );
 
   useEffect(() => {
-    refetch();
-  }, [optionSelected]);
+//    refetch();
+  }, []);
 
   return (
     <Layout heroData={heroData} heroImg={Hero}>
@@ -117,7 +117,7 @@ function Interests() {
               industry.
             </p>
             <div className="interests__section__content__cards">
-              {cards?.results?.map(card => (
+              {cards?.map(card => (
                 <ProfileCard
                   key={card?.profile_id}
                   isPremium={true}
@@ -126,7 +126,7 @@ function Interests() {
                 ></ProfileCard>
               ))}
               {loading && <Spinner animation="border" />}
-              {!cards?.results?.length && !loading && (
+              {!cards?.length && !loading && (
                 <p>No {listOptions[optionSelected - 1].text} found.</p>
               )}
             </div>

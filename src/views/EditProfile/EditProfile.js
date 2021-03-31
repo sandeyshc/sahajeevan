@@ -19,6 +19,9 @@ import AboutMe from "../../assets/icons/svg icon/About me.svg";
 import PreferenceImg from "../../assets/icons/svg icon/partner preferences.svg";
 
 import ProImg from "../../assets/images/Profile/img.png";
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
+
 import {
   viewMyProfile,
   getOptions,
@@ -489,9 +492,22 @@ function EditProfile() {
             </Col>
             <Col className="col-12 col-lg-2 p-0 pl-md-1 pr-0 col">
               <Card className="info__card m-0 rounded">
-                <div className="completeness align-items-center completeness d-flex font-weight-bolder justify-content-center rounded-circle">
-                  {data?.basic_info?.completeness + "%"}
-                </div>
+
+                  <CircularProgressbar
+                    className="completeness align-items-center d-flex font-weight-bolder justify-content-center"
+                    value={data?.basic_info?.completeness}
+                    text={`${data?.basic_info?.completeness}%`}
+                    background
+                    backgroundPadding={6}
+                    styles={buildStyles({
+                      backgroundColor: "#7bc2ff",
+                      textColor: "#fff",
+                      pathColor: "#fff",
+                      trailColor: "transparent"
+                    })}
+                  />
+
+
                 <p className="completeness__text font-weight-light mb-0 mt-3 text-nowrap">
                   Basic Details +{data?.basic_info?.completeness}%
                 </p>
@@ -647,14 +663,29 @@ function EditProfile() {
             </Col>
 
             <Col className="col-12 col-lg-2 p-0 pl-md-1 pr-0 col">
+
               <Card className="info__card m-0 rounded">
-                <div className="completeness align-items-center completeness d-flex font-weight-bolder justify-content-center rounded-circle">
-                  {data?.education_and_career?.completeness + "%"}
-                </div>
+
+              <CircularProgressbar
+                    className="completeness align-items-center d-flex font-weight-bolder justify-content-center"
+                    value={data?.education_and_career?.completeness}
+                    text={`${data?.education_and_career?.completeness}%`}
+                    background
+                    backgroundPadding={6}
+                    styles={buildStyles({
+                      backgroundColor: "#7bc2ff",
+                      textColor: "#fff",
+                      pathColor: "#fff",
+                      trailColor: "transparent"
+                    })}
+                  />
+
+
                 <p className="completeness__text font-weight-light mb-0 mt-3 text-nowrap">
                   Education Details +{data?.education_and_career?.completeness}%
                 </p>
               </Card>
+
             </Col>
           </Row>
         </Card>
@@ -822,9 +853,19 @@ function EditProfile() {
             </Col>
             <Col className="col-12 col-lg-2 p-0 pl-md-1 pr-0 col">
               <Card className="info__card m-0 rounded">
-                <div className="completeness align-items-center completeness d-flex font-weight-bolder justify-content-center rounded-circle">
-                  {data?.family_details?.completeness + "%"}
-                </div>
+                 <CircularProgressbar
+                    className="completeness align-items-center d-flex font-weight-bolder justify-content-center"
+                    value={data?.family_details?.completeness}
+                    text={`${data?.family_details?.completeness}%`}
+                    background
+                    backgroundPadding={6}
+                    styles={buildStyles({
+                      backgroundColor: "#7bc2ff",
+                      textColor: "#fff",
+                      pathColor: "#fff",
+                      trailColor: "transparent"
+                    })}
+                  />
                 <p className="completeness__text font-weight-light mb-0 mt-3 text-nowrap">
                   Family Details +{data?.family_details?.completeness}%
                 </p>
@@ -978,9 +1019,20 @@ function EditProfile() {
             </Col>
             <Col className="col-12 col-lg-2 p-0 pl-md-1 pr-0 col">
               <Card className="info__card m-0 rounded">
-                <div className="completeness align-items-center completeness d-flex font-weight-bolder justify-content-center rounded-circle">
-                  {data?.partner_preferences?.completeness + "%"}
-                </div>
+                 <CircularProgressbar
+                    className="completeness align-items-center d-flex font-weight-bolder justify-content-center"
+                    value={data?.partner_preferences?.completeness}
+                    text={`${data?.partner_preferences?.completeness}%`}
+                    background
+                    backgroundPadding={6}
+                    styles={buildStyles({
+                      backgroundColor: "#7bc2ff",
+                      textColor: "#fff",
+                      pathColor: "#fff",
+                      trailColor: "transparent",
+                      pathTransitionDuration: 0.15
+                    })}
+                  />
                 <p className="completeness__text font-weight-light mb-0 mt-3">
                   Partner Prefereneces +
                   {data?.partner_preferences?.completeness}%

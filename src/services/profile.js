@@ -24,7 +24,8 @@ const URLS = {
   SEARCH: "/profile/search",
   HOMEINFO: "/profile/get-homepage-info",
   VIEWPROFILE: "/profile/view-full-profile",
-  VIEWMYPROFILE: "/profile/view-my-profile"
+  VIEWMYPROFILE: "/profile/view-my-profile",
+  GETMYPHOTOS: "/profile/get-my-photos",
 };
 
 axios.interceptors.request.use(
@@ -60,6 +61,7 @@ axios.interceptors.response.use(
 
 const APIGetCall = async url => {
     const response = await axios.get(process.env.REACT_APP_BASE_URL + url);
+    console.log("axiooooss---", response);
     return response?.data;
   },
   APIPostCall = async (url, data) => {
@@ -129,12 +131,16 @@ export const cancelInterest = async id => {
   });
 };
 
-export const acceptInterest = async () => {
-  return await APIPostCall(URLS.ACCEPTINTEREST);
+export const acceptInterest = async id => {
+  return await APIPostCall(URLS.ACCEPTINTEREST, {
+    from_profile_id: id
+  });
 };
 
-export const declineInterest = async () => {
-  return await APIPostCall(URLS.DECLINEINTEREST);
+export const declineInterest = async id => {
+  return await APIPostCall(URLS.DECLINEINTEREST, {
+    from_profile_id: id
+  });
 };
 
 export const getOptions = async () => {
@@ -183,4 +189,8 @@ export const saveFilter = filter => {
 
 export const getFilter = filter => {
   return JSON.parse(localStorage.getItem("filter"));
+};
+
+export const getMyPhotos = async () => {
+  return await APIGetCall(URLS.GETMYPHOTOS);
 };

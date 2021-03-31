@@ -24,8 +24,10 @@ import Kundli from "../../assets/icons/svg icon/Kundli Match.svg";
 import Graph from "../../assets/icons/svg icon/graph.svg";
 import Premium from "../../assets/icons/svg icon/premium.svg";
 import dummyImage from "../../assets/images/dummy.png";
-import { sendInterest, cancelInterest, viewContact } from "../../services/profile";
+import { sendInterest, cancelInterest, acceptInterest, declineInterest, viewContact } from "../../services/profile";
 import useSnackBar from "../../hooks/SnackBarHook";
+import SemiCircleProgressBar from "react-progressbar-semicircle";
+import Icon from '@material-ui/core/Icon';
 
 function ProfileCard({
   isFullCard,
@@ -42,22 +44,23 @@ function ProfileCard({
     qualification,
     marital_status,
     mother_tongue,
+    income,
     location,
     religion,
     caste,
     online,
     interest_status,
     preference_match,
-    total_photos
+    total_photos,
+    match_percentage
   }
 }) {
 
    const [status, setStatus] = useState(interest_status);
-
    const [show, setShow] = useState(false);
    const [popupMsg, setPopupMsg] = useState("Empty data");
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+   const handleClose = () => setShow(false);
+   const handleShow = () => setShow(true);
 
 
   const parseDate = date => {
@@ -87,6 +90,20 @@ function ProfileCard({
       data: CancelData
     } = useMutation(id => cancelInterest(id)),
     {
+      mutate: AcceptInterestMutate,
+      isLoading: AcceptInterestLoading,
+      isError: AcceptErrorStatus,
+      error: AcceptError,
+      data: AcceptData
+    } = useMutation(id => acceptInterest(id)),
+    {
+      mutate: DeclineInterestMutate,
+      isLoading: DeclineInterestLoading,
+      isError: DeclineErrorStatus,
+      error: DeclineError,
+      data: DeclineData
+    } = useMutation(id => declineInterest(id)),
+    {
       mutate: ViewContactMutate,
       isLoading: ViewContactLoading,
       isError: ViewContactErrorStatus,
@@ -99,30 +116,69 @@ function ProfileCard({
     handleCancelInterest = () => {
       CancelInterestMutate(id);
     },
+    handleAcceptInterest = () => {
+      AcceptInterestMutate(id);
+    },
+     handleDeclineInterest = () => {
+      DeclineInterestMutate(id);
+    },
     handleViewContact = () => {
       ViewContactMutate(id);
       setShow(true);
     };
   useEffect(state=> {
-    SendErrorStatus && message(SendError);
-    SendData && message(SendData);
+    if(SendErrorStatus){
+        let msg = SendError ? SendError?.data : "Internet disconnected"
+        message(msg);
+       }
     if(SendData){
-    setStatus(2);
-    }
+        message(SendData);
+        setStatus(2);
+        }
   }, [SendError, SendData]);
 
   useEffect(state => {
-    CancelErrorStatus && message(CancelError);
-    CancelData && message(CancelData);
+    if(CancelErrorStatus){
+        let msg = CancelError ? CancelError?.data : "Internet disconnected"
+        message(msg);
+       }
     if (CancelData){
-    setStatus(1);
+        message(CancelData);
+        setStatus(1);
     }
   }, [CancelError, CancelData]);
 
   useEffect(state => {
-   ViewContactErrorStatus && setPopupMsg(ViewContactError?.data);
-   ViewContactData && setPopupMsg(ViewContactData?.name + " : +91 " + ViewContactData?.contact_1);
-  }, [ViewContactErrorStatus, ViewContactData, ViewContactError]);
+    if(AcceptErrorStatus){
+        let msg = AcceptError ? AcceptError?.data : "Internet disconnected"
+        message(msg);
+       }
+    if (AcceptData){
+        message(AcceptData);
+        setStatus(3);
+    }
+  }, [AcceptError, AcceptData]);
+
+  useEffect(state => {
+    if(DeclineErrorStatus){
+        let msg = DeclineError ? DeclineError?.data : "Internet disconnected"
+        message(msg);
+       }
+    if (DeclineData){
+        message(DeclineData);
+        setStatus(4);
+    }
+  }, [DeclineError, DeclineData]);
+
+  useEffect(state => {
+      if(ViewContactErrorStatus){
+       let msg = ViewContactError ? ViewContactError?.data : "Internet disconnected"
+        setPopupMsg(msg);
+        }
+      if (ViewContactData){
+            setPopupMsg(ViewContactData?.name + " : +91 " + ViewContactData?.contact_1);
+        }
+      }, [ViewContactErrorStatus, ViewContactData, ViewContactError]);
 
 
   return (
@@ -141,11 +197,18 @@ function ProfileCard({
                 />
               </div>
             ) : (
-              <Image
-                className="profile__card__left__container__img overflow-hidden"
-                src={profile_photo_url || dummyImage}
-                alt="profile image"
-              />
+              <span>
+                  <Image
+                    className="profile__card__left__container__bgimg overflow-hidden"
+                    src={profile_photo_url || dummyImage}
+                    alt="profile image"
+                  />
+                  <Image
+                    className="profile__card__left__container__img overflow-hidden"
+                    src={profile_photo_url || dummyImage}
+                    alt="profile image"
+                  />
+              </span>
             )}
             {premium && (
               <Image
@@ -175,7 +238,7 @@ function ProfileCard({
         <Col
           className="profile__card__right"
           xs={12}
-          sm={isFullCard ? 12 : 8}
+          sm={12}
           md={8}
         >
           <div className="profile__card__right__container">
@@ -188,14 +251,12 @@ function ProfileCard({
                 ></div>
                 {name} ({display_id})
               </p>
-              <p className="profile__card__right__container__header__seen d-none d-md-block">
-                <Image
-                  src={Calendar}
-                  alt="Calendar"
-                  className="profile__card__right__container__header__seen__calendar"
-                />
-                Last seen on {last_seen && parseDate(last_seen)}
-              </p>
+              <a
+                  href="javascript:void(0)"
+                  className="vprofile__card__left__container__privacy"
+                >
+                  <Image src={Privacy} alt="privacy" height="20" />
+                </a>
             </Row>
             <hr className="profile__card__right__container__splitter" />
             <Row
@@ -207,11 +268,7 @@ function ProfileCard({
               <Col className="profile__card__right__container__details__picture col-lg-3">
                 <Card>
                   <div className="d-flex flex-column">
-                    <Image
-                      src={Graph}
-                      alt="graph"
-                      height={isFullCard ? "90" : "40"}
-                    />
+                    <SemiCircleProgressBar diameter={90} strokeWidth={5} percentage={match_percentage} stroke={'#ee4641'} />
                     <p className="text-center font-weight-bolder text-danger m-0">
                       {preference_match}
                     </p>
@@ -247,7 +304,7 @@ function ProfileCard({
               <Col className="profile__card__right__container__details__professional d-none d-lg-block col-lg-5">
                 <Row>{location}</Row>
                 <Row>{occupation}</Row>
-                <Row>Rs. 5 - 7.5 Lakh, Buxar & Amingaon</Row>
+                <Row>{income}</Row>
                 <Row>{marital_status}</Row>
               </Col>
             </Row>
@@ -257,84 +314,254 @@ function ProfileCard({
                 (isFullCard ? " flex-md-nowrap" : " d-none")
               }
             >
-              <button
-                className={
-                  "profile__card__right__container__actions__view" +
-                  (isFullCard
-                    ? " flex-fill mr-2 col-sm-5 col-md-auto mb-2 mb-md-0"
-                    : "")
-                }
-                onClick={e => {
-                  e.stopPropagation();
-                  handleViewContact();
-                }}
-              >
-                <Image src={ViewContact} alt="View Contact" height={18} />
-                View Contact
-              </button>
-              <button
-                className={
-                  "profile__card__right__container__actions__send" +
-                  (isFullCard
-                    ? " flex-fill mr-2 col-sm-5 col-md-auto mb-2 mb-md-0"
-                    : "")
-                }
-                onClick={e => {
-                  e.stopPropagation();
-                  status === 1 && handleSendInterest();
-                  status === 2 && handleCancelInterest();
-                }}
-              >
-                {SendInterestLoading || CancelInterestLoading ? (
-                  <>
-                    <Spinner
-                      as="span"
-                      animation="border"
-                      size="sm"
-                      role="status"
-                      aria-hidden="true"
-                    />
-                    &nbsp; &nbsp; &nbsp; Loading...
-                  </>
-                ) : (
-                  <>
-                    <Image src={Send} alt="Send Request" height={18} />
-                    {status === 1 && "Send Interest"}
-                    {status === 2 && "Cancel Interest"}
-                    {status === 3 && "Approved"}
-                    {status === 4 && "Declined"}
-                    {status === 5 && "Approve/Reject"}
-                  </>
-                )}
-              </button>
-              <button
-                className={
-                  "profile__card__right__container__actions__chat" +
-                  (isFullCard
-                    ? " flex-fill mr-2 col-sm-5 col-md-auto mb-2 mb-md-0"
-                    : "")
-                }
-              >
-                <Image src={Chat} alt="Chat" height={18} />
-                Chat
-              </button>
-              <button
-                className={
-                  "profile__card__right__container__actions__share" +
-                  (isFullCard
-                    ? " flex-fill mr-2 col-sm-5 col-md-auto mb-2 mb-md-0"
-                    : "")
-                }
-              >
-                <Image src={Share} alt="Share Profile" height={18} />
-                Share Profile
-              </button>
+
+              {status < 3 && (
+               <span>
+                 <button
+                    className={
+                      "profile__card__right__container__actions__view" +
+                      (isFullCard
+                        ? " flex-fill mr-2 col-sm-5 col-md-auto mb-2 mb-md-0"
+                        : "")
+                    }
+                    onClick={e => {
+                      e.stopPropagation();
+                      handleViewContact();
+                    }}
+                  >
+                    <Image src={ViewContact} alt="View Contact" height={18} />
+                    View Contact
+                  </button>
+
+
+                 <button
+                    className={
+                      "profile__card__right__container__actions__single" +
+                      (isFullCard
+                        ? " flex-fill mr-2 col-sm-5 col-md-auto mb-2 mb-md-0"
+                        : "")
+                    }
+                    onClick={e => {
+                      e.stopPropagation();
+                      status === 1 && handleSendInterest();
+                      status === 2 && handleCancelInterest();
+                    }}
+                  >
+                   {SendInterestLoading || CancelInterestLoading ? (
+                      <>
+                        <Spinner
+                          as="span"
+                          animation="border"
+                          size="sm"
+                          role="status"
+                          aria-hidden="true"
+                        />
+                        &nbsp; &nbsp; &nbsp; Loading...
+                      </>
+                    ) : (
+                      <>
+                        <Image src={Send} alt="Send Request" height={18} />
+                        {status === 1 && "Send Interest"}
+                        {status === 2 && "Cancel Interest"}
+                        {status === 3 && "Accepted"}
+                      </>
+                    )}
+                 </button>
+               </span>
+              )}
+
+              {status === 3 && (
+               <span>
+                 <button
+                    className={
+                      "profile__card__right__container__actions__view" +
+                      (isFullCard
+                        ? " flex-fill mr-2 col-sm-5 col-md-auto mb-2 mb-md-0"
+                        : "")
+                    }
+                    onClick={e => {
+                      e.stopPropagation();
+                      handleViewContact();
+                    }}
+                  >
+                    <Image src={ViewContact} alt="View Contact" height={18} />
+                    View Contact
+                  </button>
+                  <button
+                    className={
+                      "profile__card__right__container__actions__chat" +
+                      (isFullCard
+                        ? " flex-fill mr-2 col-sm-5 col-md-auto mb-2 mb-md-0"
+                        : "")
+                    }
+                  >
+                    <Image src={Chat} alt="Chat" height={18} />
+                    Chat
+                  </button>
+
+                 <span className={"profile__card__right__container__actions__taken"}>Accepted</span>
+               </span>
+              )}
+
+
+              {status === 4 && ( //Declined accept again
+              <span>
+                  <button
+                    className={
+                      "profile__card__right__container__actions__view" +
+                      (isFullCard
+                        ? " flex-fill mr-2 col-sm-5 col-md-auto mb-2 mb-md-0"
+                        : "")
+                    }
+                    onClick={e => {
+                      e.stopPropagation();
+                      handleViewContact();
+                    }}
+                  >
+                    <Image src={ViewContact} alt="View Contact" height={18} />
+                    View Contact
+                  </button>
+                  <span className={"profile__card__right__container__actions__taken"}>Rejected</span>
+                  <span className={"profile__card__right__container__actions__changed_mind"}>
+                      <span className={"profile__card__right__container__actions__changed_mind_text"}>Changed your mind?</span>
+                          <span
+                            className={
+                              "profile__card__right__container__actions__changed_mind__button " +
+                              (isFullCard
+                                ? " flex-fill mr-2 col-sm-5 col-md-auto mb-2 mb-md-0"
+                                : "")
+                            }
+                            onClick={e => {
+                              e.stopPropagation();
+                              handleAcceptInterest();
+                            }}
+                          >
+
+                           {AcceptInterestLoading ? (
+                              <>
+                                <Spinner
+                                  as="span"
+                                  animation="border"
+                                  size="sm"
+                                  role="status"
+                                  aria-hidden="true"
+                                />
+                                &nbsp; Loading...
+                              </>
+                            ) : (
+                              <>
+                               <Image src={ViewContact} alt="Send Request" height={18} />
+                                Accept
+                              </>
+                            )}
+                       </span>
+                    </span>
+              </span>
+              )}
+
+
+              {status === 5 && ( //if there is an incoming request show only approve/reject buttons
+              <span>
+                  <button
+                    className={
+                      "profile__card__right__container__actions__view" +
+                      (isFullCard
+                        ? " flex-fill mr-2 col-sm-5 col-md-auto mb-2 mb-md-0"
+                        : "")
+                    }
+                    onClick={e => {
+                      e.stopPropagation();
+                      handleViewContact();
+                    }}
+                  >
+                    <Image src={ViewContact} alt="View Contact" height={18} />
+                    View Contact
+                  </button>
+
+                  <span className={"profile__card__right__container__actions__approve_reject"}>
+
+                    <span
+                        className={
+                          "profile__card__right__container__actions__accept" +
+                          (isFullCard
+                            ? " flex-fill mr-2 col-sm-5 col-md-auto mb-2 mb-md-0"
+                            : "")
+                        }
+                        onClick={e => {
+                          e.stopPropagation();
+                          handleAcceptInterest();
+                        }}
+                      >
+                       {AcceptInterestLoading ? (
+                          <>
+                            <Spinner
+                              as="span"
+                              animation="border"
+                              size="sm"
+                              role="status"
+                              aria-hidden="true"
+                            />
+                            &nbsp; Loading...
+                          </>
+                        ) : (
+                          <>
+                            <Image src={Send} alt="Send Request" height={18} />
+                            Accept
+                          </>
+                        )}
+                      </span>
+
+                      <span
+                        className={
+                          "profile__card__right__container__actions__reject" +
+                          (isFullCard
+                            ? " flex-fill mr-2 col-sm-5 col-md-auto mb-2 mb-md-0"
+                            : "")
+                        }
+                        onClick={e => {
+                          e.stopPropagation();
+                          handleDeclineInterest();
+                        }}
+                      >
+                       {DeclineInterestLoading ? (
+                          <>
+                            <Spinner
+                              as="span"
+                              animation="border"
+                              size="sm"
+                              role="status"
+                              aria-hidden="true"
+                            />
+                            &nbsp; Loading...
+                          </>
+                        ) : (
+                          <>
+                           <Image src={ViewContact} alt="Send Request" height={18} />
+                            Reject
+                          </>
+                        )}
+                      </span>
+                    </span>
+              </span>
+              )}
+
+              {status === 6 && ( //if she has has declined your request
+              <span>
+                  She has declined your request.
+               </span>
+              )}
+              {status === 7 && ( //if he has has declined your request
+              <span>
+                  He has declined your request.
+               </span>
+              )}
+
             </Row>
               <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-
+                <Modal.Header closeButton className="profile__modal__header">
+                    <Icon>lock</Icon> &nbsp; &nbsp; &nbsp; Private data
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body >
 
                 {ViewContactLoading ? (
                   <>
@@ -349,22 +576,21 @@ function ProfileCard({
                   </>
                 ) : (
                   <>
-                    {popupMsg}
+                  <div className="profile__modal__body" dangerouslySetInnerHTML={{__html: popupMsg}} />
                   </>
                 )}
 
                 </Modal.Body>
-                <Modal.Footer>
-                 <Button variant="danger" onClick={handleClose}>
-                    Upgrade
-                  </Button>
-                  <Button variant="warning" onClick={handleClose}>
-                    Sorry..No money!
-                  </Button>
+                    <Modal.Footer>
+                     <Button variant="danger" onClick={handleClose}>
+                        Upgrade
+                      </Button>
+                      <Button variant="warning" onClick={handleClose}>
+                        Close
+                      </Button>
+                    </Modal.Footer>
+                </Modal>
 
-
-                </Modal.Footer>
-              </Modal>
           </div>
         </Col>
       </Card>

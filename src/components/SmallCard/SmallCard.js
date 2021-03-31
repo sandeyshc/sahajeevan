@@ -44,9 +44,8 @@ function SmallCard({
           {religion}-{caste}
         </p>
         <p className="smallcard__content__location">
-          {mother_tongue}, {location}
+          {mother_tongue}, Lives in {location}
         </p>
-        <p className="smallcard__content__profession">{occupation}</p>
         <p className="smallcard__content__profession">{marital_status}</p>
       </div>
     </Card>

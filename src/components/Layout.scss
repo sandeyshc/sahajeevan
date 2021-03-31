@@ -7,3 +7,15 @@
         z-index: -1;
     }
 }
+
+
+@media screen and (max-width: 992px) {
+.layout__header {
+    &__hero__image {
+        position: absolute;
+        width: 100%;
+        height: 40%;
+        z-index: -1;
+    }
+}
+}

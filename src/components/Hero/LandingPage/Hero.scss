@@ -1,8 +1,9 @@
 .hero {
     height: 100vh;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     margin: auto;
+    top: 40px;
 }
 
 .banner {
@@ -29,4 +30,11 @@
             max-width: 350px;
         }
     }
+}
+
+
+@media screen and (max-width: 992px) {
+  .hero {
+    height: 730px;
+  }
 }

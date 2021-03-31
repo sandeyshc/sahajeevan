@@ -1,4 +1,4 @@
-.profile {
+.vprofile {
   .row {
     margin: 0;
   }
@@ -28,8 +28,8 @@
 
         &__img {
           border-radius: 50%;
-          width: 250px;
-          height: 250px;
+          width: 285px;
+          height: 285px;
           filter: brightness(0.75);
           img {
             width: 100%;
@@ -76,6 +76,11 @@
           right: 4%;
           top: 3%;
         }
+         &__premium {
+            position: absolute;
+            top: -16px;
+            left: -16px;
+          }
       }
     }
 
@@ -222,7 +227,7 @@
   }
 }
 
-.search-profile {
+.view-profile {
   margin: 50px 0;
 
   .profile {
@@ -286,11 +291,7 @@
             }
           }
 
-          &__premium {
-            position: absolute;
-            top: -16px;
-            left: -16px;
-          }
+
         }
       }
 
@@ -394,7 +395,7 @@
 }
 
 @media screen and (max-width: 768px) {
-  .search-profile .profile {
+  .vprofile {
     &__card {
       flex-wrap: wrap;
       overflow: hidden;
@@ -473,18 +474,5 @@
 }
 
 @media screen and (max-width: 575px) {
-  .search-profile {
-    .profile {
-      &__card {
-        max-height: max-content;
-        &__left {
-          &__container {
-            &__img {
-              max-height: 200px;
-            }
-          }
-        }
-      }
-    }
-  }
+
 }

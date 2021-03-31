@@ -10,7 +10,7 @@ import "./Layout.scss";
 function Layout({ children, heroImg, heroData, bannerContent }) {
   return (
     <div className="layout">
-      <div className="layout__header">
+      <div className="layout__header homepage_header">
         <Image src={heroImg} className="layout__header__hero__image" alt="hero image" />
         <Header />
         <Hero data={heroData}>
