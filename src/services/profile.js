@@ -12,7 +12,7 @@ const URLS = {
   SHORTLISTED: "/profile/get-shortlisted-profiles",
   SENTINTERESTS: "/profile/get-sent-interests",
   VIEWEDPROFIFLES: "/profile/get-viewed-profiles",
-  VIEWOTHERS: "/profile/view-other-contacts",
+  VIEWOTHERSCONTACT: "/profile/view-others-contacts",
   SENDINTEREST: "/profile/send-interest",
   CANCELINTEREST: "/profile/cancel-interest",
   ACCEPTINTEREST: "/profile/accept-interest",
@@ -26,6 +26,8 @@ const URLS = {
   VIEWPROFILE: "/profile/view-full-profile",
   VIEWMYPROFILE: "/profile/view-my-profile",
   GETMYPHOTOS: "/profile/get-my-photos",
+  VIEWOTHERSPHOTOS: "/profile/view-others-photos",
+  TOP10NOTIFICATIONS: "/profile/get-10-user-notifications",
 };
 
 axios.interceptors.request.use(
@@ -116,7 +118,7 @@ export const acceptedByOthers = async () => {
 };
 
 export const viewContact = async id => {
-  return await APIGetCall(URLS.VIEWOTHERS + (id ? `?profile_id=${id}` : ""));
+  return await APIGetCall(URLS.VIEWOTHERSCONTACT + (id ? `?profile_id=${id}` : ""));
 };
 
 export const sendInterest = async id => {
@@ -193,4 +195,12 @@ export const getFilter = filter => {
 
 export const getMyPhotos = async () => {
   return await APIGetCall(URLS.GETMYPHOTOS);
+};
+
+export const viewOthersPhotos = async id => {
+  return await APIGetCall(URLS.VIEWOTHERSPHOTOS + (id ? `?profile_id=${id}` : ""));
+};
+
+export const getTop10Notifications = async () => {
+  return await APIGetCall(URLS.TOP10NOTIFICATIONS);
 };

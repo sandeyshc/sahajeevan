@@ -14,7 +14,7 @@ function HomeForm() {
   });
   return (
     <section className="homeForm col-lg-6">
-      <Row className="homeForm__header px-6 ">
+      <Row className="homeForm__header px-6 m-0">
         <Image src={data?.profile_photo} className="mr-2 rounded-circle" alt="user image" height="130" />
         <Col className="homeForm__header__content">
           <p className="homeForm__header__content__title">{data?.profile_name}</p>

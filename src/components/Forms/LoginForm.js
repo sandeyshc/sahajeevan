@@ -6,8 +6,13 @@ import "./LoginForm.scss";
 import { useMutation } from "react-query";
 
 function LoginForm({ close, modalData }) {
-  const [formValue, setFormValue] = useState({ username: "", password: "" }),
+
+  const [formValue, setFormValue] = useState(
+  {username: localStorage.getItem('username'), password:localStorage.getItem('password') }),
     submit = (e) => {
+    localStorage.setItem('username', formValue.username);
+    localStorage.setItem('password', formValue.password);
+    console.log("username", localStorage.getItem('username'))
       e.preventDefault();
       mutate(formValue);
     },
@@ -34,6 +39,8 @@ function LoginForm({ close, modalData }) {
           onChange={({ target: { value } }) =>
             setFormValue({ ...formValue, username: value })
           }
+          defaultValue={formValue.username}
+          autocomplete
           required
         />
       </Form.Group>
@@ -45,6 +52,7 @@ function LoginForm({ close, modalData }) {
           onChange={({ target: { value } }) =>
             setFormValue({ ...formValue, password: value })
           }
+          defaultValue={formValue.password}
           required
         />
       </Form.Group>

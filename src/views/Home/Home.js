@@ -14,7 +14,7 @@ import {
   premiumMatches,
   profileVisitors,
   nearbyMatches,
-  dailyRecommendations
+  dailyRecommendations,
 } from "../../services/profile";
 
 function Home() {
@@ -74,6 +74,7 @@ function Home() {
       profileVisitors,
       { refetchOnWindowFocus: false }
     ),
+
     [visitorIndex, setVisitorIndex] = useState(0),
     [nearByIndex, setNearByIndex] = useState(0),
     [recommendationIndex, setRecommendationIndex] = useState(0),

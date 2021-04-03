@@ -1,3 +1,7 @@
+body{
+overflow: overlay !important;
+}
+
 .header {
   padding: 10px 100px;
   width: 100%;
@@ -13,6 +17,24 @@
       padding-right: 1rem;
       white-space: nowrap;
       box-shadow: none;
+    }
+     .notification_btn{
+       background-color: #ffffff00 !important ;
+       border-color: #ffffff00 !important;
+       &:hover {
+        background-color: #ffffff00 !important ;
+       border-color: #ffffff00 !important;
+       color: #ffebcc !important;
+      }
+    }
+    .notification_dropdown{
+       background-color: #ffffff00 !important ;
+       border-color: #ffffff00 !important;
+
+       &:hover {
+        background-color: #ffffff00 !important ;
+       border-color: #ffffff00 !important;
+      }
     }
 
     .header__nav__link__img {
@@ -51,6 +73,9 @@
     & .navbar-nav {
       margin: 0 0 0 auto;
     }
+
+
+
   }
 }
 
@@ -111,6 +136,87 @@
 .header__row__register {
   background-color: #ee4642;
 }
+
+.nav-link:hover, .nav-link:focus {
+    color: #ffebcc !important;
+}
+
+
+.dropdown_notification{
+max-height:300px;
+display: inline-block;
+word-break: break-word;
+width:300px;
+position: absolute !important;
+transition: width 2s, height 4s;
+}
+
+.msg_time{
+font-size: 12px;
+color: #b7b7b7;
+
+}
+
+.notification_msg{
+color: #808080fa;
+font-size:15px;
+font-weight:600;
+}
+
+.msg_count{
+        border: 2px solid #fffefe;
+    border-radius: 24px;
+    height: 23px;
+    width: 23px;
+    font-size: 65%;
+    padding: 2px;
+    position: absolute;
+    color: #ffffff;
+    text-align: center;
+    background-color: #44aebe;
+}
+
+.notification_parent{
+background-color:#3ca4af !important;
+padding:7px;
+}
+
+.msg_row{
+border-bottom: 2px solid #e4e4e4 !important;
+display: inline-block;
+}
+.MuiList-padding {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+.notification_header{
+text-align: center;
+
+    color: #ffffff;
+    font-weight: 600;
+}
+.notification_footer{
+text-align: center;
+    color: #3ca4af;
+    font-weight: 600;
+    cursor: pointer;
+}
+.MuiListItem-root{
+display:block !important;
+}
+
+.unread{
+height: 12px;
+    width: 12px;
+    background: #f10a0a;
+    top: -6px;
+    border: 1px solid #ffffff;
+    left: -9px;
+    position: relative;
+    border-radius: 20px;
+
+}
+
 
 @media screen and (max-width: 991px) {
   .header {

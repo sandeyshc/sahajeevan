@@ -23,7 +23,8 @@ import Kundli from "../../assets/icons/svg icon/Kundli Match.svg";
 import Graph from "../../assets/icons/svg icon/graph.svg";
 import Premium from "../../assets/icons/svg icon/premium.svg";
 import dummyImage from "../../assets/images/dummy.png";
-import { sendInterest, cancelInterest, acceptInterest, declineInterest, viewContact, getMyPhotos } from "../../services/profile";
+import { sendInterest, cancelInterest, acceptInterest, declineInterest,
+viewContact, getMyPhotos, viewOthersPhotos } from "../../services/profile";
 import useSnackBar from "../../hooks/SnackBarHook";
 import ImageGallery from 'react-image-gallery';
 import "react-image-gallery/styles/scss/image-gallery.scss"
@@ -64,33 +65,33 @@ function ViewProfileCard({
    const handleMsgPopupShow = () => setShowViewContact(true);
 
    const [showImages, setShowImages] = useState(false);
-//   const [images, setImages] = setShowImages([]);
+   const [images, setImages] = useState([]);
    const handleImagesPopupClose = () => setShowImages(false);
    const handleImagesPopupShow = () => setShowImages(true);
 
 
-   const images = [
-                  {
-                    original: 'https://picsum.photos/id/1018/1000/600/',
-                    thumbnail: 'https://picsum.photos/id/1018/250/150/',
-                  },
-                  {
-                    original: 'https://picsum.photos/id/1015/1000/600/',
-                    thumbnail: 'https://picsum.photos/id/1015/250/150/',
-                  },
-                  {
-                    original: 'https://picsum.photos/id/1019/1000/600/',
-                    thumbnail: 'https://picsum.photos/id/1019/250/150/',
-                  },
-                  {
-                    original: 'https://picsum.photos/id/1019/1000/600/',
-                    thumbnail: 'https://picsum.photos/id/1019/250/150/',
-                  },
-                  {
-                    original: 'https://picsum.photos/id/1019/1000/600/',
-                    thumbnail: 'https://picsum.photos/id/1019/1000/600/',
-                  },
-                ];
+//   const images = [
+//                  {
+//                    original: 'https://picsum.photos/id/1018/1000/600/',
+//                    thumbnail: 'https://picsum.photos/id/1018/250/150/',
+//                  },
+//                  {
+//                    original: 'https://picsum.photos/id/1015/1000/600/',
+//                    thumbnail: 'https://picsum.photos/id/1015/250/150/',
+//                  },
+//                  {
+//                    original: 'https://picsum.photos/id/1019/1000/600/',
+//                    thumbnail: 'https://picsum.photos/id/1019/250/150/',
+//                  },
+//                  {
+//                    original: 'https://picsum.photos/id/1019/1000/600/',
+//                    thumbnail: 'https://picsum.photos/id/1019/250/150/',
+//                  },
+//                  {
+//                    original: 'https://picsum.photos/id/1019/1000/600/',
+//                    thumbnail: 'https://picsum.photos/id/1019/1000/600/',
+//                  },
+//                ];
 
   const parseDate = date => {
       return new Intl.DateTimeFormat("en-AU", {
@@ -145,16 +146,12 @@ function ViewProfileCard({
       isError: GetPhotosErrorStatus,
       error: GetPhotosError,
       data: GetPhotosData
-    } = useMutation(id => getMyPhotos(id)),
+    } = useMutation(id => viewOthersPhotos(id)),
     handleGetPhotos = () => {
-
-    if(!images){
+    if(!!images){
         GetPhotosMutate(id);
     }
     handleImagesPopupShow(true);
-
-
-
     },
     handleSendInterest = () => {
       SendInterestMutate(id);
@@ -226,6 +223,16 @@ function ViewProfileCard({
             setPopupMsg(ViewContactData?.name + " : +91 " + ViewContactData?.contact_1);
         }
       }, [ViewContactErrorStatus, ViewContactData, ViewContactError]);
+
+  useEffect(state => {
+      if(GetPhotosErrorStatus){
+       let msg = GetPhotosError ? GetPhotosError?.data : "Internet disconnected"
+        message(msg);
+        }
+      if (GetPhotosData){
+            setImages(GetPhotosData?.results);
+        }
+      }, [GetPhotosErrorStatus, GetPhotosData, GetPhotosError]);
 
 
 
@@ -573,7 +580,8 @@ function ViewProfileCard({
                       </>
                     ) : (
                       <>
-                     <ImageGallery items={images} />
+                      {images.length > 0 && <ImageGallery items={images} />}
+                      {images.length === 0 && "No images to show"}
                       </>
                     )}
 
