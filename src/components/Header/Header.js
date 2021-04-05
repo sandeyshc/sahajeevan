@@ -24,6 +24,8 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import DraftsIcon from '@material-ui/icons/Drafts';
 import SendIcon from '@material-ui/icons/Send';
 import { getTop10Notifications } from "../../services/profile";
+import { Widget, addResponseMessage, addLinkSnippet, addUserMessage } from 'react-chat-widget';
+import 'react-chat-widget/lib/styles.css';
 
 
 const StyledMenu = withStyles({
@@ -108,6 +110,16 @@ const [anchorEl, setAnchorEl] = React.useState(null);
     }, 3000);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    addResponseMessage('Welcome to this awesome chat!');
+  }, []);
+
+  const handleNewUserMessage = (newMessage) => {
+    console.log(`New message incoming! ${newMessage}`);
+    // Now send the message throught the backend API
+    addResponseMessage("response");
+  };
 
 
   return (
@@ -247,6 +259,14 @@ const [anchorEl, setAnchorEl] = React.useState(null);
         type={modal}
         data={modalData}
       />
+      <div className="App">
+        <Widget
+          handleNewUserMessage={handleNewUserMessage}
+          profileAvatar={logo}
+          title="My new awesome title"
+          subtitle="And my cool subtitle"
+        />
+      </div>
     </div>
   );
 }

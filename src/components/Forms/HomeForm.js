@@ -33,52 +33,8 @@ function HomeForm() {
           {data?.other_details}
         </p>
       </Row>
-      <Row className="homeForm__cards">
-        <Card className="homeForm__cards__card">
-          <div className="homeForm__cards__card__circle">
-            <Image
-              src={RECOMMENDATION}
-              alt="daily recommendations"
-              height="30"
-            />
-            <span className="homeForm__cards__card__circle__count text-nowrap">
-              {data?.daily_recommendations}
-            </span>
-          </div>
-          <p className="homeForm__cards__card__desc">Daily Recommendations</p>
-        </Card>
-        <Card className="homeForm__cards__card">
-          <div className="homeForm__cards__card__circle">
-            <Image src={JOINED} alt="Today Joined" height="30" />
-            <span className="homeForm__cards__card__circle__count text-nowrap">
-              {data?.recently_joined}
-            </span>
-          </div>
-          <p className="homeForm__cards__card__desc">Today Joined</p>
-        </Card>
-        <Card className="homeForm__cards__card">
-          <div className="homeForm__cards__card__circle">
-            <Image src={INTERESTS} alt="Received Interests" height="30" />
-            <span className="homeForm__cards__card__circle__count text-nowrap">
-              {data?.received_interests}
-            </span>
-          </div>
-          <p className="homeForm__cards__card__desc">Received Interests</p>
-        </Card>
-      </Row>
-      <Row className="homeForm__actions">
-        <button className="homeForm__actions__upload">
-          Upload Your Photos
-        </button>
-        <Row className="homeForm__actions__sec">
-          <button className="homeForm__actions__sec__filters">
-            Manage Filters
-          </button>
-          <button className="homeForm__actions__sec__profile">
-            My Public Profile
-          </button>
-        </Row>
-      </Row>
+
+
     </section>
   );
 }

@@ -1,3 +1,39 @@
+.cards_section{
+    max-width: 100%;
+    padding: 0px 8%;
+}
+
+.profile_visitors{
+margin: 50px auto !important;
+}
+
+.recomm_bg{
+background-color: #f2f9f373;
+}
+
+.nearby_bg{
+background-color: #ffffff;
+}
+
+.premium_bg{
+background-color: #f1f1f18a;
+}
+
+.dotted_parent{
+    position: absolute;
+    right: 10px;
+}
+.dotted_child{
+width: 100%;
+text-align: right;
+}
+.dotted_image{
+     height: 87px;
+    top: -31px;
+    z-index: -3;
+    position: relative;
+
+}
 
 
 .section {
@@ -136,6 +172,18 @@
 }
 
 @media screen and (max-width: 786px) {
+    .profile_visitors{
+    margin: -33px auto !important;
+    }
+
+    .dotted_image{
+            height: 100px;
+            top: -119px;
+            z-index: -3;
+            position: relative;
+        }
+
+
     .section {
         &__header {
             &__title {

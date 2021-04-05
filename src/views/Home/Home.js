@@ -5,6 +5,7 @@ import "./Home.scss";
 import { useQuery } from "react-query";
 
 import Hero from "../../assets/images/Home/home.png";
+import Dotted from "../../assets/images/Home/dotted.png";
 import FooterLogo from "../../assets/images/logo1.png";
 import Left from "../../assets/icons/svg icon/Right1.svg";
 import Right from "../../assets/icons/svg icon/Stroke 1.svg";
@@ -18,41 +19,11 @@ import {
 } from "../../services/profile";
 
 function Home() {
-  const cards = [
-      {
-        title: "28, 5' 0'', Delhi and allahabad, Uttarpradesh",
-        language: "Hindi-Delhi, kashmiri",
-        education: "M.Com, other",
-        profession: "Rs 2 - 3 Lakh, BPO/ITES Profession",
-        pictureCount: 3
-      },
-      {
-        title: "28, 5' 0'', Delhi and allahabad, Uttarpradesh",
-        language: "Hindi-Delhi, kashmiri",
-        education: "M.Com, other",
-        profession: "Rs 2 - 3 Lakh, BPO/ITES Profession",
-        pictureCount: 3
-      },
-      {
-        title: "28, 5' 0'', Delhi and allahabad, Uttarpradesh",
-        language: "Hindi-Delhi, kashmiri",
-        education: "M.Com, other",
-        profession: "Rs 2 - 3 Lakh, BPO/ITES Profession",
-        pictureCount: 2
-      },
-      {
-        title: "28, 5' 0'', Delhi and allahabad, Uttarpradesh",
-        language: "Hindi-Delhi, kashmiri",
-        education: "M.Com, other",
-        profession: "Rs 2 - 3 Lakh, BPO/ITES Profession",
-        pictureCount: 4
-      }
-    ],
-    heroData = {
+  const heroData = {
       isLoggedIn: true,
-      title: "Lorem ipsum is simply dummy text of the printing.",
+      title: "Why choose your partner among 10 while you can choose among 1000",
       subtitle:
-        "Lorem ipsum is simply dummy text for printing and typesetting industry. Loreum ipsum has been the industry's.",
+        "",
       btnText: "Upgrade",
       className: "d-none d-lg-block"
     },
@@ -82,7 +53,10 @@ function Home() {
 
   return (
     <Layout heroImg={Hero} heroData={heroData} bannerContent={<HomeForm />}>
-      <section className="section col-xl-10 col-12">
+        <section className="dotted_parent">
+            <div className="dotted_child"><Image className="dotted_image" src={Dotted} alt="about" height="30" /></div>
+        </section>
+      <section className="section col-xl-10 col-12 cards_section profile_visitors">
         <div className="section__header">
           <div className="section__header__title">
             <p className="section__header__title__text">
@@ -142,63 +116,9 @@ function Home() {
         </div>
       </section>
 
-      <section className="section col-xl-10 col-12">
-        <div className="section__header">
-          <div className="section__header__title">
-            <p className="section__header__title__text">
-              Nearby Matches
-              <span className="section__header__title__text__count">
-                {nearbyCards?.count}
-              </span>
-            </p>
-            <p className="section__header__title__subtext">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry.
-            </p>
-          </div>
-          <div className="section__header__actions">
-            <button
-              className="section__header__actions__left d-none d-lg-inline-block"
-              onClick={() =>
-                setNearByIndex(nearByIndex > 0 ? nearByIndex - 1 : nearByIndex)
-              }
-            >
-              <Image src={Left} alt="left icon" height="15" />
-            </button>
-            <button
-              className="section__header__actions__right d-none d-lg-inline-block"
-              onClick={() =>
-                setNearByIndex(nearByIndex < 1 ? nearByIndex + 1 : nearByIndex)
-              }
-            >
-              <Image src={Right} alt="right icon" height="15" />
-            </button>
-            <button className="section__header__actions__all">
-              <span className="section__header__actions__all__text">
-                View All
-              </span>
-              <Image
-                src={RightRedArrow}
-                alt="right arrow"
-                className="section__header__actions__all__redicon"
-              />
-              <Image
-                src={RightWhiteArrow}
-                alt="right arrow"
-                className="section__header__actions__all__whiteicon"
-              />
-            </button>
-          </div>
-        </div>
-        <div className="section__cards">
-          <CardCarousel
-            cards={nearbyCards?.results}
-            activeIndex={nearByIndex}
-          ></CardCarousel>
-        </div>
-      </section>
 
-      <section className="section col-xl-10 col-12">
+
+      <section className="section col-xl-10 col-12 cards_section recomm_bg">
         <div className="section__header">
           <div className="section__header__title">
             <p className="section__header__title__text">
@@ -260,7 +180,63 @@ function Home() {
         </div>
       </section>
 
-      <section className="section col-xl-10 col-12">
+      <section className="section col-xl-10 col-12 cards_section nearby_bg">
+        <div className="section__header">
+          <div className="section__header__title">
+            <p className="section__header__title__text">
+              Nearby Matches
+              <span className="section__header__title__text__count">
+                {nearbyCards?.count}
+              </span>
+            </p>
+            <p className="section__header__title__subtext">
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry.
+            </p>
+          </div>
+          <div className="section__header__actions">
+            <button
+              className="section__header__actions__left d-none d-lg-inline-block"
+              onClick={() =>
+                setNearByIndex(nearByIndex > 0 ? nearByIndex - 1 : nearByIndex)
+              }
+            >
+              <Image src={Left} alt="left icon" height="15" />
+            </button>
+            <button
+              className="section__header__actions__right d-none d-lg-inline-block"
+              onClick={() =>
+                setNearByIndex(nearByIndex < 1 ? nearByIndex + 1 : nearByIndex)
+              }
+            >
+              <Image src={Right} alt="right icon" height="15" />
+            </button>
+            <button className="section__header__actions__all">
+              <span className="section__header__actions__all__text">
+                View All
+              </span>
+              <Image
+                src={RightRedArrow}
+                alt="right arrow"
+                className="section__header__actions__all__redicon"
+              />
+              <Image
+                src={RightWhiteArrow}
+                alt="right arrow"
+                className="section__header__actions__all__whiteicon"
+              />
+            </button>
+          </div>
+        </div>
+        <div className="section__cards">
+          <CardCarousel
+            cards={nearbyCards?.results}
+            activeIndex={nearByIndex}
+          ></CardCarousel>
+        </div>
+      </section>
+
+      <section className="section col-xl-10 col-12 cards_section premium_bg">
         <div className="section__header">
           <div className="section__header__title">
             <p className="section__header__title__text">

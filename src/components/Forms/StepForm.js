@@ -18,6 +18,7 @@ import SkipIcon from "../../assets/icons/svg icon/skip.svg";
 import SaveIcon from "../../assets/icons/svg icon/save-file.svg";
 import SaveSearch from "../../assets/icons/svg icon/search-interface-symbol.svg";
 import { DateTime } from "luxon";
+import BasicSearch from "./BasicSearch"
 
 function StepForm({ setActive, close }) {
   const [activeStep, setActiveStep] = useState(0),
@@ -593,111 +594,15 @@ function StepForm({ setActive, close }) {
             </Form.Group>
           </>
         )}
+
+
         {activeStep === 3 && (
           <>
-            <Form.Row className="stepForm__group flex-column flex-lg-row">
-              <Form.Group as={Col} controlId="partner_for">
-                <Form.Label className="stepForm__label">Looking For</Form.Label>
-                <Form.Control
-                  as="select"
-                  className="stepForm__control"
-                  name="partner_gender"
-                  onChange={handleChange}
-                >
-                  {gender?.map(opt => (
-                    <option key={opt?.key} value={opt?.key}>
-                      {opt?.value}
-                    </option>
-                  ))}
-                </Form.Control>
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="partner_occupation">
-                <Form.Label className="stepForm__label">Occupation</Form.Label>
-                <Form.Control
-                  as="select"
-                  name="partner_occupation"
-                  className="stepForm__control"
-                  onChange={handleChange}
-                >
-                  {occupation?.map(opt => (
-                    <option key={opt?.key} value={opt?.key}>
-                      {opt?.value}
-                    </option>
-                  ))}
-                </Form.Control>
-              </Form.Group>
-            </Form.Row>
-            <Form.Row className="stepForm__group flex-column flex-lg-row">
-              <Form.Group as={Col} controlId="partner_income">
-                <Form.Label className="stepForm__label">Income</Form.Label>
-                <Form.Control
-                  as="select"
-                  name="partner_income"
-                  className="stepForm__control"
-                  onChange={handleChange}
-                >
-                  {income?.map(opt => (
-                    <option key={opt?.key} value={opt?.key}>
-                      {opt?.value}
-                    </option>
-                  ))}
-                </Form.Control>
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="partner_age">
-                <Form.Label className="stepForm__label">Age</Form.Label>
-                <Form.Control
-                  name="partner_age"
-                  className="stepForm__control"
-                  type="number"
-                  onChange={handleChange}
-                />
-              </Form.Group>
-            </Form.Row>
-
-            <Form.Group
-              as={Col}
-              controlId="partner_location"
-              className="stepForm__group"
-            >
-              <Form.Label className="stepForm__label">Location</Form.Label>
-              <Form.Control
-                as="select"
-                className="stepForm__control"
-                onChange={handleChange}
-                name="partner_location"
-              >
-                {location?.map(opt => (
-                  <option key={opt?.key} value={opt?.key}>
-                    {opt?.value}
-                  </option>
-                ))}
-              </Form.Control>
-            </Form.Group>
-            <Form.Group
-              as={Col}
-              controlId="partner_qualification"
-              className="stepForm__group"
-            >
-              <Form.Label className="stepForm__label">
-                Highest Qualification
-              </Form.Label>
-              <Form.Control
-                as="select"
-                className="stepForm__control"
-                onChange={handleChange}
-                name="partner_qualification"
-              >
-                {qualification?.map(opt => (
-                  <option key={opt?.key} value={opt?.key}>
-                    {opt?.value}
-                  </option>
-                ))}
-              </Form.Control>
-            </Form.Group>
+            <BasicSearch />
           </>
         )}
+
+
         <Row className="stepForm__actions flex-column flex-sm-row col-12 col-lg-10">
           <Button
             className="stepForm__save "
