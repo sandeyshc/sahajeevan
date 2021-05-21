@@ -13,13 +13,21 @@ export function SnackBarProvider({ children }) {
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         open={!!message}
         onClose={() => setMessage("")}
-        autoHideDuration={6000}
+        autoHideDuration={60000}
         message={message}
         key={message}
       >
       <SnackbarContent style={{
-              backgroundColor:'#99b4e8',
+              backgroundColor:'rgb(93, 99, 106)',
               fontSize: '15px',
+              borderLeftStyle: 'solid',
+              borderLeftWidth: 8,
+              borderLeftColor: 'rgb(71, 204, 255)',
+              minWidth: 100,
+              borderRadius: 1,
+              opacity: 0.8,
+              minWidth:200,
+
                  }}
                 message={<span id="client-snackbar">{message}</span>}
               />

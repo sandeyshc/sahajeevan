@@ -14,10 +14,10 @@
       &__button {
         display: block;
 
-        & + img {
-          filter: grayscale(100%) brightness(120%) sepia(90%) hue-rotate(5deg)
-            saturate(500%) contrast(0.7) blur(1px);
-        }
+//         & + img {
+//           filter: grayscale(100%) brightness(120%) sepia(90%) hue-rotate(5deg)
+//             saturate(500%) contrast(0.7) blur(1px);
+//         }
       }
     }
   }
@@ -53,9 +53,9 @@
   }
 
   &__button {
-    background-color: #ee4642;
+    background-color: #fcb432;
     border: 0;
-    box-shadow: 0 0 5px #ee4642;
+    box-shadow: 0 0 5px #ffd266;
     color: white;
     min-width: 140px;
     min-height: 35px;
@@ -93,6 +93,7 @@
       text-overflow: ellipsis;
       position: relative;
       color: #ffffff;
+      cursor: pointer;
 
       &::after {
         content: "";

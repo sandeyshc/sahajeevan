@@ -20,7 +20,6 @@ function Dialog({ show, onHide, type, data }) {
       [Modals.step]: [
         "PLEASE TELL US ABOUT YOURSELF",
         "ALMOST THERE..PLEASE FILL LITTLE MORE INFORMATION",
-        "PLEASE FILL FAMILY INFORMATION",
         "SEARCH YOUR MATCH",
       ],
     },
@@ -53,6 +52,8 @@ function Dialog({ show, onHide, type, data }) {
       onHide={onHide}
       centered
       size={type === Modals.step ? "lg" : ""}
+      backdrop="static"
+       keyboard={false}
     >
       <Modal.Body className="dialog">
         <div className="dialog__header col-lg-10">

@@ -1,3 +1,8 @@
+.extra{
+  color: #fcb723 !important;
+  border-color: #ffffff !important;
+}
+
 .vprofile {
   .row {
     margin: 0;
@@ -31,6 +36,7 @@
           width: 285px;
           height: 285px;
           filter: brightness(0.75);
+          cursor:pointer;
           img {
             width: 100%;
             height: 100%;
@@ -65,16 +71,15 @@
         }
 
         &__privacy {
-          background-color: #ed4642;
+          background-color: #ffe47c3b;
           border-radius: 50%;
-          min-width: 30px;
-          min-height: 30px;
+          width: 30px;
+          height: 30px;
           display: flex;
           justify-content: center;
           align-items: center;
-          position: absolute;
-          right: 4%;
-          top: 3%;
+        top: -21%;
+        position: relative;
         }
          &__premium {
             position: absolute;
@@ -91,6 +96,19 @@
         display: flex;
         flex-direction: column;
         height: 100%;
+      &__lastseen{
+
+        justify-content: space-between;
+        justify-content: flex-end;
+
+      }
+
+
+       &__extra{
+                color: #dc3545 !important;
+                border-color: #ffffff !important;
+            }
+
 
         &__header {
           justify-content: space-between;
@@ -111,9 +129,9 @@
           }
 
           &__seen {
-            margin: 0;
+            margin: 4px 4px 0px 0px;
             color: #9f9f9f;
-            font-size: 15px;
+            font-size: 11px;
 
             &__calendar {
               margin-right: 5px;
@@ -160,7 +178,7 @@
                 margin: 0;
 
                 & + p {
-                  font-size: 18px;
+                  font-size: 14px;
                   margin: 0;
                   display: flex;
                   justify-content: center;
@@ -182,44 +200,115 @@
             & .row {
               margin: 2px 0;
             }
+            &__extra_row{
+            justify-content: flex-end;
+            }
+
+
           }
         }
 
         &__actions {
           background-color: #ecf2fe;
           margin-right: 7px;
-          border-radius: 7px;
-          padding: 10px 12px;
+          padding: 7px 0px 7px 0px;
           justify-content: space-between;
           align-items: center;
+          justify-content: flex-end;
+
+          &__faint_msg{
+              font-size: 14px;
+                font-style: italic;
+                margin: 10px;
+                color: #8e8b8b;
+          }
+
+
+          &__approve_reject {
+              border-left: 5px solid #55a5d4;
+              border-right: 5px solid #55a5d4;
+              padding: 7px 5px;
+              font-size: 15px;
+              transition: background-color 0.25s ease;
+               color: #55a5d4;
+               background-color: #ffffff;
+               border-radius: 5px 23px 5px;
+              &:hover {
+//                     background-color: #ee4642;
+//                     color: white;
+              }
+              img {
+                transition: all 0.25s ease;
+              }
+            }
+
+          &__children{
+//             border-bottom: 2px solid #d1dee4;
+            padding: 0px 0px 5px 0px;
+          }
+          &__icons{
+            margin: 0px 20px;
+            border-right: 2px solid #b7b7b7;
+          }
 
           img {
             margin-right: 7px;
           }
 
+
+
+         &__changed_mind{
+            &__button{
+            cursor: pointer;
+            color: #4eabe2;
+            }
+          }
+
+          &__changed_mind_text{
+          font-size: 12px;
+          font-style: italic;
+          margin: 10px;
+          color: #8e8b8b;
+          }
           button {
-            display: flex;
             justify-content: center;
             align-items: center;
             border: 0;
-            border-radius: 50px;
-            background-color: white;
+            background-color: #ecf2fe;
             color: #c3525d;
             font-size: 14px;
-            box-shadow: 0 0 10px 5px #e8ebf4;
-            min-height: 45px;
+            outline: none;
           }
 
           &__view {
           }
 
-          &__send {
+          &__single {
+              border-left: 3px solid #f7acad !important ;
+              padding: 6px 15px;
+              border-radius: 0px 20px 20px 0px;
+          }
+
+          &__taken {
+              border-left: 3px solid #ff8c8c !important ;
+              padding: 6px 15px;
+              color: #ff8c8c;
+              border-radius: 0px 20px 20px 0px;
           }
 
           &__chat {
           }
 
           &__share {
+          }
+           &__accept {
+           padding: 10px 15px;
+           cursor: pointer;
+
+          }
+           &__reject {
+            padding: 10px 15px;
+            cursor: pointer;
           }
         }
       }
@@ -306,7 +395,7 @@
             }
 
             &__seen {
-              font-size: 12px;
+              font-size: 10px;
             }
           }
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useQuery } from "react-query";
-import { Form, Image, Button } from "react-bootstrap";
+import { Form, Image, Button, Accordion, Card } from "react-bootstrap";
 import {
   RadioGroup,
   Radio,
@@ -20,6 +20,7 @@ import Hero from "../../assets/images/Search/hero.png";
 import SaveSearch from "../../assets/icons/svg icon/search-interface-symbol.svg";
 import Save from "../../assets/icons/svg icon/save-file.svg";
 import { getOptions, saveFilter } from "../../services/profile";
+import Icon from '@material-ui/core/Icon';
 
 function Search() {
   const [formData, setFormData] = useState({
@@ -84,16 +85,16 @@ function Search() {
         },
         religion: Options?.results?.religion[0],
         height: {
-          from: 5,
+          from: 4.5,
           to: 5.5
         },
         location: [Options?.results?.location[0]],
         marital_status: [Options?.results?.marital_status[0]],
         caste: [Options?.results?.caste[Options?.results?.religion[0].value][0]],
         mother_tongue: [Options?.results?.mother_tongue[0]],
-        occupation: [Options?.results?.occupation[0]],
-        qualification: [Options?.results?.qualification[0]],
-        income: [Options?.results?.income[0]]
+        occupation: [],
+        qualification: [],
+        income: []
       });
   }, [OptionsSuccess]);
   return (
@@ -493,175 +494,204 @@ function Search() {
                   </Select>
                 </div>
               </div>
-              <div className="search__form__controls__group  mb-3">
-                <p className="search__form__controls__group__label">
-                  Occupation
-                </p>
-                <div className="search__form__controls__group__wrapper">
-                  <Select
-                    labelId="occupation"
-                    className="w-100 my-2"
-                    id="occupation"
-                    name="occupation"
-                    MenuProps={{
-                      getContentAnchorEl: null,
-                      anchorOrigin: {
-                        vertical: "bottom",
-                        horizontal: "left"
-                      }
-                    }}
-                    multiple
-                    value={formData?.occupation}
-                    onChange={({ target: { name, value } }) =>
-                      handleChange({ [name]: value })
-                    }
-                    input={<Input id="select-occupation" />}
-                    renderValue={selected => (
-                      <div>
-                        {selected?.map(select => (
-                          <Chip
-                            className="m-2"
-                            variant="outlined"
-                            key={select?.key}
-                            clickable
-                            value={select?.key}
-                            label={select?.value}
-                            onDelete={() =>
-                              handleChipDelete("occupation", select?.key)
-                            }
-                            deleteIcon={
-                              <span
-                                className="text-dark"
-                                onMouseDown={event => event.stopPropagation()}
-                              >
-                                &#10005;
+
+              <div>
+                    <Accordion defaultActiveKey="1">
+                      <Card>
+                        <Card.Header>
+                          <Accordion.Toggle as={Card.Header} variant="link" eventKey="0">
+                              <Button variant="danger">Advanced Filters </Button>
+                              <span className="chevron_down">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-down" viewBox="0 0 16 16">
+                                  <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                                  <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                                </svg>
                               </span>
-                            }
-                          />
-                        ))}
-                      </div>
-                    )}
-                  >
-                    {Options?.results?.occupation.map(occupation => (
-                      <MenuItem key={occupation.key} value={occupation}>
-                        {occupation.value}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </div>
+                          </Accordion.Toggle>
+                        </Card.Header>
+                        <Accordion.Collapse eventKey="0">
+                          <Card.Body>
+                          <div className="search__form__controls__group  mb-3">
+                                <p className="search__form__controls__group__label">
+                                  Occupation
+                                </p>
+                                <div className="search__form__controls__group__wrapper">
+                                  <Select
+                                    labelId="occupation"
+                                    className="w-100 my-2"
+                                    id="occupation"
+                                    name="occupation"
+                                    MenuProps={{
+                                      getContentAnchorEl: null,
+                                      anchorOrigin: {
+                                        vertical: "bottom",
+                                        horizontal: "left"
+                                      }
+                                    }}
+                                    multiple
+                                    value={formData?.occupation}
+                                    onChange={({ target: { name, value } }) =>
+                                      handleChange({ [name]: value })
+                                    }
+                                    input={<Input id="select-occupation" />}
+                                    renderValue={selected => (
+                                      <div>
+                                        {selected?.map(select => (
+                                          <Chip
+                                            className="m-2"
+                                            variant="outlined"
+                                            key={select?.key}
+                                            clickable
+                                            value={select?.key}
+                                            label={select?.value}
+                                            onDelete={() =>
+                                              handleChipDelete("occupation", select?.key)
+                                            }
+                                            deleteIcon={
+                                              <span
+                                                className="text-dark"
+                                                onMouseDown={event => event.stopPropagation()}
+                                              >
+                                                &#10005;
+                                              </span>
+                                            }
+                                          />
+                                        ))}
+                                      </div>
+                                    )}
+                                  >
+                                    {Options?.results?.occupation.map(occupation => (
+                                      <MenuItem key={occupation.key} value={occupation}>
+                                        {occupation.value}
+                                      </MenuItem>
+                                    ))}
+                                  </Select>
+                                </div>
+                              </div>
+                              <div className="search__form__controls__group  mb-3">
+                                <p className="search__form__controls__group__label">
+                                  Qualification
+                                </p>
+                                <div className="search__form__controls__group__wrapper">
+                                  <Select
+                                    labelId="qualification"
+                                    className="w-100 my-2"
+                                    id="qualification"
+                                    name="qualification"
+                                    multiple
+                                    MenuProps={{
+                                      getContentAnchorEl: null,
+                                      anchorOrigin: {
+                                        vertical: "bottom",
+                                        horizontal: "left"
+                                      }
+                                    }}
+                                    value={formData?.qualification}
+                                    onChange={({ target: { name, value } }) =>
+                                      handleChange({ [name]: value })
+                                    }
+                                    input={<Input id="select-qualification" />}
+                                    renderValue={selected => (
+                                      <div>
+                                        {selected?.map(select => (
+                                          <Chip
+                                            className="m-2"
+                                            variant="outlined"
+                                            key={select?.key}
+                                            clickable
+                                            value={select?.key}
+                                            label={select?.value}
+                                            onDelete={() =>
+                                              handleChipDelete("qualification", select?.key)
+                                            }
+                                            deleteIcon={
+                                              <span
+                                                className="text-dark"
+                                                onMouseDown={event => event.stopPropagation()}
+                                              >
+                                                &#10005;
+                                              </span>
+                                            }
+                                          />
+                                        ))}
+                                      </div>
+                                    )}
+                                  >
+                                    {Options?.results?.qualification.map(qualification => (
+                                      <MenuItem key={qualification.key} value={qualification}>
+                                        {qualification.value}
+                                      </MenuItem>
+                                    ))}
+                                  </Select>
+                                </div>
+                              </div>
+                              <div className="search__form__controls__group  mb-3">
+                                <p className="search__form__controls__group__label">Income</p>
+                                <div className="search__form__controls__group__wrapper">
+                                  <Select
+                                    labelId="income"
+                                    className="w-100 my-2"
+                                    id="income"
+                                    name="income"
+                                    MenuProps={{
+                                      getContentAnchorEl: null,
+                                      anchorOrigin: {
+                                        vertical: "bottom",
+                                        horizontal: "left"
+                                      }
+                                    }}
+                                    multiple
+                                    value={formData?.income}
+                                    onChange={({ target: { name, value } }) =>
+                                      handleChange({ [name]: value })
+                                    }
+                                    input={<Input id="select-income" />}
+                                    renderValue={selected => (
+                                      <div>
+                                        {selected?.map(select => (
+                                          <Chip
+                                            className="m-2"
+                                            variant="outlined"
+                                            key={select?.key}
+                                            clickable
+                                            value={select?.key}
+                                            label={select?.value}
+                                            onDelete={() =>
+                                              handleChipDelete("income", select?.key)
+                                            }
+                                            deleteIcon={
+                                              <span
+                                                className="text-dark"
+                                                onMouseDown={event => event.stopPropagation()}
+                                              >
+                                                &#10005;
+                                              </span>
+                                            }
+                                          />
+                                        ))}
+                                      </div>
+                                    )}
+                                  >
+                                    {Options?.results?.income.map(income => (
+                                      <MenuItem key={income.key} value={income}>
+                                        {income.value}
+                                      </MenuItem>
+                                    ))}
+                                  </Select>
+                                </div>
+                              </div>
+
+                          </Card.Body>
+                        </Accordion.Collapse>
+                      </Card>
+                    </Accordion>
               </div>
-              <div className="search__form__controls__group  mb-3">
-                <p className="search__form__controls__group__label">
-                  Qualification
-                </p>
-                <div className="search__form__controls__group__wrapper">
-                  <Select
-                    labelId="qualification"
-                    className="w-100 my-2"
-                    id="qualification"
-                    name="qualification"
-                    multiple
-                    MenuProps={{
-                      getContentAnchorEl: null,
-                      anchorOrigin: {
-                        vertical: "bottom",
-                        horizontal: "left"
-                      }
-                    }}
-                    value={formData?.qualification}
-                    onChange={({ target: { name, value } }) =>
-                      handleChange({ [name]: value })
-                    }
-                    input={<Input id="select-qualification" />}
-                    renderValue={selected => (
-                      <div>
-                        {selected?.map(select => (
-                          <Chip
-                            className="m-2"
-                            variant="outlined"
-                            key={select?.key}
-                            clickable
-                            value={select?.key}
-                            label={select?.value}
-                            onDelete={() =>
-                              handleChipDelete("qualification", select?.key)
-                            }
-                            deleteIcon={
-                              <span
-                                className="text-dark"
-                                onMouseDown={event => event.stopPropagation()}
-                              >
-                                &#10005;
-                              </span>
-                            }
-                          />
-                        ))}
-                      </div>
-                    )}
-                  >
-                    {Options?.results?.qualification.map(qualification => (
-                      <MenuItem key={qualification.key} value={qualification}>
-                        {qualification.value}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </div>
-              </div>
-              <div className="search__form__controls__group  mb-3">
-                <p className="search__form__controls__group__label">Income</p>
-                <div className="search__form__controls__group__wrapper">
-                  <Select
-                    labelId="income"
-                    className="w-100 my-2"
-                    id="income"
-                    name="income"
-                    MenuProps={{
-                      getContentAnchorEl: null,
-                      anchorOrigin: {
-                        vertical: "bottom",
-                        horizontal: "left"
-                      }
-                    }}
-                    multiple
-                    value={formData?.income}
-                    onChange={({ target: { name, value } }) =>
-                      handleChange({ [name]: value })
-                    }
-                    input={<Input id="select-income" />}
-                    renderValue={selected => (
-                      <div>
-                        {selected?.map(select => (
-                          <Chip
-                            className="m-2"
-                            variant="outlined"
-                            key={select?.key}
-                            clickable
-                            value={select?.key}
-                            label={select?.value}
-                            onDelete={() =>
-                              handleChipDelete("income", select?.key)
-                            }
-                            deleteIcon={
-                              <span
-                                className="text-dark"
-                                onMouseDown={event => event.stopPropagation()}
-                              >
-                                &#10005;
-                              </span>
-                            }
-                          />
-                        ))}
-                      </div>
-                    )}
-                  >
-                    {Options?.results?.income.map(income => (
-                      <MenuItem key={income.key} value={income}>
-                        {income.value}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </div>
-              </div>
+
+
+
+
+
+
             </div>
             <div className="search__form__actions">
               <Button type="submit" className="search__form__actions__search">

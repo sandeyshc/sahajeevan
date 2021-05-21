@@ -25,6 +25,7 @@ import DraftsIcon from '@material-ui/icons/Drafts';
 import SendIcon from '@material-ui/icons/Send';
 import { getTop10Notifications } from "../../services/profile";
 import { Widget, addResponseMessage, addLinkSnippet, addUserMessage } from 'react-chat-widget';
+import useSnackBar from "../../hooks/SnackBarHook";
 import 'react-chat-widget/lib/styles.css';
 
 

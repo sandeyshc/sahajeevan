@@ -1,13 +1,26 @@
-import React, { useState } from "react";
-import { Image, Row } from "react-bootstrap";
-import { Layout, ProfileCard, ListOptions, Filter } from "../../components";
+import React, { useState, useEffect } from "react";
+import { Image, Row, Card, Button, Form } from "react-bootstrap";
+import { Layout, ProfileCard, ListOptions } from "../../components";
 import "./SearchResults.scss";
 
 import heroImg from "../../assets/images/SearchResults/hero.png";
 import { getFilter } from "../../services/profile";
 import Pagination from "@material-ui/lab/Pagination";
 
+import "../Search/Search.scss";
+import {
+  Accordion,
+  Slider,
+  Tooltip,
+  AccordionSummary,
+  AccordionDetails
+} from "@material-ui/core";
+import { useQuery, useMutation } from "react-query";
+import { getOptions, search, saveFilter } from "../../services/profile";
+
 function SearchResults() {
+  const [totalResults, setTotalResults] = useState([0]);
+  const [pagesCount, setPagesCount] = useState([0]);
   const [profiles, setProfiles] = useState([]),
     heroData = {
       subtitle:
@@ -15,47 +28,419 @@ function SearchResults() {
       title: "Search Results",
       isSmallBanner: true,
       isLoggedIn: true
-    },
-    obj = {
-      birth_date: "2021-02-09",
-      caste: "96 kuli Maratha",
-      height: 5.5,
-      interest_status: "Cancel Interest",
-      last_seen: "2021-02-09T04:48:12Z",
-      location: "Thane",
-      marital_status: "Never Married",
-      mother_tongue: "Marathi",
-      occupation: "Government sector",
-      preference_match: "12/20",
-      profile: "Shrutika B",
-      profile_id: "S_EYTCBK",
-      profile_photo_url: "",
-      religion: "Hindu",
-      total_photos: 9
     };
+    const data = getFilter();
+    const [filterData, setFilterData] = useState(),
+    { data: Options } = useQuery("getOptions", getOptions, {
+      refetchOnWindowFocus: false
+    }),
+    {
+      mutate: SearchProfilesMutate,
+      isLoading: SearchProfilesLoading,
+      isError: SearchProfilesErrorStatus,
+      isSuccess: SearchProfilesSuccess,
+      error: SearchProfilesError,
+      data: SearchProfiles
+    } = useMutation(formData => search(formData)),
+
+    heightText = value => {
+      let temp = String(value).split(".");
+      return temp[0] + "'" + (temp[1] ? temp[1] + '"' : "");
+    },
+    ageText = value => {
+      return value + " Years";
+    },
+    ValueLabelComponent = props => {
+      const { children, open, value, labelFn } = props;
+
+      return (
+        <Tooltip
+          open={open}
+          enterTouchDelay={0}
+          placement="bottom"
+          title={labelFn(value)}
+        >
+          {children}
+        </Tooltip>
+      );
+    },
+    handleCheck = (name, id, checked) => {
+      setFilterData({
+        ...filterData,
+        [name]: checked
+          ? [...filterData[name], id]
+          : filterData[name].filter(v => v !== id)
+      });
+    },
+    handleSlide = (name, value) => {
+      setFilterData({
+        ...filterData,
+        [name]: {
+          from: value[0],
+          to: value[1]
+        }
+      });
+    },
+    applyFilter = () => {
+      saveFilter(filterData);
+      SearchProfilesMutate(filterData);
+    };
+  useEffect(() => {
+    const data = getFilter();
+  SearchProfilesMutate(data);
+    if (data) {
+      setFilterData(data);
+    }
+  }, []);
+  useEffect(() => {
+  const data = getFilter();
+    SearchProfilesSuccess && setProfiles(SearchProfiles?.results);
+    const imageCount = SearchProfiles?.count;
+    setTotalResults(SearchProfiles?.count);
+
+    setPagesCount( Math.floor((imageCount + 8 - 1) / 8))
+
+  }, [SearchProfilesSuccess, SearchProfiles]);
+
+
   return (
     <Layout heroImg={heroImg} heroData={heroData}>
       <section className="results col-lg-10 col-12">
         <Row className="results__section m-0">
           <div className="results__section__filter d-none d-xl-block">
-            <Filter data={getFilter()} setProfiles={setProfiles} />
+           <div className="filter">
+            {SearchProfilesLoading && (<div className="filter_loader"><span className="filter_loading">Loading...</span></div>)}
+            <span className="basic_filters">Basic Filters:</span>
+              <Accordion defaultExpanded={true}>
+                <AccordionSummary
+                  as={Card.Header}
+                  eventKey="0"
+                  className="d-flex filter__card__header"
+                  expandIcon={<span class="material-icons">expand_more</span>}
+                >
+                  Marital Status
+                </AccordionSummary>
+                <AccordionDetails eventKey="0">
+                  <Card.Body>
+                    <Form className="filter__form">
+                      {Options?.results?.marital_status.map(opt => (
+                        <Form.Check
+                          key={opt.key}
+                          id={"marital_status" + opt.key}
+                          className="filter__form__check"
+                          label={opt?.value}
+                          value={opt?.key}
+                          checked={filterData?.marital_status?.indexOf(opt.key) > -1}
+                          onChange={({ target: { checked } }) =>
+                            handleCheck("marital_status", opt.key, checked)
+                          }
+                        />
+                      ))}
+                      <div className="filter__form__maritalActions">
+                        <Button
+                          className="filter__form__maritalActions__positive"
+                          onClick={applyFilter}
+                        >
+                          APPLY
+                        </Button>
+                        <Button className="filter__form__maritalActions__negative">
+                          CLEAR
+                        </Button>
+                      </div>
+                    </Form>
+                  </Card.Body>
+                </AccordionDetails>
+              </Accordion>
+              <Accordion defaultExpanded={true}>
+                <AccordionSummary
+                  as={Card.Header}
+                  eventKey="0"
+                  className="d-flex filter__card__header"
+                  expandIcon={<span class="material-icons">expand_more</span>}
+                >
+                  Height
+                </AccordionSummary>
+                <AccordionDetails eventKey="0">
+                  <Card.Body>
+                    <div className="d-flex filter__card__title justify-content-between align-items-center">
+                      <p className="filter__card__title__text m-0">Lorem</p>
+                      <div className="d-flex filter__card__title__controls">
+                        <input
+                          type="text"
+                          value={filterData?.height?.from}
+                          onChange={({ target: { value } }) =>
+                            setFilterData({
+                              ...filterData,
+                              height: { ...filterData?.height, from: value }
+                            })
+                          }
+                        />
+                        <hr className="filter__card__title__controls__separator" />
+                        <input
+                          type="text"
+                          value={filterData?.height?.to}
+                          onChange={({ target: { value } }) =>
+                            setFilterData({
+                              ...filterData,
+                              height: { ...filterData?.height, to: value }
+                            })
+                          }
+                        />
+                      </div>
+                    </div>
+                    <Slider
+                      className="filter__form__height my-2"
+                      value={[filterData?.height?.from, filterData?.height?.to]}
+                      onChange={(e, newValue) => handleSlide("height", newValue)}
+                      min={Options?.results?.height[0].key}
+                      max={
+                        Options?.results?.height[Options?.results?.height?.length - 1]
+                          ?.key
+                      }
+                      step={0.1}
+                      valueLabelDisplay="auto"
+                      aria-labelledby="range-slider"
+                      getAriaValueText={heightText}
+                      valueLabelFormat={heightText}
+                      ValueLabelComponent={props =>
+                        ValueLabelComponent({ ...props, labelFn: heightText })
+                      }
+                    />
+                    <div className="filter__form__height__actions mt-3">
+                      <Button
+                        className="filter__form__height__actions__positive"
+                        onClick={applyFilter}
+                      >
+                        APPLY
+                      </Button>
+                      <Button className="filter__form__height__actions__negative">
+                        CLEAR
+                      </Button>
+                    </div>
+                  </Card.Body>
+                </AccordionDetails>
+              </Accordion>
+              <Accordion defaultExpanded={true}>
+                <AccordionSummary
+                  as={Card.Header}
+                  eventKey="0"
+                  className="filter__card__header"
+                  expandIcon={<span class="material-icons">expand_more</span>}
+                >
+                  Highest Qualification
+                </AccordionSummary>
+                <AccordionDetails eventKey="0">
+                  <Card.Body>
+                    <Form className="filter__form">
+                      {Options?.results?.qualification.map(opt => (
+                        <Form.Check
+                          key={opt.key}
+                          id={"qualification" + opt.key}
+                          className="filter__form__check"
+                          label={opt?.value}
+                          value={opt?.key}
+                          checked={filterData?.qualification.indexOf(opt.key) > -1}
+                          onChange={({ target: { checked } }) =>
+                            handleCheck("qualification", opt.key, checked)
+                          }
+                        />
+                      ))}
+                      <div className="filter__form__maritalActions">
+                        <Button
+                          className="filter__form__maritalActions__positive"
+                          onClick={applyFilter}
+                        >
+                          APPLY
+                        </Button>
+                        <Button className="filter__form__maritalActions__negative">
+                          CLEAR
+                        </Button>
+                      </div>
+                    </Form>
+                  </Card.Body>
+                </AccordionDetails>
+              </Accordion>
+              <Accordion defaultExpanded={true}>
+                <AccordionSummary
+                  as={Card.Header}
+                  eventKey="0"
+                  className="filter__card__header"
+                  expandIcon={<span class="material-icons">expand_more</span>}
+                >
+                  Occupation
+                </AccordionSummary>
+                <AccordionDetails eventKey="0">
+                  <Card.Body>
+                    <Form className="filter__form">
+                      {Options?.results?.occupation.map(opt => (
+                        <Form.Check
+                          key={opt.key}
+                          id={"occupation" + opt.key}
+                          className="filter__form__check"
+                          label={opt?.value}
+                          value={opt?.key}
+                          checked={filterData?.occupation.indexOf(opt.key) > -1}
+                          onChange={({ target: { checked } }) =>
+                            handleCheck("occupation", opt.key, checked)
+                          }
+                        />
+                      ))}
+                      <div className="filter__form__maritalActions">
+                        <Button
+                          className="filter__form__maritalActions__positive"
+                          onClick={applyFilter}
+                        >
+                          APPLY
+                        </Button>
+                        <Button className="filter__form__maritalActions__negative">
+                          CLEAR
+                        </Button>
+                      </div>
+                    </Form>
+                  </Card.Body>
+                </AccordionDetails>
+              </Accordion>
+              <Accordion defaultExpanded={true}>
+                <AccordionSummary
+                  as={Card.Header}
+                  eventKey="0"
+                  className="filter__card__header"
+                  expandIcon={<span class="material-icons">expand_more</span>}
+                >
+                  Age
+                </AccordionSummary>
+                <AccordionDetails eventKey="0">
+                  <Card.Body>
+                    <div className="d-flex filter__card__title justify-content-between align-items-center">
+                      <p className="filter__card__title__text m-0">Lorem</p>
+                      <div className="d-flex filter__card__title__controls">
+                        <input
+                          type="text"
+                          value={filterData?.age?.from}
+                          onChange={({ target: { value } }) =>
+                            setFilterData({
+                              ...filterData,
+                              age: { ...filterData?.age, from: value }
+                            })
+                          }
+                        />
+                        <hr className="filter__card__title__controls__separator" />
+                        <input
+                          type="text"
+                          value={filterData?.age?.to}
+                          onChange={({ target: { value } }) =>
+                            setFilterData({
+                              ...filterData,
+                              age: { ...filterData?.age, to: value }
+                            })
+                          }
+                        />
+                      </div>
+                    </div>
+                    <Slider
+                      className="filter__form__height my-2"
+                      value={[filterData?.age?.from, filterData?.age?.to]}
+                      onChange={(e, newValue) => handleSlide("age", newValue)}
+                      min={18}
+                      max={60}
+                      step={1}
+                      valueLabelDisplay="auto"
+                      aria-labelledby="range-slider"
+                      getAriaValueText={ageText}
+                      ValueLabelComponent={props =>
+                        ValueLabelComponent({ ...props, labelFn: ageText })
+                      }
+                    />
+                    <div className="filter__form__height__actions mt-3">
+                      <Button
+                        className="filter__form__height__actions__positive"
+                        onClick={applyFilter}
+                      >
+                        APPLY
+                      </Button>
+                      <Button className="filter__form__height__actions__negative">
+                        CLEAR
+                      </Button>
+                    </div>
+                  </Card.Body>
+                </AccordionDetails>
+              </Accordion>
+              <Accordion defaultExpanded={true}>
+                <AccordionSummary
+                  as={Card.Header}
+                  eventKey="0"
+                  className="filter__card__header"
+                  expandIcon={<span class="material-icons">expand_more</span>}
+                >
+                  Only Paid Members
+                </AccordionSummary>
+                <AccordionDetails eventKey="0">
+                  <Card.Body>
+                    <Form className="filter__form">
+                      <Form.Check
+                        className="filter__form__check"
+                        label="All"
+                        id="paid__all"
+                      />
+                      <Form.Check
+                        className="filter__form__check"
+                        label="Lorem Ipsum"
+                        id="paid__1"
+                      />
+                      <Form.Check
+                        className="filter__form__check"
+                        label="Lorem Ipsum"
+                        id="paid__2"
+                      />
+                      <Form.Check
+                        className="filter__form__check"
+                        label="Lorem Ipsum"
+                        id="paid__3"
+                      />
+                      <Form.Check
+                        className="filter__form__check"
+                        label="Others"
+                        id="paid__4"
+                      />
+                      <div className="filter__form__paidmembers">
+                        <Button className="filter__form__paidmembers__positive">
+                          APPLY
+                        </Button>
+                        <Button className="filter__form__paidmembers__negative">
+                          CLEAR
+                        </Button>
+                      </div>
+                    </Form>
+                  </Card.Body>
+                </AccordionDetails>
+              </Accordion>
+            </div>
+
+
+
           </div>
           <div className="results__section__content">
             <p className="results__section__content__title">
-              Lorem Ipsum is simply dummy
+              Send interest to start conversation...
             </p>
             <p className="results__section__content__subtitle">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry.
+              Chat will be visible only after reqeust is accepted..
             </p>
+            <span>{totalResults} profiles found</span>
             <div className="results__section__content__cards">
-              {profiles?.map(profile => (
-                <ProfileCard card={profile} />
-              ))}
+            {profiles.length > 0 ? (
+                profiles?.map(profile => (
+                    <ProfileCard card={profile} />
+                  ))
+
+            ) : (
+            <div className="no_profile_txt">No profiles found</div>
+            )}
+
             </div>
             <Pagination
               className="d-flex justify-content-end results__section__content__pagination"
-              count={profiles?.length}
+              count={pagesCount}
               size="large"
             />
           </div>

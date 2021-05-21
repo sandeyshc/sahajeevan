@@ -91,7 +91,7 @@
     }
 
     &__right {
-      padding: 0;
+      padding: 0px 0px 0px 7px;
 
       &__container {
         display: flex;
@@ -107,7 +107,8 @@
             margin-bottom: 8px;
             font-size: 28px;
             font-weight: 400;
-            color: #6d6d6d;
+            color: #6788aa;
+            cursor:pointer;
 
             &__status {
               width: 20px;
@@ -153,8 +154,29 @@
           font-weight: 300;
           white-space: nowrap;
 
+          &__parent{
+          min-height:96px;
+          }
+
+          &__match{
+            position: absolute;
+            top: 25px;
+          }
+
+          &__matchIcon{
+             justify-content: center;
+//              position: relative;
+             top: -38px;
+          }
+           &__matchOutof{
+            justify-content: center;
+//             position: relative;
+            font-size:15px;
+            top: -38px;
+          }
+
           &__picture {
-            padding: 0 20px 10px 0;
+            padding: 7px;
 
             .card {
               padding: 5px 10px 1px;
@@ -197,6 +219,7 @@
           padding: 10px 12px;
           justify-content: space-between;
           align-items: center;
+          border-radius: 30px;
 
           img {
             margin-right: 7px;
@@ -379,8 +402,13 @@
             padding: 15px 0 0;
             justify-content: space-evenly;
 
+            &__matchtxt{
+            font-size: 16px;
+            color: #7d7d7d;
+            }
+
             &__picture {
-              padding: 0 20px 10px 0;
+              padding: 7px;
 
               .card {
                 padding: 5px 10px 1px;
@@ -425,6 +453,7 @@
             transition: background-color 0.25s ease;
             margin: 0;
             padding: 7px 12px;
+            border-radius: 30px;
 
             &__approve_reject {
                   border-left: 5px solid #6cc9ff;
@@ -534,8 +563,8 @@
           &__actions {
             justify-content: flex-end;
             padding: 0;
-//             justify-content: space-between;
             padding: 10px;
+            border-radius: 30px;
 
             button {
               margin: 0;

@@ -71,6 +71,7 @@ function BasicSearch() {
         caste: getKeysArr(formData.caste),
         religion: formData.religion.key
       });
+      console.log("ppushing searchresults");
       history.push("/searchresults");
     };
 

@@ -28,6 +28,13 @@ import { sendInterest, cancelInterest, acceptInterest, declineInterest, viewCont
 import useSnackBar from "../../hooks/SnackBarHook";
 import SemiCircleProgressBar from "react-progressbar-semicircle";
 import Icon from '@material-ui/core/Icon';
+import StarOutlineOutlinedIcon from '@material-ui/icons/StarOutlineOutlined';
+import StarOutlinedIcon from '@material-ui/icons/StarOutlined';
+
+const openInNewTab = (url) => {
+  const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
+  if (newWindow) newWindow.opener = null
+}
 
 function ProfileCard({
   isFullCard,
@@ -52,7 +59,8 @@ function ProfileCard({
     interest_status,
     preference_match,
     total_photos,
-    match_percentage
+    match_percentage,
+    shortlisted
   }
 }) {
 
@@ -227,12 +235,7 @@ function ProfileCard({
               </span>
             </a>
 
-            <a
-              href="javascript:void(0)"
-              className="profile__card__left__container__privacy"
-            >
-              <Image src={Privacy} alt="privacy" height="20" />
-            </a>
+
           </div>
         </Col>
         <Col
@@ -244,19 +247,22 @@ function ProfileCard({
           <div className="profile__card__right__container">
             <Row className="profile__card__right__container__header">
               <p className="profile__card__right__container__header__name d-flex align-items-center"
-              onClick={() => !isFullCard && !!id && history.push(`/profile/${id}`)}>
+              onClick={() => openInNewTab(`/profile/${id}`)}>
                 <div
                   className="profile__card__right__container__header__name__status d-inline-block mr-2 rounded-circle"
                   style={{ borderColor: online ? "#52ac3b" : "#f2ae30" }}
                 ></div>
                 {name} ({display_id})
               </p>
-              <a
-                  href="javascript:void(0)"
-                  className="vprofile__card__left__container__privacy"
-                >
-                  <Image src={Privacy} alt="privacy" height="20" />
+               {shortlisted ?
+                  <a href="javascript:void(0)" className="vprofile__card__left__container__privacy" title="Shortlisted">
+                <StarOutlinedIcon style={{ color: 'rgb(244, 45, 45)' }} />
                 </a>
+                :
+                <a href="javascript:void(0)" className="vprofile__card__left__container__privacy" title="Shortlist">
+                    <StarOutlineOutlinedIcon style={{ color: '#8a8383' }} />
+                </a>
+                 }
             </Row>
             <hr className="profile__card__right__container__splitter" />
             <Row
@@ -265,29 +271,33 @@ function ProfileCard({
                 (isFullCard ? " pt-md-4 px-md-4 pt-3" : "")
               }
             >
-              <Col className="profile__card__right__container__details__picture col-lg-3">
+              <Col className="profile__card__right__container__details__picture col-lg-4">
                 <Card>
-                  <div className="d-flex flex-column">
-                    <SemiCircleProgressBar diameter={90} strokeWidth={5} percentage={match_percentage} stroke={'#ee4641'} />
-                    <p className="text-center font-weight-bolder text-danger m-0">
-                      {preference_match}
-                    </p>
+                  <div className="d-flex flex-column profile__card__right__container__details__parent">
+                     <SemiCircleProgressBar diameter={120} strokeWidth={6} percentage={match_percentage} stroke={'#fcb723'} stroke-linecap={'round'} />
+                        <p className="text-center font-weight-bolder text-danger m-0 profile__card__right__container__details__match">
+                            <Row className="profile__card__right__container__details__matchIcon">
+                                <Image
+                                  src={Kundli}
+                                  alt="Kundli match"
+                                  height={isFullCard ? "20" : "20"}
+                                  className="mr-1"
+                                />
+                            </Row>
+                            <Row className="profile__card__right__container__details__matchOutof">
+                                {preference_match}
+                            </Row>
+                             <p className={"profile__card__right__container__details__matchtxt text-center m-0  " + (isFullCard ? "py-2" : "")} >
+                                <hr className="m-0" />
+                                Preference Match
+                              </p>
+                        </p>
                   </div>
-                  <hr className="m-0" />
-                  <p
-                    className={"text-center m-0 " + (isFullCard ? "py-2" : "")}
-                  >
-                    <Image
-                      src={Kundli}
-                      alt="Kundli match"
-                      height={isFullCard ? "20" : "10"}
-                      className="mr-1"
-                    />
-                    Kundli Match
-                  </p>
+
+
                 </Card>
               </Col>
-              <Col className="profile__card__right__container__details__personal col-lg-3">
+              <Col className="profile__card__right__container__details__personal col-lg-4">
                 <Row>
                   {age} yrs, {height}
                 </Row>
@@ -301,7 +311,7 @@ function ProfileCard({
                   {mother_tongue}, {location}
                 </Row>
               </Col>
-              <Col className="profile__card__right__container__details__professional d-none d-lg-block col-lg-5">
+              <Col className="profile__card__right__container__details__professional d-none d-lg-block col-lg-4">
                 <Row>{location}</Row>
                 <Row>{occupation}</Row>
                 <Row>{income}</Row>
@@ -363,7 +373,6 @@ function ProfileCard({
                         <Image src={Send} alt="Send Request" height={18} />
                         {status === 1 && "Send Interest"}
                         {status === 2 && "Cancel Interest"}
-                        {status === 3 && "Accepted"}
                       </>
                     )}
                  </button>

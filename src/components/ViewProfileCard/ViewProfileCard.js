@@ -3,7 +3,7 @@ import { useMutation } from "react-query";
 import { useHistory } from "react-router";
 import "./ViewProfileCard.scss";
 
-import { Card, Image, Col, Row, Spinner } from "react-bootstrap";
+import { Card, Image, Col, Row, Spinner, Dropdown } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 import ModalBody from "react-bootstrap/ModalBody";
 import ModalHeader from "react-bootstrap/ModalHeader";
@@ -29,6 +29,9 @@ import useSnackBar from "../../hooks/SnackBarHook";
 import ImageGallery from 'react-image-gallery';
 import "react-image-gallery/styles/scss/image-gallery.scss"
 import Icon from '@material-ui/core/Icon';
+import SemiCircleProgressBar from "react-progressbar-semicircle";
+import StarOutlineOutlinedIcon from '@material-ui/icons/StarOutlineOutlined';
+import StarOutlinedIcon from '@material-ui/icons/StarOutlined';
 
 
 function ViewProfileCard({
@@ -53,7 +56,9 @@ function ViewProfileCard({
     online,
     interest_status,
     preference_match,
-    total_photos
+    total_photos,
+    match_percentage,
+    shortlisted
   }
 }) {
 
@@ -297,12 +302,15 @@ function ViewProfileCard({
                 ></div>
                 {name} ({display_id})
               </p>
-               <a
-                  href="javascript:void(0)"
-                  className="vprofile__card__left__container__privacy"
-                >
-                  <Image src={Privacy} alt="privacy" height="20" />
+                {shortlisted ?
+                  <a href="javascript:void(0)" className="vprofile__card__left__container__privacy">
+                <StarOutlinedIcon color="secondary"/>
                 </a>
+                :
+                <a href="javascript:void(0)" className="vprofile__card__left__container__privacy">
+                    <StarOutlineOutlinedIcon color="primary" />
+                </a>
+                 }
 
             </Row>
             <hr className="vprofile__card__right__container__splitter" />
@@ -315,26 +323,21 @@ function ViewProfileCard({
               <Col className="vprofile__card__right__container__details__picture col-lg-3">
                 <Card>
                   <div className="d-flex flex-column">
-                    <Image
-                      src={Graph}
-                      alt="graph"
-                      height={isFullCard ? "90" : "40"}
-                    />
+                   <SemiCircleProgressBar diameter={120} strokeWidth={5} percentage={match_percentage} stroke={'#fcb723'} />
                     <p className="text-center font-weight-bolder text-danger m-0">
+
+                        <Image
+                          src={Kundli}
+                          alt="Kundli match"
+                          height={isFullCard ? "20" : "10"}
+                          className="mr-1"
+                        />
                       {preference_match}
                     </p>
                   </div>
                   <hr className="m-0" />
-                  <p
-                    className={"text-center m-0 " + (isFullCard ? "py-2" : "")}
-                  >
-                    <Image
-                      src={Kundli}
-                      alt="Kundli match"
-                      height={isFullCard ? "20" : "10"}
-                      className="mr-1"
-                    />
-                    Kundli Match
+                  <p className={"text-center m-0 " + (isFullCard ? "py-2" : "")}>
+                    Preference Match
                   </p>
                 </Card>
               </Col>
@@ -352,11 +355,41 @@ function ViewProfileCard({
                   {mother_tongue}, {location}
                 </Row>
               </Col>
-              <Col className="vprofile__card__right__container__details__professional d-none d-lg-block col-lg-5">
+              <Col className="vprofile__card__right__container__details__professional d-none d-lg-block col-lg-3">
                 <Row>{location}</Row>
                 <Row>{occupation}</Row>
                 <Row>{income}</Row>
                 <Row>{marital_status}</Row>
+              </Col>
+              <Col className="vprofile__card__right__container__details__professional d-none d-lg-block col-lg-3">
+                <Row className="vprofile__card__right__container__details__professional__extra_row">
+                   <span>
+                     <button type="button" class="btn extra" data-toggle="tooltip" title="Share profile">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share-fill" viewBox="0 0 16 16">
+                          <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z"></path>
+                        </svg>
+                     </button>
+                  </span>
+                </Row>
+                <Row className="vprofile__card__right__container__details__professional__extra_row">
+                   <span>
+                      <button type="button" class="btn extra" data-toggle="tooltip" title="Download this profile">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-square-fill" viewBox="0 0 16 16">
+                          <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5a.5.5 0 0 1 1 0z"></path>
+                        </svg>
+                        </button>
+                   </span>
+                </Row>
+                <Row className="vprofile__card__right__container__details__professional__extra_row">
+                   <span>
+                        <button type="button" class="btn extra" data-toggle="tooltip" title="Report and block this profile">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-slash-circle-fill" viewBox="0 0 16 16">
+                              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.646-2.646a.5.5 0 0 0-.708-.708l-6 6a.5.5 0 0 0 .708.708l6-6z"></path>
+                            </svg>
+                        </button>
+                   </span>
+                </Row>
+
               </Col>
             </Row>
             <Row
@@ -365,157 +398,254 @@ function ViewProfileCard({
                 (isFullCard ? " flex-md-nowrap" : " d-none")
               }
             >
-              <button
-                className={
-                  "vprofile__card__right__container__actions__view" +
-                  (isFullCard
-                    ? " flex-fill mr-2 col-sm-5 col-md-auto mb-2 mb-md-0"
-                    : "")
-                }
-                onClick={e => {
-                  e.stopPropagation();
-                  handleViewContact();
-                }}
-              >
-                <Image src={ViewContact} alt="View Contact" height={18} />
-                View Contact
-              </button>
-               <button
-                className={
-                  "vprofile__card__right__container__actions__chat" +
-                  (isFullCard
-                    ? " flex-fill mr-2 col-sm-5 col-md-auto mb-2 mb-md-0"
-                    : "")
-                }
-              >
-                <Image src={Chat} alt="Chat" height={18} />
-                Chat
-              </button>
+               {status < 3 && (
+               <span className="vprofile__card__right__container__actions__children">
+                 <button
+                    className={
+                      "vprofile__card__right__container__actions__view" +
+                      (isFullCard
+                        ? " flex-fill mr-2 col-sm-5 col-md-auto mb-2 mb-md-0"
+                        : "")
+                    }
+                    onClick={e => {
+                      e.stopPropagation();
+                      handleViewContact();
+                    }}
+                  >
+                    <Image src={ViewContact} alt="View Contact" height={18} />
+                    View Contact
+                  </button>
 
 
-              {status < 5 && (
-                <button
-                className={
-                  "vprofile__card__right__container__actions__send" +
-                  (isFullCard
-                    ? " flex-fill mr-2 col-sm-5 col-md-auto mb-2 mb-md-0"
-                    : "")
-                }
-                onClick={e => {
-                  e.stopPropagation();
-                  status === 1 && handleSendInterest();
-                  status === 2 && handleCancelInterest();
-                }}
-              >
-               {SendInterestLoading || CancelInterestLoading ? (
-                  <>
-                    <Spinner
-                      as="span"
-                      animation="border"
-                      size="sm"
-                      role="status"
-                      aria-hidden="true"
-                    />
-                    &nbsp; &nbsp; &nbsp; Loading...
-                  </>
-                ) : (
-                  <>
-                    <Image src={Send} alt="Send Request" height={18} />
-                    {status === 1 && "Send Interest"}
-                    {status === 2 && "Cancel Interest"}
-                    {status === 3 && "Accepted"}
-                    {status === 4 && "Declined"}
-                  </>
-                )}
-              </button>
+                 <button
+                    className={
+                      "vprofile__card__right__container__actions__single" +
+                      (isFullCard
+                        ? " flex-fill mr-2 col-sm-5 col-md-auto mb-2 mb-md-0"
+                        : "")
+                    }
+                    onClick={e => {
+                      e.stopPropagation();
+                      status === 1 && handleSendInterest();
+                      status === 2 && handleCancelInterest();
+                    }}
+                  >
+                   {SendInterestLoading || CancelInterestLoading ? (
+                      <>
+                        <Spinner
+                          as="span"
+                          animation="border"
+                          size="sm"
+                          role="status"
+                          aria-hidden="true"
+                        />
+                        &nbsp; &nbsp; &nbsp;oading.....
+                      </>
+                    ) : (
+                      <>
+                        <Image src={Send} alt="Send Interest" height={18} />
+                        {status === 1 && "Send Interest"}
+                        {status === 2 && "Cancel Interest"}
+                      </>
+                    )}
+                 </button>
+               </span>
               )}
 
-              {status ===5 && ( //if there is an incoming request show only approve/reject buttons
-              <span className={"vprofile__card__right__container__actions__approve_reject"}>
-                <span
-                className={
-                  "vprofile__card__right__container__actions__send" +
-                  (isFullCard
-                    ? " flex-fill mr-2 col-sm-5 col-md-auto mb-2 mb-md-0"
-                    : "")
-                }
-                onClick={e => {
-                  e.stopPropagation();
-                  handleAcceptInterest();
-                }}
-              >
-               {AcceptInterestLoading ? (
-                  <>
-                    <Spinner
-                      as="span"
-                      animation="border"
-                      size="sm"
-                      role="status"
-                      aria-hidden="true"
-                    />
-                    &nbsp; &nbsp; &nbsp; Loading...
-                  </>
-                ) : (
-                  <>
-                    <Image src={Send} alt="Acceptt" height={18} />
-                    Accept
-                  </>
-                )}
-              </span>
+              {status === 3 && (
+               <span>
+                 <button
+                    className={
+                      "vprofile__card__right__container__actions__view" +
+                      (isFullCard
+                        ? " flex-fill mr-2 col-sm-5 col-md-auto mb-2 mb-md-0"
+                        : "")
+                    }
+                    onClick={e => {
+                      e.stopPropagation();
+                      handleViewContact();
+                    }}
+                  >
+                    <Image src={ViewContact} alt="View Contact" height={18} />
+                    View Contact
+                  </button>
+                  <button
+                    className={
+                      "vprofile__card__right__container__actions__chat" +
+                      (isFullCard
+                        ? " flex-fill mr-2 col-sm-5 col-md-auto mb-2 mb-md-0"
+                        : "")
+                    }
+                  >
+                    <Image src={Chat} alt="Chat" height={18} />
+                    Chat
+                  </button>
 
-              <span
-                className={
-                  "vprofile__card__right__container__actions__send" +
-                  (isFullCard
-                    ? " flex-fill mr-2 col-sm-5 col-md-auto mb-2 mb-md-0"
-                    : "")
-                }
-                onClick={e => {
-                  e.stopPropagation();
-                  handleDeclineInterest();
-                }}
-              >
-               {DeclineInterestLoading ? (
-                  <>
-                    <Spinner
-                      as="span"
-                      animation="border"
-                      size="sm"
-                      role="status"
-                      aria-hidden="true"
-                    />
-                    &nbsp; &nbsp; &nbsp; Loading...
-                  </>
-                ) : (
-                  <>
-                    <Image src={Send} alt="declinee" height={18} />
-                    Reject
-                  </>
-                )}
+                 <span className={"vprofile__card__right__container__actions__taken"}>Accepted</span>
+               </span>
+              )}
+
+
+              {status === 4 && ( //Declined accept again
+              <span>
+                  <button
+                    className={
+                      "vprofile__card__right__container__actions__view" +
+                      (isFullCard
+                        ? " flex-fill mr-2 col-sm-5 col-md-auto mb-2 mb-md-0"
+                        : "")
+                    }
+                    onClick={e => {
+                      e.stopPropagation();
+                      handleViewContact();
+                    }}
+                  >
+                    <Image src={ViewContact} alt="View Contact" height={18} />
+                    View Contact
+                  </button>
+                  <span className={"vprofile__card__right__container__actions__taken"}>Rejected</span>
+                  <span className={"vprofile__card__right__container__actions__changed_mind"}>
+                      <span className={"vprofile__card__right__container__actions__changed_mind_text"}>Changed your mind?</span>
+                          <span
+                            className={
+                              "vprofile__card__right__container__actions__changed_mind__button " +
+                              (isFullCard
+                                ? " flex-fill mr-2 col-sm-5 col-md-auto mb-2 mb-md-0"
+                                : "")
+                            }
+                            onClick={e => {
+                              e.stopPropagation();
+                              handleAcceptInterest();
+                            }}
+                          >
+
+                           {AcceptInterestLoading ? (
+                              <>
+                                <Spinner
+                                  as="span"
+                                  animation="border"
+                                  size="sm"
+                                  role="status"
+                                  aria-hidden="true"
+                                />
+                                &nbsp; Loading...
+                              </>
+                            ) : (
+                              <>
+                               <Image src={ViewContact} alt="Send Interest" height={18} />
+                                Accept
+                              </>
+                            )}
+                       </span>
+                    </span>
               </span>
+              )}
+
+
+              {status === 5 && ( //if there is an incoming request show only approve/reject buttons
+              <span>
+
+                  <button
+                    className={
+                      "vprofile__card__right__container__actions__view" +
+                      (isFullCard
+                        ? " flex-fill mr-2 col-sm-5 col-md-auto mb-2 mb-md-0"
+                        : "")
+                    }
+                    onClick={e => {
+                      e.stopPropagation();
+                      handleViewContact();
+                    }}
+                  >
+                    <Image src={ViewContact} alt="View Contact" height={18} />
+                    View Contact
+                  </button>
+                    <span className="vprofile__card__right__container__actions__faint_msg">
+                       You have received interest!
+                      </span>
+                  <span className={"vprofile__card__right__container__actions__approve_reject"}>
+                    <span
+                        className={
+                          "vprofile__card__right__container__actions__accept" +
+                          (isFullCard
+                            ? " flex-fill mr-2 col-sm-5 col-md-auto mb-2 mb-md-0"
+                            : "")
+                        }
+                        onClick={e => {
+                          e.stopPropagation();
+                          handleAcceptInterest();
+                        }}
+                      >
+                       {AcceptInterestLoading ? (
+                          <>
+                            <Spinner
+                              as="span"
+                              animation="border"
+                              size="sm"
+                              role="status"
+                              aria-hidden="true"
+                            />
+                            &nbsp; Loading...
+                          </>
+                        ) : (
+                          <>
+                            <Image src={Send} alt="Accept" height={18} />
+                            Accept
+                          </>
+                        )}
+                      </span>
+
+                      <span
+                        className={
+                          "vprofile__card__right__container__actions__reject" +
+                          (isFullCard
+                            ? " flex-fill mr-2 col-sm-5 col-md-auto mb-2 mb-md-0"
+                            : "")
+                        }
+                        onClick={e => {
+                          e.stopPropagation();
+                          handleDeclineInterest();
+                        }}
+                      >
+                       {DeclineInterestLoading ? (
+                          <>
+                            <Spinner
+                              as="span"
+                              animation="border"
+                              size="sm"
+                              role="status"
+                              aria-hidden="true"
+                            />
+                            &nbsp; Loading...
+                          </>
+                        ) : (
+                          <>
+                           <Image src={ViewContact} alt="Decline" height={18} />
+                            Reject
+                          </>
+                        )}
+                      </span>
+                    </span>
               </span>
+              )}
+
+              {status === 6 && ( //if she has has declined your request
+              <span>
+                  She has declined your interest.
+               </span>
+              )}
+              {status === 7 && ( //if he has has declined your request
+              <span>
+                  He has declined your interest.
+               </span>
               )}
 
             </Row>
 
-            <Row
-              className={
-                "vprofile__card__right__container__actions d-sm-flex" +
-                (isFullCard ? " flex-md-nowrap" : " d-none")
-              }
-            >
+            <Row className={ "vprofile__card__right__container__lastseen d-sm-flex" +
+                (isFullCard ? " flex-md-nowrap" : " d-none") }>
 
-              <button
-                className={
-                  "vprofile__card__right__container__actions__share" +
-                  (isFullCard
-                    ? " flex-fill mr-2 col-sm-5 col-md-auto mb-2 mb-md-0"
-                    : "")
-                }
-              >
-                <Image src={Share} alt="Share Profile" height={18} />
-                Download as biodata
-              </button>
+
                <p className="vprofile__card__right__container__header__seen d-none d-md-block">
                 <Image
                   src={Calendar}

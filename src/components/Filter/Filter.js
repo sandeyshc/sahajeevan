@@ -16,9 +16,15 @@ function Filter({ data, setProfiles }) {
     { data: Options } = useQuery("getOptions", getOptions, {
       refetchOnWindowFocus: false
     }),
-    { mutate, isSuccess, data: SearchProfiles } = useMutation(formData =>
-      search(formData)
-    ),
+    {
+      mutate: SearchProfilesMutate,
+      isLoading: SearchProfilesLoading,
+      isError: SearchProfilesErrorStatus,
+      isSuccess: SearchProfilesSuccess,
+      error: SearchProfilesError,
+      data: SearchProfiles
+    } = useMutation(formData => search(formData)),
+
     heightText = value => {
       let temp = String(value).split(".");
       return temp[0] + "'" + (temp[1] ? temp[1] + '"' : "");
@@ -58,8 +64,9 @@ function Filter({ data, setProfiles }) {
       });
     },
     applyFilter = () => {
+    console.log("filter_data", filterData);
       saveFilter(filterData);
-      mutate(filterData);
+      SearchProfilesMutate(filterData);
     };
   useEffect(() => {
     if (data) {
@@ -67,11 +74,13 @@ function Filter({ data, setProfiles }) {
     }
   }, [data]);
   useEffect(() => {
-    isSuccess && setProfiles(SearchProfiles?.results);
-    !SearchProfiles && mutate(data);
-  }, [isSuccess, SearchProfiles]);
+    SearchProfilesSuccess && setProfiles(SearchProfiles?.results);
+    !SearchProfiles && SearchProfilesMutate(data);
+  }, [SearchProfilesSuccess, SearchProfiles]);
   return (
     <div className="filter">
+    {SearchProfilesLoading && (<div className="filter_loader"><span className="filter_loading">Loading...</span></div>)}
+
       <Accordion defaultExpanded={true}>
         <AccordionSummary
           as={Card.Header}

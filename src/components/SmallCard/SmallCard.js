@@ -5,6 +5,12 @@ import { Card, Image } from "react-bootstrap";
 import Arrow from "../../assets/icons/svg icon/Right.svg";
 import Camera from "../../assets/icons/svg icon/camera.svg";
 
+
+const openInNewTab = (url) => {
+  const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
+  if (newWindow) newWindow.opener = null
+}
+
 function SmallCard({
   data: {
     mother_tongue,
@@ -17,7 +23,8 @@ function SmallCard({
     age,
     caste,
     marital_status,
-    religion
+    religion,
+    id
   },
   children
 }) {
@@ -27,8 +34,8 @@ function SmallCard({
         <Image src={Camera} alt="camera" height="13px" />
         <span className="smallcard__pictures__count">{total_photos}</span>
       </span>
-      <button className="smallcard__button">
-        Send Interest
+      <button className="smallcard__button" onClick={() => openInNewTab(`/profile/${id}`)}>
+        View Profile
         <Image
           src={Arrow}
           alt="right arrow"
@@ -37,7 +44,7 @@ function SmallCard({
       </button>
       {children}
       <div className="smallcard__content">
-        <p className="smallcard__content__title pb-2">
+        <p className="smallcard__content__title pb-2" onClick={() => openInNewTab(`/profile/${id}`)}>
           {name}, {age} yrs, {height}
         </p>
         <p className="smallcard__content__location">

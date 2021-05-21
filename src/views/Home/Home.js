@@ -18,6 +18,7 @@ import {
   dailyRecommendations,
 } from "../../services/profile";
 
+
 function Home() {
   const heroData = {
       isLoggedIn: true,

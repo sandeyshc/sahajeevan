@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./StepForm.scss";
 import Stepper from "react-stepper-horizontal";
-import { Form, Button, Row, Col, Image } from "react-bootstrap";
+import { Form, Button, Row, Col, Image, Spinner } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import { useQuery, useMutation } from "react-query";
 import {
   getOptions,
   createProfile,
   updateProfile,
-  createFamilyDetails,
   saveFilter
 } from "../../services/profile";
 
@@ -43,27 +42,23 @@ function StepForm({ setActive, close }) {
     history = useHistory(),
     {
       mutate: CreateProfile,
+      isLoading: CreateProfileLoading,
       error: CreateProfileError,
       isSuccess: CreateProfileSuccess,
       data: CreateProfileData
     } = useMutation(formData => createProfile(formData)),
     {
       mutate: UpdateProfile,
+      isLoading: UpdateProfileLoading,
       error: UpdateProfileError,
       isSuccess: UpdateProfileSuccess,
       data: UpdateProfileData
     } = useMutation((id, formData) => updateProfile(id, formData)),
-    {
-      mutate: FamilyDetails,
-      error: FamilyDetailsError,
-      isSuccess: FamilyDetailsSuccess,
-      data: FamilyDetailsData
-    } = useMutation(formData => createFamilyDetails(formData)),
+
     steps = [
       { title: "Step 1" },
       { title: "Step 2" },
-      { title: "Step 3" },
-      { title: "Step 4" }
+      { title: "Step 3" }
     ],
     fatherOcc = [
       {
@@ -124,11 +119,6 @@ function StepForm({ setActive, close }) {
         mother_tongue: mother_tongue[0].key,
         occupation: occupation[0].key,
         qualification: qualification[0].key,
-        father_is: fatherOcc[0].key,
-        mother_is: motherOcc[0].key,
-        brothers: 0,
-        sisters: 0,
-        family_location: location[0].key,
         partner_gender: 1,
         partner_occupation: 1,
         partner_income: 2,
@@ -141,7 +131,8 @@ function StepForm({ setActive, close }) {
       if (activeStep < steps.length - 1) {
         setActiveStep(activeStep + 1);
         setActive(activeStep + 1);
-      } else {
+      }
+      else {
         close();
         history.push("/home");
       }
@@ -194,17 +185,8 @@ function StepForm({ setActive, close }) {
             }
           ]);
           break;
+
         case 2:
-          FamilyDetails({
-            father_is: profileData.father_is,
-            mother_is: profileData.mother_is,
-            brothers: +profileData.brothers,
-            sisters: +profileData.sisters,
-            family_location: profileData.family_location,
-            about_family: profileData.about_family
-          });
-          break;
-        case 3:
           saveFilter({
             gender: profileData.partner_gender,
             occupation: [profileData.partner_occupation],
@@ -232,7 +214,7 @@ function StepForm({ setActive, close }) {
     };
 
   useEffect(() => {
-    if (CreateProfileSuccess || UpdateProfileSuccess || FamilyDetailsSuccess) {
+    if (CreateProfileSuccess || UpdateProfileSuccess ) {
       nextStep();
     }
     if (optionsSuccess) {
@@ -242,7 +224,6 @@ function StepForm({ setActive, close }) {
     CreateProfileSuccess,
     UpdateProfileSuccess,
     optionsSuccess,
-    FamilyDetailsSuccess
   ]);
   return (
     <>
@@ -250,7 +231,7 @@ function StepForm({ setActive, close }) {
         <Stepper
           steps={steps}
           activeStep={activeStep}
-          size={48}
+          size={35}
           circleFontSize={18}
           activeColor="#ffffff"
           defaultColor="#ffffff"
@@ -266,9 +247,10 @@ function StepForm({ setActive, close }) {
         />
       </div>
 
-      <Form className="stepForm" onSubmit={handleSubmit}>
+
         {activeStep === 0 && (
           <>
+           <Form className="stepForm" onSubmit={handleSubmit}>
             <Form.Row className="stepForm__group flex-column flex-lg-row">
               {!!CreateProfileError && (
                 <Form.Control.Feedback
@@ -399,10 +381,32 @@ function StepForm({ setActive, close }) {
                 </Form.Control>
               </Form.Group>
             </Form.Row>
+             <Row className="stepForm__actions flex-column flex-sm-row col-12 col-lg-10">
+              <Button className="stepForm__submit" type="submit">
+              {CreateProfileLoading ? (
+                  <>
+                    <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+                    &nbsp; &nbsp; &nbsp; Loading...
+                  </>
+                ) : (
+                  <>
+                     SAVE & Next
+                        <Image
+                          src={SaveIcon}
+                          alt="save"
+                          height={20}
+                        />
+                  </>
+                )}
+              </Button>
+        </Row>
+        </Form>
           </>
         )}
+
         {activeStep === 1 && (
           <>
+          <Form className="stepForm" onSubmit={handleSubmit}>
             <Form.Row className="stepForm__group flex-column flex-lg-row">
               <Form.Group as={Col} controlId="religion">
                 <Form.Label className="stepForm__label">Religion</Form.Label>
@@ -498,129 +502,39 @@ function StepForm({ setActive, close }) {
                 ))}
               </Form.Control>
             </Form.Group>
+
+
+              <Row className="stepForm__actions flex-column flex-sm-row col-12 col-lg-10">
+              <Button className="stepForm__submit" type="submit">
+               {UpdateProfileLoading ? (
+                  <>
+                    <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+                    &nbsp; &nbsp; &nbsp; Loading...
+                  </>
+                ) : (
+                  <>
+                     SAVE & Next
+                        <Image
+                          src={SaveIcon}
+                          alt="save"
+                          height={20}
+                        />
+                  </>
+                )}
+              </Button>
+            </Row>
+            </Form>
+
+
           </>
         )}
+
         {activeStep === 2 && (
-          <>
-            <Form.Row className="stepForm__group flex-column flex-lg-row">
-              <Form.Group as={Col} controlId="father">
-                <Form.Label className="stepForm__label">Father Is</Form.Label>
-                <Form.Control
-                  as="select"
-                  name="father_is"
-                  className="stepForm__control"
-                  placeholder="Father Occupation"
-                  onChange={handleChange}
-                  required
-                >
-                  {fatherOcc?.map(opt => (
-                    <option key={opt?.key} value={opt?.key}>
-                      {opt?.value}
-                    </option>
-                  ))}
-                </Form.Control>
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="mother">
-                <Form.Label className="stepForm__label">Mother Is</Form.Label>
-                <Form.Control
-                  as="select"
-                  name="mother_is"
-                  className="stepForm__control"
-                  placeholder="Mother Occupation"
-                  onChange={handleChange}
-                  required
-                >
-                  {motherOcc?.map(opt => (
-                    <option key={opt?.key} value={opt?.key}>
-                      {opt?.value}
-                    </option>
-                  ))}
-                </Form.Control>
-              </Form.Group>
-            </Form.Row>
-            <Form.Row className="stepForm__group flex-column flex-lg-row">
-              <Form.Group as={Col} controlId="brother">
-                <Form.Label className="stepForm__label">Brothers</Form.Label>
-                <Form.Control
-                  type="number"
-                  name="brothers"
-                  className="stepForm__control"
-                  onChange={handleChange}
-                  value={profileData.brothers}
-                  required
-                />
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="sister">
-                <Form.Label className="stepForm__label">Sisters</Form.Label>
-                <Form.Control
-                  type="number"
-                  name="sisters"
-                  className="stepForm__control"
-                  onChange={handleChange}
-                  value={profileData.sisters}
-                  required
-                />
-              </Form.Group>
-            </Form.Row>
-
-            <Form.Group
-              as={Col}
-              controlId="location"
-              className="stepForm__group"
-            >
-              <Form.Label className="stepForm__label">Location</Form.Label>
-              <Form.Control
-                name="family_location"
-                className="stepForm__control"
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
-            <Form.Group as={Col} controlId="about" className="stepForm__group">
-              <Form.Label className="stepForm__label">About Family</Form.Label>
-              <Form.Control
-                as="textarea"
-                name="about_family"
-                maxLength={100}
-                className="stepForm__control"
-                onChange={handleChange}
-                required
-              />
-              <p className="my-1 text-right text-black-50">
-                Max. characters: 100
-              </p>
-            </Form.Group>
-          </>
-        )}
-
-
-        {activeStep === 3 && (
           <>
             <BasicSearch />
           </>
         )}
 
-
-        <Row className="stepForm__actions flex-column flex-sm-row col-12 col-lg-10">
-          <Button
-            className="stepForm__save "
-            onClick={nextStep}
-            disabled={activeStep < 2}
-          >
-            SKIP
-            <Image src={SkipIcon} alt="skip" height={15} />
-          </Button>
-          <Button className="stepForm__submit" type="submit">
-            {activeStep === 3 ? "Search" : "SAVE & Next"}
-            <Image
-              src={activeStep === 3 ? SaveSearch : SaveIcon}
-              alt="save"
-              height={20}
-            />
-          </Button>
-        </Row>
         <p className="stepForm__postscript">
           Lorem ipsum is simply a dummy text of printing.
         </p>
@@ -633,7 +547,6 @@ function StepForm({ setActive, close }) {
             Privacy Policy
           </Link>
         </p>
-      </Form>
     </>
   );
 }

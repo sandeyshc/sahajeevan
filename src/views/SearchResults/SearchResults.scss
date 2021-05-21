@@ -1,6 +1,17 @@
+
+.no_profile_txt{
+position: relative;
+font-size: 40px;
+color: #b1b1b1;
+}
+.basic_filters{
+color: #902c2c;
+    font-size: 22px;
+}
+
 .results {
   margin: 40px auto;
-  max-width: 1200px;
+  max-width: 1100px;
 
   &__section {
     display: flex;
