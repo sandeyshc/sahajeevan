@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo2.png";
 import "./Header.scss";
@@ -27,8 +27,18 @@ import { getTop10Notifications } from "../../services/profile";
 import { Widget, addResponseMessage, addLinkSnippet, addUserMessage } from 'react-chat-widget';
 import useSnackBar from "../../hooks/SnackBarHook";
 import 'react-chat-widget/lib/styles.css';
+import { makeStyles } from '@material-ui/core/styles';
+import Popover from '@material-ui/core/Popover';
+import Typography from '@material-ui/core/Typography';
 
-
+const useStyles = makeStyles(theme => ({
+  popover: {
+    pointerEvents: 'none',
+  },
+  popoverContent: {
+    pointerEvents: 'auto',
+  },
+}));
 const StyledMenu = withStyles({
   paper: {
     border: '1px solid #d3d4d5',
@@ -61,7 +71,19 @@ const StyledMenuItem = withStyles((theme) => ({
 
 
 function Header() {
-const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const [openedPopover, setOpenedPopover] = useState(false)
+  const popoverAnchor = useRef(null);
+
+  const popoverEnter = ({ currentTarget }) => {
+    setOpenedPopover(true)
+  };
+  const popoverLeave = ({ currentTarget }) => {
+    setOpenedPopover(false)
+  };
+  const classes = useStyles();
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
 //const [notifications, setnotifications] = useState([]);
   const landLinks = [
       { text: "SEARCH ME", link: "home" },
@@ -101,9 +123,6 @@ const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-
-
 
    useEffect(() => {
     const timer = setTimeout(() => {
@@ -161,7 +180,60 @@ const [anchorEl, setAnchorEl] = React.useState(null);
                 Search
               </NavLink>
               <NavLink className="header__nav__link" as={Link} to="/interests">
-                Interests
+                     <span
+                      ref={popoverAnchor}
+                      aria-owns="mouse-over-popover"
+                      aria-haspopup="true"
+                      onMouseEnter={popoverEnter}
+                      onMouseLeave={popoverLeave}
+                    >MY INTERESTS >
+                    </span>
+                    <Popover
+                    id="mouse-over-popover"
+                    className={classes.popover}
+                    classes={{
+                      paper: classes.popoverContent,
+                    }}
+                        open={openedPopover}
+                        anchorEl={popoverAnchor.current}
+                        anchorOrigin={{
+                          vertical: 'bottom',
+                          horizontal: 'center',
+                        }}
+                        transformOrigin={{
+                          vertical: 'top',
+                          horizontal: 'center',
+                        }}
+                        PaperProps={{onMouseEnter: popoverEnter, onMouseLeave: popoverLeave}}
+                      >
+                        <div>
+
+                              <StyledMenuItem className="notification_parent">
+                                  <div className="notification_header">
+                                  </div>
+                               </StyledMenuItem>
+                                   <StyledMenuItem className="msg_row">
+                                      <div className="notification_msg">Viewed Profiles</div>
+                                   </StyledMenuItem>
+                                   <StyledMenuItem className="msg_row">
+                                      <div className="notification_msg">Accepted by Me</div>
+                                   </StyledMenuItem>
+                                   <StyledMenuItem className="msg_row">
+                                      <div className="notification_msg">Received Interests</div>
+                                   </StyledMenuItem>
+                                   <StyledMenuItem className="msg_row">
+                                      <div className="notification_msg">Sent Inetrests</div>
+                                   </StyledMenuItem>
+                                   <StyledMenuItem className="msg_row">
+                                      <div className="notification_msg">Shortlisted</div>
+                                   </StyledMenuItem>
+                                   <StyledMenuItem className="msg_row">
+                                      <div className="notification_msg">Accepted by others</div>
+                                   </StyledMenuItem>
+
+
+                    </div>
+                  </Popover>
               </NavLink>
 
               <NavLink className="header__nav__link">Upgrade</NavLink>

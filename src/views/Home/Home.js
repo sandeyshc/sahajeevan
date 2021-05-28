@@ -4,7 +4,7 @@ import { Image, Card } from "react-bootstrap";
 import "./Home.scss";
 import { useQuery } from "react-query";
 
-import Hero from "../../assets/images/Home/home.png";
+import Hero from "../../assets/images/Home/home.jpg";
 import Dotted from "../../assets/images/Home/dotted.png";
 import FooterLogo from "../../assets/images/logo1.png";
 import Left from "../../assets/icons/svg icon/Right1.svg";
@@ -22,10 +22,10 @@ import {
 function Home() {
   const heroData = {
       isLoggedIn: true,
-      title: "Why choose your partner among 10 while you can choose among 1000",
+      title: "",
       subtitle:
         "",
-      btnText: "Upgrade",
+      btnText: "",
       className: "d-none d-lg-block"
     },
     { data: premiumCards } = useQuery("premiumMatches", premiumMatches, {
