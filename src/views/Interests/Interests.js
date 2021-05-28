@@ -29,9 +29,10 @@ function Interests() {
   const heroData = {
       title: "Interests",
       subtitle:
-        "Lorem ipsum is simply dummy text of the printing and typesetting industry.",
+        "",
       isLoggedIn: true,
-      isSmallBanner: true
+      isSmallBanner: true,
+      profileView: true
     },
     listText = {
       viewedProfiles: "Viewed Profiles",
@@ -109,9 +110,7 @@ function Interests() {
             ></ListOptions>
           </div>
           <div className="interests__section__content col-sm-12">
-            <p className="interests__section__content__title">
-              Lorem Ipsum is simply dummy
-            </p>
+
             <p className="interests__section__content__subtitle">
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry.

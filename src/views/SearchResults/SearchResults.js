@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Image, Row, Card, Button, Form } from "react-bootstrap";
 import { Layout, ProfileCard, ListOptions } from "../../components";
 import "./SearchResults.scss";
-
+import "./Filter.scss";
 import heroImg from "../../assets/images/SearchResults/hero.png";
 import { getFilter } from "../../services/profile";
 import Pagination from "@material-ui/lab/Pagination";
@@ -21,13 +21,15 @@ import { getOptions, search, saveFilter } from "../../services/profile";
 function SearchResults() {
   const [totalResults, setTotalResults] = useState([0]);
   const [pagesCount, setPagesCount] = useState([0]);
+  const [pageNo, setPageNo] = useState(1);
   const [profiles, setProfiles] = useState([]),
     heroData = {
       subtitle:
         "Lorem Ipsum is simply the dummy text for printing and typesetting industry.",
       title: "Search Results",
       isSmallBanner: true,
-      isLoggedIn: true
+      isLoggedIn: true,
+          profileView: true
     };
     const data = getFilter();
     const [filterData, setFilterData] = useState(),
@@ -41,7 +43,7 @@ function SearchResults() {
       isSuccess: SearchProfilesSuccess,
       error: SearchProfilesError,
       data: SearchProfiles
-    } = useMutation(formData => search(formData)),
+    } = useMutation((formData, pageNo) => search(formData, pageNo)),
 
     heightText = value => {
       let temp = String(value).split(".");
@@ -81,26 +83,33 @@ function SearchResults() {
         }
       });
     },
+    paginationHandler = (event, value) => {
+        setPageNo(value);
+        console.log("vvvalue", value);
+
+    },
     applyFilter = () => {
       saveFilter(filterData);
-      SearchProfilesMutate(filterData);
+      setPageNo(1);
+      SearchProfilesMutate([filterData, pageNo]);
     };
+
   useEffect(() => {
-    const data = getFilter();
-  SearchProfilesMutate(data);
+  console.log("pgnnouse efect", pageNo);
+  const data = getFilter();
+  SearchProfilesMutate([data, pageNo]);
     if (data) {
       setFilterData(data);
     }
-  }, []);
+  }, [pageNo]);
+
   useEffect(() => {
   const data = getFilter();
     SearchProfilesSuccess && setProfiles(SearchProfiles?.results);
     const imageCount = SearchProfiles?.count;
     setTotalResults(SearchProfiles?.count);
-
     setPagesCount( Math.floor((imageCount + 8 - 1) / 8))
-
-  }, [SearchProfilesSuccess, SearchProfiles]);
+  }, [SearchProfilesSuccess, SearchProfiles, pagesCount]);
 
 
   return (
@@ -437,14 +446,18 @@ function SearchResults() {
             <div className="no_profile_txt">No profiles found</div>
             )}
 
-            </div>
-            <Pagination
+             <Pagination onChange={paginationHandler} page={pageNo}
               className="d-flex justify-content-end results__section__content__pagination"
               count={pagesCount}
               size="large"
             />
+
+            </div>
+
+
           </div>
         </Row>
+
       </section>
     </Layout>
   );

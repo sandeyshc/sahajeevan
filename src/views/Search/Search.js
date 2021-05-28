@@ -35,9 +35,10 @@ function Search() {
     heroData = {
       title: "Search Now",
       subtitle:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        "",
       isLoggedIn: true,
-      isSmallBanner: true
+      isSmallBanner: true,
+      profileView: true
     },
     history = useHistory(),
     handleChange = newValue => {
@@ -101,7 +102,6 @@ function Search() {
     <Layout heroImg={Hero} heroData={heroData}>
       <section className="search col-lg-9 col-md-12 col-sm-12">
         <div className="search__header">
-          <p className="search__header__title">Lorem Ipsum is simply dummy</p>
           <p className="search__header__subtitle">
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry.
