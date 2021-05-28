@@ -20,18 +20,19 @@ function CardCarousel({ cards = [], activeIndex }) {
           <div className="cards">
             {cards?.slice(0, 4).map((card, j) => (
               <SmallCard data={card} key={"A" + Math.random()}>
-                 <Image
+
+               <div className="card_top">
+                    <Image
                     className="bgImg overflow-hidden grayscale blur"
                     src={card.profile_photo_url || dummyImage}
                     alt="profile image"
-                  />
-               <span>
+                    />
                   <Image
                     className="cardImg overflow-hidden"
                     src={card.profile_photo_url || dummyImage}
                     alt="profile image"
                   />
-              </span>
+              </div>
               </SmallCard>
             ))}
           </div>
@@ -40,18 +41,19 @@ function CardCarousel({ cards = [], activeIndex }) {
           <div className="cards">
             {cards?.slice(4).map((card, j) => (
               <SmallCard data={card} key={"B" + Math.random()}>
+
+                <div className="card_top">
                   <Image
                         className="bgImg overflow-hidden  grayscale blur"
                         src={card.profile_photo_url || dummyImage}
                         alt="profile image"
                   />
-                <span>
                   <Image
                     className="cardImg overflow-hidden"
                     src={card.profile_photo_url || dummyImage}
                     alt="profile image"
                   />
-              </span>
+              </div>
               </SmallCard>
             ))}
           </div>
@@ -60,18 +62,19 @@ function CardCarousel({ cards = [], activeIndex }) {
       <div className="d-flex d-lg-none" style={{ "overflow-x": "scroll" }}>
         {cards?.map(card => (
           <SmallCard data={card} key={card.id}>
-             <Image
-                className="bgImg overflow-hidden grayscale blur"
-                src={card.profile_photo_url || dummyImage}
-                alt="profile image"
-             />
-           <span>
+
+           <div className="card_top">
+               <Image
+                    className="bgImg overflow-hidden grayscale blur"
+                    src={card.profile_photo_url || dummyImage}
+                    alt="profile image"
+                 />
              <Image
                 className="cardImg overflow-hidden"
                 src={card.profile_photo_url || dummyImage}
                 alt="profile image"
              />
-           </span>
+           </div>
           </SmallCard>
         ))}
       </div>

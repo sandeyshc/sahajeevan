@@ -26,7 +26,7 @@ function Home() {
       subtitle:
         "",
       btnText: "",
-      className: "d-none d-lg-block"
+      className: "d-lg-block"
     },
     { data: premiumCards } = useQuery("premiumMatches", premiumMatches, {
       refetchOnWindowFocus: false
@@ -53,7 +53,7 @@ function Home() {
     [premiumIndex, setPremiumIndex] = useState(0);
 
   return (
-    <Layout heroImg={Hero} heroData={heroData} bannerContent={<HomeForm />}>
+    <Layout heroImg={Hero} heroData={heroData} bannerContent={<HomeForm />} isHomePage={"true"}>
         <section className="dotted_parent">
             <div className="dotted_child"><Image className="dotted_image" src={Dotted} alt="about" height="30" /></div>
         </section>

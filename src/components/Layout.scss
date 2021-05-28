@@ -8,6 +8,11 @@
     }
 }
 
+.homeImg{
+    object-fit: cover;
+    object-position: 58% 28%;
+}
+
 
 @media screen and (max-width: 992px) {
 .layout__header {

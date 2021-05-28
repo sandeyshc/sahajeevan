@@ -2,46 +2,51 @@
   background-color: white;
   padding: 25px;
   border-radius: 5px;
+  box-shadow: 5px 10px 72px -11px #e7e7e4;
+
+  &__btns{
+  align-items: center;
+    display: inline-grid;
+    }
 //   max-width: 50%;
 //   box-shadow: 1px 2px 9px 4px #b7b7b7;
-
-  &__header {
-    align-items: center;
-    margin: 0px 0px 20px 0px;
-
-    img {
+   &__img {
         border: 5px solid #fcb432;
         width: 120px;
         height: 120px;
         margin: 0px 20px 0px 0px;
     }
 
+  &__header {
+    align-items: center;
+    margin: 0px 0px 20px 0px;
+
     &__content {
       font-size: 18px;
       padding: 0px 0px 0px 15px;
 
       &__title {
-        font-size: 32px;
+        font-size: 20px;
         color: #6e6e6e;
         margin: 0;
       }
 
       &__subtitle {
         color: #b7b7b7;
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 300;
         margin-bottom: 0;
         position: relative;
 
-        &::after {
-          content: "";
-          position: absolute;
-          top: 110%;
-          left: 0;
-          width: 30%;
-          height: 3px;
-          background-color: #ee4642;
-        }
+//         &::after {
+//           content: "";
+//           position: absolute;
+//           top: 110%;
+//           left: 0;
+//           width: 30%;
+//           height: 3px;
+//           background-color: #ee4642;
+//         }
 
         &__percentage {
           margin-left: 5px;
@@ -64,8 +69,8 @@
 
   &__cards {
     margin: 10px 0;
-    padding: 20px 0 0;
-    display: grid;
+//     padding: 20px 0 0;
+//     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 15px;
 
@@ -74,7 +79,7 @@
       box-shadow: 0 0 6px #e7e7e7;
       align-items: center;
       justify-content: center;
-      min-height: 135px;
+      min-height: 111px;
 
       &__circle {
         background-color: #fad5d8;
@@ -101,7 +106,7 @@
       }
 
       &__desc {
-        font-size: 14px;
+        font-size: 11px;
         color: #919191;
         text-align: center;
         margin: 15px 0 0;
@@ -112,17 +117,31 @@
   &__actions {
     padding: 20px;
 
-    &__upload {
+    &__viewpr {
       width: 100%;
       border: 0;
       border-radius: 50px;
       background-color: #ee4642;
       color: white;
-      font-size: 20px;
+      font-size: 16px;
       font-weight: 600;
-      min-height: 55px;
+      min-height: 42px;
       box-shadow: 0 10px 20px #ffadb2;
-      margin-bottom: 30px;
+      align-items: center;
+    justify-content: center;
+    }
+
+    &__search {
+      width: 100%;
+      border: 0;
+      border-radius: 50px;
+      background-color: #fcb432;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      min-height: 42px;
+      box-shadow: 0 10px 20px #fcb432;
+
     }
 
     &__sec {
@@ -158,7 +177,11 @@
   .homeForm {
     max-width: 90%;
     box-shadow: 1px 5px 8px 2px #b7b7b7;
+    &__cards{
+    display: none;
+    }
   }
+
 }
 
 @media screen and (max-width: 374px) {

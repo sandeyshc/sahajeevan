@@ -7,11 +7,11 @@ import Footer from "./Footer/Footer";
 import Hero from "./Hero/LandingPage/Hero";
 import "./Layout.scss";
 
-function Layout({ children, heroImg, heroData, bannerContent }) {
+function Layout({ children, heroImg, heroData, bannerContent, isHomePage }) {
   return (
     <div className="layout">
       <div className="layout__header homepage_header">
-        <Image src={heroImg} className="layout__header__hero__image" alt="hero image" />
+        <Image src={heroImg} alt="hero image" className={"layout__header__hero__image " + (isHomePage ? "homeImg" : "")} />
         <Header />
         <Hero data={heroData}>
           {bannerContent}
