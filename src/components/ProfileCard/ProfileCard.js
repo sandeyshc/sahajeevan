@@ -8,6 +8,7 @@ import ModalHeader from "react-bootstrap/ModalHeader";
 import ModalFooter from "react-bootstrap/ModalFooter";
 import ModalTitle from "react-bootstrap/ModalTitle";
 import { Button} from 'react-bootstrap';
+import SahjeevanChat from '../Header/Chatt';
 
 
 import { Card, Image, Col, Row, Spinner } from "react-bootstrap";
@@ -404,7 +405,7 @@ function ProfileCard({
                         : "")
                     }
                   >
-                    <Image src={Chat} alt="Chat" height={18} />
+                    <Image src={Chat} alt="Chat" height={18}/>
                     Chat
                   </button>
 

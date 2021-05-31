@@ -1,10 +1,46 @@
 body{
 overflow: overlay !important;
 }
+.appLogo{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+
+
+.hover-underline-animation {
+  display: inline-block;
+  position: relative;
+  color: #ffffff !important;
+}
+
+.hover-underline-animation:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #fcb432;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.hover-underline-animation:hover:after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+
+.hover-underline-animation:focus {
+  color: #ffffff !important;
+}
 
 .header {
   padding: 10px 100px;
   width: 100%;
+  height: 100px;
 
   .header__nav {
     .header__nav__link {
@@ -138,7 +174,7 @@ overflow: overlay !important;
 }
 
 .nav-link:hover, .nav-link:focus {
-    color: #ffebcc !important;
+//     color: #ffebcc !important;
 }
 
 

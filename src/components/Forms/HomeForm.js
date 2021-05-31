@@ -11,7 +11,7 @@ function HomeForm() {
   return (
     <section className="homeForm col-lg-12 d-xl-block">
 			<div className="row">
-				<div className="col-lg-4 col-md-12 col-xs-12">
+				<div className="col-lg-4 col-md-12 col-xs-12 homeForm__photo_name">
 					<div className="row">
 						<div className="col-lg-3 col-md-4 col-xs-4">
 						    <span>
@@ -21,13 +21,16 @@ function HomeForm() {
 						<div className="col-lg-9 col-md-7 col-xs-7">
 						    <p className="homeForm__header__content__title">HIMANSHU CHOUHAN</p>
                               <p className="homeForm__header__content__subtitle">
-                                Add Details To Your Profile{" "}
-                                <span className="homeForm__header__content__subtitle__percentage">
-                                  58%
+                                Completeness {" "}
+                                 <span className="homeForm__header__content__subtitle__percentage">
+                                     58%
+                                 </span>
+                                  <span className="homeForm__header__content__subtitle__edit">
+                                      Edit
+                                  </span>
                                   <div>
-                                  <Line percent="58" strokeWidth="4" strokeColor="#fcb432" />
+                                  <Line percent="58" strokeWidth="4" strokeColor="#35cce6" />
                                   </div>
-                                </span>
                              </p>
 						</div>
 					</div>
@@ -61,17 +64,20 @@ function HomeForm() {
 					<div className="row">
 						<div className="col-lg-8 col-md-6 col-xs-6">
 						    <button className="homeForm__actions__viewpr">
-                              View My Public Profile
+                              Profile Preview
                             </button>
-
 						</div>
 						<div className="col-lg-4 col-md-4 col-xs-4">
 						    <button className="homeForm__actions__search">
                               Search
                             </button>
-
 						</div>
-
+						 <div className="homeForm__actions__accType">
+                                Account Type : Free &nbsp;&nbsp;&nbsp;
+                                <span className="homeForm__actions__upgrade">
+                                 Upgrade
+                                </span>
+                            </div>
 					</div>
 				</div>
 			</div>

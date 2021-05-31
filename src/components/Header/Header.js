@@ -24,12 +24,15 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import DraftsIcon from '@material-ui/icons/Drafts';
 import SendIcon from '@material-ui/icons/Send';
 import { getTop10Notifications } from "../../services/profile";
-import { Widget, addResponseMessage, addLinkSnippet, addUserMessage } from 'react-chat-widget';
+
 import useSnackBar from "../../hooks/SnackBarHook";
 import 'react-chat-widget/lib/styles.css';
 import { makeStyles } from '@material-ui/core/styles';
 import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
+import MessageIcon from '@material-ui/icons/Message';
+import SvgIcon from '@material-ui/core/SvgIcon';
+import Chat from './Chatt';
 
 const useStyles = makeStyles(theme => ({
   popover: {
@@ -58,6 +61,15 @@ const StyledMenu = withStyles({
     {...props}
   />
 ));
+
+function HomeIcon(props) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#ffffff" class="bi bi-chat-right-text" viewBox="0 0 16 16">
+  <path d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1H2zm12-1a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z"></path>
+  <path d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6zm0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"></path>
+</svg>
+  );
+}
 
 const StyledMenuItem = withStyles((theme) => ({
   root: {
@@ -131,15 +143,7 @@ function Header() {
     return () => clearTimeout(timer);
   }, []);
 
-  useEffect(() => {
-    addResponseMessage('Welcome to this awesome chat!');
-  }, []);
 
-  const handleNewUserMessage = (newMessage) => {
-    console.log(`New message incoming! ${newMessage}`);
-    // Now send the message throught the backend API
-    addResponseMessage("response");
-  };
 
 
   return (
@@ -160,6 +164,7 @@ function Header() {
               className="header__nav__img"
             />
           </Link>
+
         </Navbar.Brand>
         <div
           className="header__menu text-white d-sm-flex d-xl-none"
@@ -170,16 +175,19 @@ function Header() {
         <Nav className="d-xl-flex d-none">
           {isAuthenticated() ? (
             <>
-              <NavLink className="header__nav__link" as={Link} to="/home">
+              <NavLink className="header__nav__link hover-underline-animation" as={Link} to="/home">
                 Home
               </NavLink>
-              <NavLink className="header__nav__link" as={Link} to="/editprofile">
+              <NavLink className="header__nav__link hover-underline-animation" as={Link} to="/editprofile">
                 My Profile
               </NavLink>
-              <NavLink className="header__nav__link" as={Link} to="/search">
+               <NavLink className="header__nav__link hover-underline-animation" as={Link} to="/editprofile">
+                Chats
+              </NavLink>
+              <NavLink className="header__nav__link hover-underline-animation" as={Link} to="/search">
                 Search
               </NavLink>
-              <NavLink className="header__nav__link" as={Link} to="/interests">
+              <NavLink className="header__nav__link hover-underline-animation" as={Link} to="/interests">
                      <span
                       ref={popoverAnchor}
                       aria-owns="mouse-over-popover"
@@ -236,7 +244,6 @@ function Header() {
                   </Popover>
               </NavLink>
 
-              <NavLink className="header__nav__link">Upgrade</NavLink>
 
               <NavLink className="header__nav__link header__nav__link__img">
                 <BellIcon color="#ffffff" width='25' active={true} onClick={handleClick} animate={bellAnimation} />
@@ -332,14 +339,9 @@ function Header() {
         type={modal}
         data={modalData}
       />
-      <div className="App">
-        <Widget
-          handleNewUserMessage={handleNewUserMessage}
-          profileAvatar={logo}
-          title="My new awesome title"
-          subtitle="And my cool subtitle"
-        />
-      </div>
+        <div>
+        <Chat/>
+        </div>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 .list {
-    border-radius: 8px;
+//     border-radius: 8px;
 
     &__item {
         font-size: 15px;
@@ -8,19 +8,23 @@
         display: flex;
         margin-bottom: 10px;
         box-shadow: 0 0 5px 2px #f1f1f1;
-        border-radius: 8px;
+//         border-radius: 8px;
         color: #6d6d6d;
         white-space: nowrap;
         padding: 15px;
         transition: all 0.25s ease;
         &.active {
-            background-color: #fcb432;
-            color: white;
-            border-color: #fcb432;
+          color: #fcb432 !important;
+          border-bottom: 2px solid #fcb432 !important;
+          background-color: #ffffff !important;
+          border-top-width: 0px !important;
+          border-right-width: 0px !important;
+          border-left-width: 0px !important;
+          border-radius: 0px !important;
         }
 
         &+.list__item {
-            border-top-width: 1px;
+//             border-top-width: 1px;
         }
 
         &:hover {

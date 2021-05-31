@@ -1,8 +1,15 @@
 .homeForm {
   background-color: white;
-  padding: 25px;
   border-radius: 5px;
   box-shadow: 5px 10px 72px -11px #e7e7e4;
+  width: fit-content;
+    margin: 0 auto;
+
+
+  &__photo_name{
+    align-items: center;
+    display: inline-flex;
+  }
 
   &__btns{
   align-items: center;
@@ -37,6 +44,15 @@
         font-weight: 300;
         margin-bottom: 0;
         position: relative;
+
+         &__edit {
+            font-size: 16px;
+            font-weight: 500;
+            color: #127da6;
+            margin: 16px;
+            cursor: pointer;
+            text-decoration: underline;
+          }
 
 //         &::after {
 //           content: "";
@@ -84,8 +100,8 @@
       &__circle {
         background-color: #fad5d8;
         border-radius: 50%;
-        width: 70px;
-        height: 70px;
+        width: 50px;
+        height: 50px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -117,6 +133,24 @@
   &__actions {
     padding: 20px;
 
+    &__accType{
+        margin: 0 auto;
+        position: relative;
+        bottom: -21px;
+        font-weight: 200;
+    }
+
+    &__upgrade{
+        color: #1688b4;
+        text-decoration: underline;
+        font-weight: 400;
+        cursor: pointer;
+    }
+
+     &__paid{
+
+    }
+
     &__viewpr {
       width: 100%;
       border: 0;
@@ -129,6 +163,7 @@
       box-shadow: 0 10px 20px #ffadb2;
       align-items: center;
     justify-content: center;
+        outline: none;
     }
 
     &__search {
@@ -141,6 +176,7 @@
       font-weight: 600;
       min-height: 42px;
       box-shadow: 0 10px 20px #fcb432;
+       outline: none;
 
     }
 
@@ -172,6 +208,7 @@
     }
   }
 }
+
 
 @media screen and (max-width: 992px) {
   .homeForm {

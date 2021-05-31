@@ -4,7 +4,7 @@ import { Image, Card } from "react-bootstrap";
 import "./Home.scss";
 import { useQuery } from "react-query";
 
-import Hero from "../../assets/images/Home/home.jpg";
+import Hero from "../../assets/images/Home/home.png";
 import Dotted from "../../assets/images/Home/dotted.png";
 import FooterLogo from "../../assets/images/logo1.png";
 import Left from "../../assets/icons/svg icon/Right1.svg";
@@ -53,10 +53,12 @@ function Home() {
     [premiumIndex, setPremiumIndex] = useState(0);
 
   return (
-    <Layout heroImg={Hero} heroData={heroData} bannerContent={<HomeForm />} isHomePage={"true"}>
+    <Layout heroImg={Hero} heroData={heroData} isHomePage={"true"}>
         <section className="dotted_parent">
             <div className="dotted_child"><Image className="dotted_image" src={Dotted} alt="about" height="30" /></div>
         </section>
+       <div className="home__content">
+       <HomeForm />
       <section className="section col-xl-10 col-12 cards_section profile_visitors">
         <div className="section__header">
           <div className="section__header__title">
@@ -315,6 +317,7 @@ function Home() {
           </p>
         </Card>
       </section>
+      </div>
     </Layout>
   );
 }
