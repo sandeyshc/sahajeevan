@@ -11,24 +11,20 @@ export default function SahjeevanChat({ showChatBox }) {
     const [showChat, setShowChat] = useState(showChatBox);
     const [showOnlineMember, setShowOnlineMember] = useState(false);
     const handleChatIconClick = () => {
-        setShowChat(!showChat);
-        };
+    setShowChat(!showChat);
+    };
     const handleOnlineIconClick = () => {
-        setShowOnlineMember(!showOnlineMember);
-        };
-
-
-  const handleMemberClick = () => {
+    setShowOnlineMember(!showOnlineMember);
+    };
+    const handleMemberClick = () => {
         setShowChat(true);
-  };
-  const handleOnlineBoxCloseClick = () => {
+    };
+    const handleOnlineBoxCloseClick = () => {
         setShowOnlineMember(false);
-  };
-  const handleChatBoxCloseClick = () => {
+    };
+    const handleChatBoxCloseClick = () => {
         setShowChat(false);
-  };
-
-
+    };
   return (
   <>
     <div style={{ display: 'block',
@@ -141,7 +137,6 @@ export default function SahjeevanChat({ showChatBox }) {
               </OverlayTrigger>
     </div>
 
-
     <div style={{ display: 'block',
                   width: 700,
                   padding: 30 }}>
@@ -231,10 +226,6 @@ export default function SahjeevanChat({ showChatBox }) {
                     </span>
               </OverlayTrigger>
     </div>
-
-
-
-
    </>
   );
 }

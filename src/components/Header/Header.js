@@ -35,17 +35,18 @@ import SvgIcon from '@material-ui/core/SvgIcon';
 import Chat from './Chatt';
 
 const useStyles = makeStyles(theme => ({
-  popover: {
+    popover: {
     pointerEvents: 'none',
-  },
-  popoverContent: {
+    },
+    popoverContent: {
     pointerEvents: 'auto',
-  },
-}));
+    },
+    }));
+
 const StyledMenu = withStyles({
-  paper: {
+    paper: {
     border: '1px solid #d3d4d5',
-  },
+    },
 })((props) => (
   <Menu
     elevation={0}
@@ -81,12 +82,9 @@ const StyledMenuItem = withStyles((theme) => ({
   },
 }))(MenuItem);
 
-
 function Header() {
-
   const [openedPopover, setOpenedPopover] = useState(false)
   const popoverAnchor = useRef(null);
-
   const popoverEnter = ({ currentTarget }) => {
     setOpenedPopover(true)
   };
@@ -94,16 +92,13 @@ function Header() {
     setOpenedPopover(false)
   };
   const classes = useStyles();
-
   const [anchorEl, setAnchorEl] = React.useState(null);
-//const [notifications, setnotifications] = useState([]);
   const landLinks = [
       { text: "SEARCH ME", link: "home" },
       { text: "MEMBERSHIP PLANS", link: "searchresults" },
       { text: "WHY US?" },
       { text: "TESTIMONIALS" }
     ],
-
     Modals = {
       login: "LOGIN",
       register: "REGISTER",
@@ -131,7 +126,6 @@ function Header() {
      const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -142,10 +136,6 @@ function Header() {
     }, 3000);
     return () => clearTimeout(timer);
   }, []);
-
-
-
-
   return (
     <div className="header">
       <Drawer anchor="right" open={drawerState} onClose={toggleDrawer}>
@@ -164,7 +154,6 @@ function Header() {
               className="header__nav__img"
             />
           </Link>
-
         </Navbar.Brand>
         <div
           className="header__menu text-white d-sm-flex d-xl-none"
@@ -188,14 +177,15 @@ function Header() {
                 Search
               </NavLink>
               <NavLink className="header__nav__link hover-underline-animation" as={Link} to="/interests">
-                     <span
+                  <span
                       ref={popoverAnchor}
                       aria-owns="mouse-over-popover"
                       aria-haspopup="true"
                       onMouseEnter={popoverEnter}
                       onMouseLeave={popoverLeave}
-                    >MY INTERESTS >
-                    </span>
+                    >
+                    MY INTERESTS
+                  </span>
                     <Popover
                     id="mouse-over-popover"
                     className={classes.popover}
@@ -215,11 +205,10 @@ function Header() {
                         PaperProps={{onMouseEnter: popoverEnter, onMouseLeave: popoverLeave}}
                       >
                         <div>
-
                               <StyledMenuItem className="notification_parent">
                                   <div className="notification_header">
                                   </div>
-                               </StyledMenuItem>
+                              </StyledMenuItem>
                                    <StyledMenuItem className="msg_row">
                                       <div className="notification_msg">Viewed Profiles</div>
                                    </StyledMenuItem>
@@ -237,14 +226,10 @@ function Header() {
                                    </StyledMenuItem>
                                    <StyledMenuItem className="msg_row">
                                       <div className="notification_msg">Accepted by others</div>
-                                   </StyledMenuItem>
-
-
-                    </div>
+                              </StyledMenuItem>
+                        </div>
                   </Popover>
               </NavLink>
-
-
               <NavLink className="header__nav__link header__nav__link__img">
                 <BellIcon color="#ffffff" width='25' active={true} onClick={handleClick} animate={bellAnimation} />
                 <span className="unread"></span>
@@ -269,10 +254,8 @@ function Header() {
                         <StyledMenuItem className="">
                           <div className="notification_footer">View All</div>
                        </StyledMenuItem>
-
                       </StyledMenu>
               </NavLink>
-
               <NavLink
                 className="header__nav__link header__nav__link__img header__nav__link__img__user"
                 as={Link}
@@ -332,7 +315,6 @@ function Header() {
           )}
         </Nav>
       </Navbar>
-
       <Dialog
         show={!!modal}
         onHide={handleModal}

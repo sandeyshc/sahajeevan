@@ -81,16 +81,6 @@ function HomeForm() {
 					</div>
 				</div>
 			</div>
-		
-    
-    
-    
-    
-    
-
-
-
-
     </section>
   );
 }
