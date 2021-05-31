@@ -165,8 +165,17 @@ export const updateFamilyDetails = async data => {
   return await APIPatchCall(URLS.FAMILYDETAILS, data);
 };
 
-export const search = async data => {
-  return await APIPostCall(URLS.SEARCH, data);
+export const search = async ([data, pageNo]) => {
+    console.log("-------------", pageNo);
+    if(pageNo > 1)
+    {
+    return await APIPostCall(URLS.SEARCH + "?page=" + pageNo, data);
+    }
+    else
+    {
+    return await APIPostCall(URLS.SEARCH, data);
+    }
+
 };
 
 export const viewedProfiles = async () => {

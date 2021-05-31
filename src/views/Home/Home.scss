@@ -1,10 +1,10 @@
 .cards_section{
     max-width: 100%;
-    padding: 0px 8%;
+    padding: 1% 8%;
 }
 
 .profile_visitors{
-margin: 50px auto !important;
+margin: 30px auto !important;
 }
 
 .recomm_bg{
@@ -28,16 +28,25 @@ width: 100%;
 text-align: right;
 }
 .dotted_image{
-     height: 87px;
+     height: 101px;
+     width:160px;
     top: -31px;
     z-index: -3;
     position: relative;
 
 }
 
+.home{
+    &__content{
+//     padding: 0 8%;
+        margin-top: 148px;
+    }
+}
+
 
 .section {
-    margin: auto;
+        margin: 30px auto;
+
 
     &__header {
         display: flex;
@@ -47,7 +56,7 @@ text-align: right;
 
         &__title {
             &__text {
-                font-size: 38px;
+                font-size: 30px;
                 font-weight: 700;
                 color: #5e5e5e;
                 margin: 0;
@@ -146,7 +155,7 @@ text-align: right;
     }
 
     &__cards {
-        margin: 30px 0;
+//         margin: 30px 0;
     }
 }
 
@@ -172,9 +181,6 @@ text-align: right;
 }
 
 @media screen and (max-width: 786px) {
-    .profile_visitors{
-    margin: -33px auto !important;
-    }
 
     .dotted_image{
             height: 100px;

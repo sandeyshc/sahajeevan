@@ -1,11 +1,23 @@
+button:focus {
+    outline: 0;
+}
+
 .layout__header {
     position: relative;
     &__hero__image {
         position: absolute;
         width: 100%;
-        height: 100%;
+
         z-index: -1;
     }
+}
+
+.homeImg{
+    object-fit: cover;
+    object-position: bottom;
+    filter: brightness(1.2);
+     height: 370px;
+
 }
 
 

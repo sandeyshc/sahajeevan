@@ -6,6 +6,7 @@ import { Card, Col, Image, Nav, Row } from "react-bootstrap";
 import { Layout, ViewProfileCard } from "../../components";
 import "./Profile.scss";
 import Hero from "../../assets/images/Profile/hero.png";
+import Reddot from "../../assets/images/Profile/reddot.png";
 
 import About from "../../assets/icons/svg icon/about.svg";
 import Education from "../../assets/icons/svg icon/Page-4.svg";
@@ -132,6 +133,14 @@ function Profile() {
               <p className="profileView__card__header__content__subtitle">
                 Lorem Ipsum is simply dummy text
               </p>
+            </div>
+            <div className="profileView__card__header__dotted">
+              <Image
+              className="profileView__card__header__dotted__img"
+              src={Reddot}
+              alt="reddot"
+              height={50}
+            />
             </div>
           </div>
           <Row className="profileView__card__content">

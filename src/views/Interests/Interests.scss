@@ -1,6 +1,10 @@
 .interests {
-    margin: auto;
-    max-width: 1200px;
+     padding-top: 36px;
+    position: relative;
+    margin: -90px auto 0;
+    background: #ffffff;
+    border-radius: 5px;
+    max-width: 1050px;
 
     &__section {
         display: flex;
